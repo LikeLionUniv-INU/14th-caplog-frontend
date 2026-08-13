@@ -60,6 +60,7 @@ export const ErrorMessage = styled.div`
 export const LoginButton = styled.button`
   color: #b55116;
   font-weight: 700;
+  font-size: 14px;
   background-color: #ffe3bf;
   width: 80%;
   height: 40px;

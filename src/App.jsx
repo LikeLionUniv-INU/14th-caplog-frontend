@@ -3,6 +3,7 @@ import AppLayout from './styles/AppLayout';
 import Intro from './pages/Intro';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import CheckAuth from './pages/CheckAuth';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Intro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/checkauth" element={<CheckAuth />} />
         </Routes>
       </AppLayout>
     </BrowserRouter>
