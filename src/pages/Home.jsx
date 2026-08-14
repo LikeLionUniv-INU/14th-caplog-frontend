@@ -1,0 +1,69 @@
+import BottomNav from "./BottomNav";
+import PreviewBox from "./PreviewBox";
+import PreviewFilter from "./PreviewFilter";
+import SearchBar from "./SearchBar";
+import * as S from "./Home.style";
+import alarm from "../assets/alarm.svg"
+import { memoryData } from "./mockMemory";
+import { previewData } from "./mockPreview";
+import { useNavigate } from "react-router-dom";
+
+function Home() {
+  const navigate = useNavigate();
+
+  return (
+    <S.HomeContainer>
+      <S.Header>
+        <S.AlarmButton>
+          <img src={alarm} alt="알람" />
+        </S.AlarmButton>
+      </S.Header>
+
+      <S.MemoryBox>
+        <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
+
+       <S.MemoryList>
+  {memoryData.map((memory) => (
+    <S.MemoryItem key={memory.id}>
+      <span>{memory.title}</span>
+
+      <S.MemoryRight>
+        <S.Dday $active={memory.active}>
+          {memory.dday}
+        </S.Dday>
+
+        <S.ArrowButton>›</S.ArrowButton>
+      </S.MemoryRight>
+    </S.MemoryItem>
+  ))}
+</S.MemoryList>
+      </S.MemoryBox>
+
+      <SearchBar />
+
+      <S.PreviewHeader>
+        <S.PreviewTitle>저장한 캡쳐 정보</S.PreviewTitle>
+
+        <S.AllButton onClick={() => navigate("/Archive")}>
+          전체 보기 ›
+        </S.AllButton>
+      </S.PreviewHeader>
+
+      <PreviewFilter />
+
+      <S.PreviewList>
+  {previewData.map((preview) => (
+    <PreviewBox
+      key={preview.id}
+      image={preview.image}
+      title={preview.title}
+    />
+  ))}
+</S.PreviewList>
+
+      <BottomNav />
+    </S.HomeContainer>
+  );
+}
+
+export default Home;
