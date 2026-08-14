@@ -20,3 +20,19 @@ export const signup = async (username, password) => {
 
   return response.data;
 };
+
+// 권한 허용 여부 전송
+export const putAuth = async (isApproved) => {
+  const response = await api.put('/users/photo-consent', {
+    params: { isApproved },
+  });
+
+  return response.data;
+};
+
+// 권한 확인 여부 확인
+export const checkAuth = async () => {
+  const response = await api.get('/users/photo-consent');
+
+  return response.data;
+};

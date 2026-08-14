@@ -1,10 +1,24 @@
 import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
+import { putAuth } from '../api/auth';
 
 export default function CheckAuth() {
   const navigate = useNavigate();
+
+  /** 권한 허용 여부 전송 API 함수 */
   const handleStartClick = async () => {
-    navigate('/home');
+    try {
+      const data = await putAuth(true);
+
+      if (data.isSuccess) {
+        navigate('/home');
+      } else {
+        alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
+      }
+    } catch (error) {
+      console.error('권한 설정 오류:', error);
+      alert('서버와 통신할 수 없습니다. 다시 시도해주세요.');
+    }
   };
 
   return (

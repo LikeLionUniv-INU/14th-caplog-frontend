@@ -1,7 +1,7 @@
 import * as S from './Login.styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../api/auth';
+import { login, checkAuth } from '../api/auth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,14 +30,21 @@ export default function Login() {
         if (token) localStorage.setItem('accessToken', token);
 
         const userNickname = data.result?.nickname || '게스트';
-        alert(`${userNickname}님 환영합니다.`);
 
-        // 최초/기존 이용자 분기 처리
-        // if (!data.result.onboardingCompleted) {
-        //   navigate('/checkauth');
-        // } else {
-        //   navigate('/home');
-        // }
+        try {
+          const authData = await checkAuth();
+          const isApproved = authData.result?.isApproved;
+
+          if (isApproved) {
+            alert(`${userNickname}님 환영합니다.`);
+            navigate('/home');
+          } else {
+            navigate('/checkauth');
+          }
+        } catch (authError) {
+          console.error('권한 확인 실패:', authError);
+          navigate('/checkauth');
+        }
       } else {
         setErrorMessage(data.message);
       }
