@@ -3,6 +3,7 @@ import * as S from './Upload.styles';
 import GalleryIcon from '../assets/icons/Gallery.svg';
 import { analyzeImage } from '../api/upload';
 import { useNavigate } from 'react-router-dom';
+import UploadLoading from '../components/common/UploadLoading';
 
 export default function Upload() {
   const fileInputRef = useRef(null);
@@ -31,11 +32,10 @@ export default function Upload() {
       alert('사진을 먼저 선택해주세요.');
       return;
     }
-
     setIsLoading(true);
+
     try {
       const data = await analyzeImage(imageFile);
-
       if (data.isSuccess) {
         alert('분석이 완료되었습니다!');
         // navigate('/result', { state: { resultData: data.result } });
@@ -43,7 +43,7 @@ export default function Upload() {
         alert(data.message || '분석 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error('이미지 업로드 실패:', error);
+      console.error('업로드 실패:', error);
       alert('서버와 통신할 수 없습니다.');
     } finally {
       setIsLoading(false);
@@ -82,6 +82,8 @@ export default function Upload() {
       <S.SubmitButton onClick={handleSubmit} disabled={!imageFile || isLoading}>
         {isLoading ? 'AI가 분석하고 있어요...' : '사진 업로드'}
       </S.SubmitButton>
+
+      {isLoading && <UploadLoading />}
     </S.Container>
   );
 }
