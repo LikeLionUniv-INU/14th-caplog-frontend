@@ -21,8 +21,8 @@ export const signup = async (username, password) => {
   return response.data;
 };
 
-// 권한 허용 여부 전송
-export const putAuth = async (isApproved) => {
+// 사진 권한 허용 여부 전송
+export const putPhotoAuth = async (isApproved) => {
   const response = await api.put('/users/photo-consent', {
     params: { isApproved },
   });
@@ -30,9 +30,25 @@ export const putAuth = async (isApproved) => {
   return response.data;
 };
 
-// 권한 확인 여부 확인
-export const checkAuth = async () => {
+// 사진 권한 허용 여부 확인
+export const checkPhotoAuth = async () => {
   const response = await api.get('/users/photo-consent');
+
+  return response.data;
+};
+
+// 알림 권한 허용 여부 전송
+export const putNotiAuth = async (isApproved) => {
+  const response = await api.put('/users/alarm-consent', {
+    params: { isApproved },
+  });
+
+  return response.data;
+};
+
+// 알림 권한 허용 여부 확인
+export const checkNotiAuth = async () => {
+  const response = await api.get('/users/alarm-consent');
 
   return response.data;
 };

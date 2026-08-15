@@ -33,7 +33,7 @@ export const Description = styled.p`
 export const InfoCard = styled.div`
   background-color: #fff0dd;
   border-radius: 16px;
-  padding: 14px 16px;
+  padding: 14px 18px 6px 18px;
   margin-bottom: 18px;
 `;
 

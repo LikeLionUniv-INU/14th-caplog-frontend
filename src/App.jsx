@@ -3,7 +3,8 @@ import AppLayout from './styles/AppLayout';
 import Intro from './pages/Intro';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import CheckAuth from './pages/CheckAuth';
+import CheckPhotoAuth from './pages/CheckPhotoAuth';
+import CheckNotiAuth from './pages/CheckNotiAuth';
 import Mypage from './pages/Mypage';
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<Intro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/checkauth" element={<CheckAuth />} />
+        <Route path="/check-photo-auth" element={<CheckPhotoAuth />} />
+        <Route path="/check-noti-auth" element={<CheckNotiAuth />} />
 
         {/* 하단바 필요한 페이지들 */}
         <Route element={<AppLayout />}>
