@@ -7,6 +7,7 @@ import CheckPhotoAuth from './pages/CheckPhotoAuth';
 import CheckNotiAuth from './pages/CheckNotiAuth';
 import Mypage from './pages/Mypage';
 import Notification from './pages/Notification';
+import Upload from './pages/Upload';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         {/* 하단바 필요한 페이지들 */}
         <Route element={<AppLayout />}>
           <Route path="/notification" element={<Notification />} />
+          <Route path="/upload" element={<Upload />} />
           <Route path="/mypage" element={<Mypage />} />
         </Route>
       </Routes>
