@@ -1,7 +1,7 @@
 import * as S from './Login.styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login, checkAuth } from '../api/auth';
+import { login, checkPhotoAuth, checkNotiAuth } from '../api/auth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,18 +32,20 @@ export default function Login() {
         const userNickname = data.result?.nickname || '게스트';
 
         try {
-          const authData = await checkAuth();
-          const isApproved = authData.result?.isApproved;
+          const photoAuthData = await checkPhotoAuth();
+          const notiAuthData = await checkNotiAuth();
+          const isPhotoApproved = photoAuthData.result?.isApproved;
+          const isNotiApproved = notiAuthData.result?.isApproved;
 
-          if (isApproved) {
+          if (isPhotoApproved && isNotiApproved) {
             alert(`${userNickname}님 환영합니다.`);
             navigate('/home');
           } else {
-            navigate('/checkauth');
+            navigate('/check-photo-auth');
           }
         } catch (authError) {
           console.error('권한 확인 실패:', authError);
-          navigate('/checkauth');
+          navigate('/check-photo-auth');
         }
       } else {
         setErrorMessage(data.message);

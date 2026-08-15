@@ -1,17 +1,17 @@
 import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
-import { putAuth } from '../api/auth';
+import { putPhotoAuth } from '../api/auth';
 
-export default function CheckAuth() {
+export default function CheckPhotoAuth() {
   const navigate = useNavigate();
 
-  /** 권한 허용 여부 전송 API 함수 */
-  const handleStartClick = async () => {
+  /** 사진 권한 허용 여부 전송 API 함수 */
+  const handlePhotoAuth = async () => {
     try {
-      const data = await putAuth(true);
+      const data = await putPhotoAuth(true);
 
       if (data.isSuccess) {
-        navigate('/home');
+        navigate('/check-noti-auth');
       } else {
         alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
       }
@@ -28,8 +28,9 @@ export default function CheckAuth() {
       <S.ContentWrapper>
         <S.SectionTitle>사진 접근 권한</S.SectionTitle>
         <S.Description>
-          CapLog는 기기 사진에서 스크린샷을 선택해 정리 정보를 자동으로
-          추출합니다.
+          CapLog는 기기 사진에서 스크린샷을 선택해
+          <br />
+          정리 정보를 자동으로 추출합니다.
         </S.Description>
 
         <S.InfoCard>
@@ -57,8 +58,8 @@ export default function CheckAuth() {
         </S.Description>
       </S.ContentWrapper>
 
-      <S.StartButton onClick={handleStartClick}>
-        권한 허용 후 CapLog 시작하기
+      <S.StartButton onClick={handlePhotoAuth}>
+        사진 권한 허용하기
       </S.StartButton>
     </S.Container>
   );
