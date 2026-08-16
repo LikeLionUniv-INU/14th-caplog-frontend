@@ -14,6 +14,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 85%;
+  margin: 5vh;
 `;
 
 export const SectionTitle = styled.h2`
