@@ -25,7 +25,7 @@ export const BackIcon = styled.img`
 `;
 
 export const Title = styled.h1`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #7c2d12;
 `;

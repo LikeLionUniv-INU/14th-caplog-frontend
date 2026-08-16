@@ -6,6 +6,8 @@ import Signup from './pages/Signup';
 import CheckPhotoAuth from './pages/CheckPhotoAuth';
 import CheckNotiAuth from './pages/CheckNotiAuth';
 import Mypage from './pages/Mypage';
+import ProfileEdit from './pages/ProfileEdit';
+import NotiSetting from './pages/NotiSetting';
 import Notification from './pages/Notification';
 import Upload from './pages/Upload';
 
@@ -24,6 +26,8 @@ function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage/edit" element={<ProfileEdit />} />
+          <Route path="/mypage/notifications" element={<NotiSetting />} />
         </Route>
       </Routes>
     </BrowserRouter>
