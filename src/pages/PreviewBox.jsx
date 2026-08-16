@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const PreviewBoxContainer = styled.button`
   width: 177px;
@@ -40,8 +41,12 @@ const PreviewTitle = styled.p`
 `;
 
 function PreviewBox({ image, title }) {
+  const navigate = useNavigate();
+
   return (
-    <PreviewBoxContainer type="button">
+    <PreviewBoxContainer 
+     type="button" 
+     onClick={() => navigate("/Group")}>
       <PreviewImage
   src={image}
   alt={title}
