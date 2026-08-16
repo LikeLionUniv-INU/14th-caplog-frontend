@@ -86,6 +86,7 @@ export const ScheduleRow = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  margin-bottom: 18px;
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -182,7 +183,7 @@ export const SubmitButton = styled.button`
 export const TextArea = styled.textarea`
   width: 100%;
   min-height: 130px;
-  padding: 16px;
+  padding: 10px;
   border: 1px solid #7c2d12;
   border-radius: 8px;
   font-size: 13px;
