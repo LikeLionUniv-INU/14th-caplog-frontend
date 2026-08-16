@@ -5,7 +5,7 @@ import { login, checkPhotoAuth, checkNotiAuth } from '../api/auth';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -13,32 +13,32 @@ export default function Login() {
     navigate('/signup');
   };
 
-  /** 로그인 API 연동 함수 */
+  /** 로그인 API */
   const handleLoginSubmit = async () => {
-    if (!nickname || !password) {
+    if (!userName || !password) {
       setErrorMessage('닉네임과 비밀번호를 모두 입력해주세요.');
       return;
     }
     setErrorMessage('');
 
     try {
-      const data = await login(nickname, password);
+      const data = await login(userName, password);
 
       if (data.isSuccess) {
         // 토큰 저장
         const token = data.result?.accessToken;
         if (token) localStorage.setItem('accessToken', token);
 
-        const userNickname = data.result?.nickname || '게스트';
-
         try {
-          const photoAuthData = await checkPhotoAuth();
-          const notiAuthData = await checkNotiAuth();
+          const [photoAuthData, notiAuthData] = await Promise.all([
+            checkPhotoAuth(),
+            checkNotiAuth(),
+          ]);
           const isPhotoApproved = photoAuthData.result?.isApproved;
           const isNotiApproved = notiAuthData.result?.isApproved;
 
           if (isPhotoApproved && isNotiApproved) {
-            alert(`${userNickname}님 환영합니다.`);
+            alert(`${userName}님 환영합니다.`);
             navigate('/home');
           } else {
             navigate('/check-photo-auth');
@@ -67,8 +67,8 @@ export default function Login() {
           style={{ marginBottom: '30px' }}
           type="text"
           placeholder="닉네임을 입력해주세요."
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
         />
 
         <S.Label>비밀번호</S.Label>
