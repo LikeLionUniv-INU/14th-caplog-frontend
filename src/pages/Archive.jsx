@@ -1,6 +1,7 @@
 import PreviewBox from './PreviewBox';
 import PreviewFilter from './PreviewFilter';
 import SearchBar from './SearchBar';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { previewData } from './mockPreview';
 import * as S from './Archive.style';
@@ -8,6 +9,12 @@ import back from '../assets/back.svg';
 
 function Archive() {
   const navigate = useNavigate();
+
+  const [search, setSearch] = useState('');
+
+  const filteredData = previewData.filter((preview) =>
+    preview.title.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <S.ArchiveContainer>
@@ -20,22 +27,30 @@ function Archive() {
       </S.ArchiveHeader>
 
       <S.SearchArea>
-        <SearchBar />
+        <SearchBar
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+        />
       </S.SearchArea>
 
       <S.FilterArea>
         <PreviewFilter />
       </S.FilterArea>
 
-      <S.PreviewList>
-        {previewData.map((preview) => (
-          <PreviewBox
-            key={preview.id}
-            image={preview.image}
-            title={preview.title}
-          />
-        ))}
-      </S.PreviewList>
+      {filteredData.length === 0 ? (
+        <p>검색 결과가 없습니다.</p>
+      ) : (
+        <S.PreviewList>
+          {filteredData.map((preview) => (
+            <PreviewBox
+              key={preview.id}
+              image={preview.image}
+              title={preview.title}
+            />
+          ))}
+        </S.PreviewList>
+      )}
     </S.ArchiveContainer>
   );
 }

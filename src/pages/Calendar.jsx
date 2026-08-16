@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import * as S from './Calendar.style';
 import PreviewBox from './PreviewBox';
 
+// 달력페이지 전용 더미데이터
 const schedules = {
   '2026-08-03': [
     {

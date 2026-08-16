@@ -14,8 +14,14 @@ export const Header = styled.header`
   height: 115px;
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+`;
+
+export const Logo = styled.img`
+  width: 76px;
+  height: auto;
+  display: block;
 `;
 
 export const AlarmButton = styled.button`
@@ -96,11 +102,9 @@ export const Dday = styled.span`
 
   border-radius: 30px;
 
-  background-color: ${({ $active }) =>
-    $active ? "#e26f0b" : "#fdba74"};
+  background-color: ${({ $active }) => ($active ? '#e26f0b' : '#fdba74')};
 
-  color: ${({ $active }) =>
-    $active ? "#fff7ed" : "#7c2d12"};
+  color: ${({ $active }) => ($active ? '#fff7ed' : '#7c2d12')};
 
   font-weight: 700;
 `;
@@ -117,15 +121,22 @@ export const ArrowButton = styled.button`
   cursor: pointer;
 `;
 
+export const PreviewSection = styled.section`
+  margin-top: 22px;
+`;
+
 export const PreviewHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  margin-top: 28px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 
   padding: 0 4px;
+`;
+
+export const SearchSection = styled.div`
+  margin-top: 20px;
 `;
 
 export const PreviewTitle = styled.p`
@@ -152,4 +163,8 @@ export const PreviewList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 177px);
   gap: 16px;
+`;
+
+export const FilterSection = styled.div`
+  margin-bottom: 12px;
 `;

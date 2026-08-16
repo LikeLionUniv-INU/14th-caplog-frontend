@@ -4,17 +4,27 @@ import picsearch from '../assets/picsearch.svg';
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 370px;
-  height: 41px;
-  border-radius: 30px;
+
+  width: 100%;
+  height: 37px;
+
+  padding: 0 6px 0 14px;
+  box-sizing: border-box;
+
+  border-radius: 20px;
   background-color: #fff0dd;
 `;
 
 const SearchBarInput = styled.input`
   flex: 1;
+  min-width: 0;
+
   background: transparent;
   border: none;
   outline: none;
+
+  font-size: 12px;
+  color: #b55116;
 
   &::placeholder {
     color: #b55116;
@@ -22,24 +32,38 @@ const SearchBarInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  width: 29px;
-  height: 29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
   border: none;
-  padding-right: 4px;
-  background-color: #fdba74;
   border-radius: 50%;
+
+  background-color: #fdba74;
   cursor: pointer;
+  flex-shrink: 0;
 
   img {
     width: 15px;
-    height: 19px;
+    height: 15px;
   }
 `;
 
-function SearchBar() {
+function SearchBar({ onClick, value, onChange, autoFocus }) {
   return (
-    <SearchBarContainer>
-      <SearchBarInput type="search" placeholder="검색" />
+    <SearchBarContainer onClick={onClick}>
+      <SearchBarInput
+        type="search"
+        placeholder="검색"
+        value={value}
+        onChange={onChange}
+        autoFocus={autoFocus}
+      />
+
       <SearchButton>
         <img src={picsearch} alt="검색" />
       </SearchButton>
