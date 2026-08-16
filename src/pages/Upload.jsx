@@ -4,6 +4,7 @@ import GalleryIcon from '../assets/icons/Gallery.svg';
 import { analyzeImage } from '../api/upload';
 import { useNavigate } from 'react-router-dom';
 import UploadLoading from '../components/common/UploadLoading';
+import BottomSheet from '../components/common/BottomSheet';
 
 export default function Upload() {
   const fileInputRef = useRef(null);
@@ -12,6 +13,7 @@ export default function Upload() {
   const [previewImage, setPreviewImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleBoxClick = () => {
     fileInputRef.current?.click();
@@ -35,13 +37,16 @@ export default function Upload() {
     setIsLoading(true);
 
     try {
-      const data = await analyzeImage(imageFile);
-      if (data.isSuccess) {
-        alert('분석이 완료되었습니다!');
-        // navigate('/result', { state: { resultData: data.result } });
-      } else {
-        alert(data.message || '분석 중 오류가 발생했습니다.');
-      }
+      // 서버 연동 전 테스트용
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      setIsSheetOpen(true);
+
+      // const data = await analyzeImage(imageFile);
+      // if (data.isSuccess) {
+      //   setIsSheetOpen(true);
+      // } else {
+      //   alert(data.message || '분석 중 오류가 발생했습니다.');
+      // }
     } catch (error) {
       console.error('업로드 실패:', error);
       alert('서버와 통신할 수 없습니다.');
@@ -80,10 +85,12 @@ export default function Upload() {
       </S.Description>
 
       <S.SubmitButton onClick={handleSubmit} disabled={!imageFile || isLoading}>
-        {isLoading ? 'AI가 분석하고 있어요...' : '사진 업로드'}
+        {isLoading ? 'AI가 분석하고 있어요...' : '사진 분석하기'}
       </S.SubmitButton>
 
       {isLoading && <UploadLoading />}
+
+      <BottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
     </S.Container>
   );
 }
