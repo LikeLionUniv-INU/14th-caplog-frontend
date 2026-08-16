@@ -5,19 +5,37 @@ import Home from './pages/Home';
 import Archive from './pages/Archive';
 import Group from './pages/Group';
 import Detail from './pages/Detail';
+import Calendar from './pages/Calendar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import CheckPhotoAuth from './pages/CheckPhotoAuth';
+import CheckNotiAuth from './pages/CheckNotiAuth';
+import Mypage from './pages/Mypage';
+import Notification from './pages/Notification';
+import Upload from './pages/Upload';
 
 function App() {
   return (
     <BrowserRouter>
-      <AppLayout>
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path='/Home' element={<Home />} />
-          <Route path='/Archive' element={<Archive />} />
-          <Route path='/Group' element={<Group />} />
-          <Route path='/Detail' element={<Detail />} />
-        </Routes>
-      </AppLayout>
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/check-photo-auth" element={<CheckPhotoAuth />} />
+        <Route path="/check-noti-auth" element={<CheckNotiAuth />} />
+
+        {/* 하단바 필요한 페이지들 */}
+        <Route element={<AppLayout />}>
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/Archive" element={<Archive />} />
+          <Route path="/Group" element={<Group />} />
+          <Route path="/Detail" element={<Detail />} />
+          <Route path="/calendar" element={<Calendar />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
