@@ -1,11 +1,10 @@
-import BottomNav from "./BottomNav";
-import PreviewBox from "./PreviewBox";
-import PreviewFilter from "./PreviewFilter";
-import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
-import { previewData } from "./mockPreview";
-import * as S from "./Archive.style";
-import back from "../assets/back.svg";
+import PreviewBox from './PreviewBox';
+import PreviewFilter from './PreviewFilter';
+import SearchBar from './SearchBar';
+import { useNavigate } from 'react-router-dom';
+import { previewData } from './mockPreview';
+import * as S from './Archive.style';
+import back from '../assets/back.svg';
 
 function Archive() {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ function Archive() {
   return (
     <S.ArchiveContainer>
       <S.ArchiveHeader>
-        <S.BackButton onClick={() => navigate("/Home")}>
+        <S.BackButton onClick={() => navigate('/Home')}>
           <img src={back} alt="뒤로가기" />
         </S.BackButton>
 
@@ -37,8 +36,6 @@ function Archive() {
           />
         ))}
       </S.PreviewList>
-
-      <BottomNav />
     </S.ArchiveContainer>
   );
 }

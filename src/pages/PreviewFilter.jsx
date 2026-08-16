@@ -1,5 +1,5 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 const FilterContainer = styled.div`
   display: flex;
@@ -13,8 +13,7 @@ const FilterButton = styled.button`
   border: none;
   border-radius: 16px;
 
-  background-color: ${(props) =>
-    props.$active ? "#FFd1a1" : "#FFF0DD"};
+  background-color: ${(props) => (props.$active ? '#FFd1a1' : '#FFF0DD')};
 
   color: #7c2d12;
 
@@ -25,46 +24,46 @@ const FilterButton = styled.button`
 `;
 
 function PreviewFilter() {
-  const [selectedFilter, setSelectedFilter] = useState("전체");
+  const [selectedFilter, setSelectedFilter] = useState('전체');
 
   return (
     <FilterContainer>
       <FilterButton
         type="button"
-        $active={selectedFilter === "전체"}
-        onClick={() => setSelectedFilter("전체")}
+        $active={selectedFilter === '전체'}
+        onClick={() => setSelectedFilter('전체')}
       >
         전체
       </FilterButton>
 
       <FilterButton
         type="button"
-        $active={selectedFilter === "공부"}
-        onClick={() => setSelectedFilter("공부")}
+        $active={selectedFilter === '공부'}
+        onClick={() => setSelectedFilter('공부')}
       >
         공부
       </FilterButton>
 
       <FilterButton
         type="button"
-        $active={selectedFilter === "학교"}
-        onClick={() => setSelectedFilter("학교")}
+        $active={selectedFilter === '학교'}
+        onClick={() => setSelectedFilter('학교')}
       >
         학교
       </FilterButton>
 
       <FilterButton
         type="button"
-        $active={selectedFilter === "일상"}
-        onClick={() => setSelectedFilter("일상")}
+        $active={selectedFilter === '일상'}
+        onClick={() => setSelectedFilter('일상')}
       >
         일상
       </FilterButton>
 
       <FilterButton
         type="button"
-        $active={selectedFilter === "기타"}
-        onClick={() => setSelectedFilter("기타")}
+        $active={selectedFilter === '기타'}
+        onClick={() => setSelectedFilter('기타')}
       >
         기타
       </FilterButton>

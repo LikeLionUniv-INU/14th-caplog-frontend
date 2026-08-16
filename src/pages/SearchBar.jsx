@@ -11,12 +11,12 @@ const SearchBarContainer = styled.div`
 `;
 
 const SearchBarInput = styled.input`
-flex: 1;
-background: transparent;
-border: none;
-outline: none;
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
 
-&::placeholder {
+  &::placeholder {
     color: #b55116;
   }
 `;
@@ -31,18 +31,17 @@ const SearchButton = styled.button`
   cursor: pointer;
 
   img {
-  width: 15px;
-  height: 19px;
-}
+    width: 15px;
+    height: 19px;
+  }
 `;
-
 
 function SearchBar() {
   return (
     <SearchBarContainer>
       <SearchBarInput type="search" placeholder="검색" />
       <SearchButton>
-       <img src={picsearch} alt="검색" />
+        <img src={picsearch} alt="검색" />
       </SearchButton>
     </SearchBarContainer>
   );
