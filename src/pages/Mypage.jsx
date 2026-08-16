@@ -6,7 +6,15 @@ import avatarImg1 from '../assets/images/Avatar_1.png';
 
 export default function Mypage() {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState('LikeLionINU');
+
+  // 유저 기본 정보
+  const [userInfo, setUserInfo] = useState({
+    userName: 'LikeLionINU', // 기본 닉네임
+    imgUrl: avatarImg1, // 기본 프로필
+    totalSchedule: 0, // 기본 저장한 정보
+    thisMonthSchedule: 0, // 기본 이번 달 일정
+  });
+
   const menuItems = [
     { label: '프로필 설정', path: '/mypage/edit' },
     { label: '알림 설정', path: '/mypage/notifications' },
@@ -18,12 +26,18 @@ export default function Mypage() {
     { label: '로그아웃', path: '/login' },
   ];
 
-  /** 유저 정보 조회 API 함수*/
+  /** 사용자 프로필 정보 조회 API*/
   const fetchUserInfo = async () => {
     try {
       const data = await getUserInfo();
-      const name = data.result?.userName || 'LikeLionINU';
-      setUserName(name);
+      if (data.isSuccess && data.result) {
+        setUserInfo({
+          userName: data.result.userName || 'LikeLionINU',
+          imgUrl: data.result.imgUrl || avatarImg1,
+          totalSchedule: data.result.totalSchedule || 0,
+          thisMonthSchedule: data.result.thisMonthSchedule || 0,
+        });
+      }
     } catch (error) {
       console.error('유저 정보 조회 오류:', error);
     }
@@ -37,8 +51,8 @@ export default function Mypage() {
     <S.Container>
       <S.Header>마이페이지</S.Header>
       <S.InfoCard>
-        <S.Avatar src={avatarImg1} />
-        <S.ProfileText>{userName}님 반갑습니다.</S.ProfileText>
+        <S.Avatar src={userInfo.imgUrl} />
+        <S.ProfileText>{userInfo.userName}님 반갑습니다.</S.ProfileText>
       </S.InfoCard>
 
       <S.Divider />
@@ -51,13 +65,13 @@ export default function Mypage() {
           <S.StatCard>
             <S.CardLabel>저장한 정보</S.CardLabel>
             <S.Divider style={{ margin: '10px' }} />
-            <S.CardValue>1개</S.CardValue>
+            <S.CardValue>{userInfo.totalSchedule}개</S.CardValue>
           </S.StatCard>
 
           <S.StatCard>
             <S.CardLabel>이번 달 등록 일정</S.CardLabel>
             <S.Divider style={{ margin: '10px' }} />
-            <S.CardValue>1개</S.CardValue>
+            <S.CardValue>{userInfo.thisMonthSchedule}개</S.CardValue>
           </S.StatCard>
         </S.CardWrapper>
       </S.StatWrapper>
