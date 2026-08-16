@@ -73,6 +73,10 @@ export default function Upload() {
         ) : (
           <img src={GalleryIcon} width="64" />
         )}
+
+        <S.Description style={{ margin: '20px 0 0 0' }}>
+          터치하여 사진 추가
+        </S.Description>
       </S.UploadBox>
 
       <S.Description>
