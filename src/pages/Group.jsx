@@ -14,7 +14,7 @@ function Group() {
   return (
     <S.GroupContainer>
       <S.GroupHeader>
-        <S.BackButton type="button" onClick={() => navigate(-1)}>
+        <S.BackButton type="button" onClick={() => navigate('/Home')}>
           <img src={back} alt="뒤로가기" />
         </S.BackButton>
       </S.GroupHeader>
