@@ -10,16 +10,32 @@ export default function BottomNav() {
   const location = useLocation();
 
   const navItems = [
-    { path: '/home', icon: <img src={HomeIcon} /> },
-    { path: '/calendar', icon: <img src={CalendarIcon} /> },
-    { path: '/upload', icon: <img src={UploadIcon} /> },
-    { path: '/mypage', icon: <img src={ProfileIcon} /> },
+    {
+      path: '/home',
+      activePaths: ['/home', '/detail', '/notification'],
+      icon: <img src={HomeIcon} alt="홈" />,
+    },
+    {
+      path: '/calendar',
+      activePaths: ['/calendar'],
+      icon: <img src={CalendarIcon} alt="캘린더" />,
+    },
+    {
+      path: '/upload',
+      activePaths: ['/upload'],
+      icon: <img src={UploadIcon} alt="업로드" />,
+    },
+    {
+      path: '/mypage',
+      activePaths: ['/mypage'],
+      icon: <img src={ProfileIcon} alt="마이페이지" />,
+    },
   ];
 
   return (
     <S.NavContainer>
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
+        const isActive = item.activePaths.includes(location.pathname);
 
         return (
           <S.NavItem
@@ -27,8 +43,7 @@ export default function BottomNav() {
             $isActive={isActive}
             onClick={() => navigate(item.path)}
           >
-            {/* SVG 아이콘 컴포넌트가 들어갈 자리 */}
-            <span style={{ fontSize: '10px' }}>{item.icon}</span>
+            {item.icon}
           </S.NavItem>
         );
       })}
