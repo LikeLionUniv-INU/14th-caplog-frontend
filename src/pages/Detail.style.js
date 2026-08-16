@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DetailContainer = styled.div`
   width: 100%;
@@ -187,7 +187,10 @@ export const SummaryBox = styled.div`
   }
 `;
 
-// 크게보기 팝업
+/* =========================
+   사진 전체보기 팝업
+========================= */
+
 export const FullScreenOverlay = styled.div`
   position: absolute;
   inset: 0;
@@ -230,9 +233,8 @@ export const FullScreenImage = styled.img`
   display: block;
 `;
 
-// 수정 팝업
 /* =========================
-   팝업 뒷배경
+   수정 팝업 뒷배경
 ========================= */
 
 export const PopupOverlay = styled.div`
@@ -248,7 +250,6 @@ export const PopupOverlay = styled.div`
   align-items: center;
 `;
 
-
 /* =========================
    수정 팝업
 ========================= */
@@ -258,6 +259,7 @@ export const ModifyPopup = styled.div`
 
   top: 50%;
   left: 50%;
+
   transform: translate(-50%, -50%);
 
   width: calc(100% - 48px);
@@ -283,7 +285,6 @@ export const PopupTitle = styled.h2`
   font-size: 22px;
   font-weight: 700;
 `;
-
 
 /* =========================
    공통 입력 영역
@@ -333,7 +334,6 @@ export const TextArea = styled.textarea`
 
   font-family: inherit;
   font-size: 13px;
-
   line-height: 1.5;
 
   resize: none;
@@ -341,18 +341,17 @@ export const TextArea = styled.textarea`
   outline: none;
 `;
 
-
 /* =========================
    일정
 ========================= */
 
 export const ScheduleRow = styled.div`
-  position: relative;
-
   display: flex;
   align-items: center;
 
   gap: 8px;
+
+  width: 100%;
 `;
 
 export const CheckBox = styled.input`
@@ -377,7 +376,7 @@ export const CheckBox = styled.input`
   }
 
   &:checked::after {
-    content: "✓";
+    content: '✓';
 
     display: flex;
     justify-content: center;
@@ -393,112 +392,28 @@ export const CheckBox = styled.input`
   }
 `;
 
-export const ScheduleInput = styled.input`
-  width: 100%;
-  height: 40px;
+export const DateTimeInput = styled.input`
+  flex: 1;
+  min-width: 0;
+  height: 42px;
 
   box-sizing: border-box;
+  padding: 0 10px;
 
-  padding: 0 12px;
-
-  border: 1px solid #555;
+  border: 1px solid #777;
   border-radius: 6px;
 
-  font-size: 14px;
+  background: white;
+  font-size: 13px;
 
   outline: none;
-
-  cursor: pointer;
 
   &:disabled {
     background: #eeeeee;
     color: #aaaaaa;
-
     cursor: default;
   }
 `;
-
-
-/* =========================
-   일정 달력 팝업
-========================= */
-
-export const SchedulePopup = styled.div`
-  position: absolute;
-
-  top: 48px;
-  right: 0;
-
-  width: 270px;
-
-  box-sizing: border-box;
-
-  padding: 18px;
-
-  background: white;
-
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-  z-index: 200;
-`;
-
-export const SchedulePopupTitle = styled.p`
-  margin: 0 0 8px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  &:not(:first-child) {
-    margin-top: 18px;
-  }
-`;
-
-export const DateInput = styled.input`
-  width: 100%;
-  height: 42px;
-
-  box-sizing: border-box;
-
-  padding: 0 10px;
-
-  border: 1px solid #777;
-  border-radius: 6px;
-
-  font-size: 14px;
-`;
-
-export const TimeInput = styled.input`
-  width: 100%;
-  height: 42px;
-
-  box-sizing: border-box;
-
-  padding: 0 10px;
-
-  border: 1px solid #777;
-  border-radius: 6px;
-
-  font-size: 14px;
-`;
-
-export const ScheduleCloseButton = styled.button`
-  width: 100%;
-  height: 38px;
-
-  margin-top: 18px;
-
-  border: none;
-  border-radius: 6px;
-
-  background: #444;
-  color: white;
-
-  cursor: pointer;
-`;
-
 
 /* =========================
    저장 위치
@@ -523,6 +438,7 @@ export const SelectRow = styled.div`
 
 export const SelectBox = styled.div`
   flex: 1;
+
   min-width: 0;
 `;
 
@@ -542,9 +458,8 @@ export const Select = styled.select`
   font-size: 13px;
 `;
 
-
 /* =========================
-   하단
+   수정 팝업 하단
 ========================= */
 
 export const Line = styled.hr`
@@ -562,6 +477,7 @@ export const ButtonRow = styled.div`
 
 export const CancelButton = styled.button`
   flex: 1;
+
   height: 44px;
 
   border: 1px solid #888;
@@ -576,6 +492,7 @@ export const CancelButton = styled.button`
 
 export const ModifyButton = styled.button`
   flex: 1;
+
   height: 44px;
 
   border: none;
@@ -589,10 +506,13 @@ export const ModifyButton = styled.button`
   cursor: pointer;
 `;
 
+/* =========================
+   삭제 팝업
+========================= */
 
-// 삭제 팝업
 export const DeletePopupOverlay = styled.div`
   position: absolute;
+
   top: 0;
   left: 0;
 
@@ -615,6 +535,7 @@ export const DeletePopup = styled.div`
   box-sizing: border-box;
 
   background-color: #fff0dd;
+
   border-radius: 20px;
 
   padding: 24px 20px 18px;
@@ -628,6 +549,7 @@ export const DeletePopupTitle = styled.h2`
   margin: 0;
 
   color: #7c2d12;
+
   font-size: 16px;
   font-weight: 600;
 `;
@@ -638,9 +560,11 @@ export const PopupDescription = styled.p`
   width: 240px;
 
   color: #7c2d12;
+
   font-size: 11px;
   font-weight: 400;
   line-height: 1.6;
+
   text-align: center;
 `;
 
@@ -648,6 +572,7 @@ export const PopupButtonBox = styled.div`
   margin-top: auto;
 
   display: flex;
+
   gap: 12px;
 `;
 
@@ -661,6 +586,7 @@ export const DeleteCancelButton = styled.button`
   background-color: #ffffff;
 
   color: #7c2d12;
+
   font-size: 11px;
 
   cursor: pointer;
@@ -676,6 +602,7 @@ export const DeleteButton = styled.button`
   background-color: #fdba74;
 
   color: #7c2d12;
+
   font-size: 11px;
 
   cursor: pointer;

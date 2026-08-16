@@ -14,41 +14,15 @@ function Detail() {
   // 일정 사용 여부
   const [scheduleEnabled, setScheduleEnabled] = useState(true);
 
-  // 달력 팝업 열림 여부
-  const [scheduleOpen, setScheduleOpen] = useState(false);
-
-  // 일정 입력창
-  const [scheduleText, setScheduleText] = useState('2025.04.22(수) 15:00');
-
-  // 달력 / 시간
-  const [date, setDate] = useState('2025-04-22');
-  const [time, setTime] = useState('15:00');
-
-  const handleDateChange = (e) => {
-    const newDate = e.target.value;
-
-    setDate(newDate);
-
-    const formattedDate = newDate.replaceAll('-', '.');
-
-    setScheduleText(`${formattedDate} ${time}`);
-  };
-
-  const handleTimeChange = (e) => {
-    const newTime = e.target.value;
-
-    setTime(newTime);
-
-    const formattedDate = date.replaceAll('-', '.');
-
-    setScheduleText(`${formattedDate} ${newTime}`);
-  };
+  // 날짜 / 시간
+  const [schedule, setSchedule] = useState('2025-04-22T15:00');
 
   return (
     <S.DetailContainer>
+      {/* 사진 영역 */}
       <S.ImageSection>
         <S.Header>
-          <S.BackButton onClick={() => navigate('/group')}>
+          <S.BackButton type="button" onClick={() => navigate('/group')}>
             <img src={back} alt="뒤로가기" />
           </S.BackButton>
         </S.Header>
@@ -58,6 +32,7 @@ function Detail() {
         </S.ImageButton>
       </S.ImageSection>
 
+      {/* 정보 영역 */}
       <S.InfoSection>
         <S.TitleRow>
           <S.Title>데이터수학통계 중간고사 날짜</S.Title>
@@ -93,10 +68,11 @@ function Detail() {
         </S.SummaryBox>
       </S.InfoSection>
 
+      {/* 사진 전체보기 팝업 */}
       {openPopup === 'fullScreen' && (
         <S.FullScreenOverlay>
           <S.FullScreenHeader>
-            <S.BackButton onClick={() => setOpenPopup(null)}>
+            <S.BackButton type="button" onClick={() => setOpenPopup(null)}>
               <img src={back} alt="뒤로가기" />
             </S.BackButton>
           </S.FullScreenHeader>
@@ -107,6 +83,7 @@ function Detail() {
         </S.FullScreenOverlay>
       )}
 
+      {/* 수정 팝업 */}
       {openPopup === 'modify' && (
         <S.PopupOverlay>
           <S.ModifyPopup>
@@ -127,53 +104,15 @@ function Detail() {
                 <S.CheckBox
                   type="checkbox"
                   checked={scheduleEnabled}
-                  onChange={(e) => {
-                    setScheduleEnabled(e.target.checked);
-
-                    if (!e.target.checked) {
-                      setScheduleOpen(false);
-                    }
-                  }}
+                  onChange={(e) => setScheduleEnabled(e.target.checked)}
                 />
 
-                <S.ScheduleInput
-                  value={scheduleText}
+                <S.DateTimeInput
+                  type="datetime-local"
+                  value={schedule}
                   disabled={!scheduleEnabled}
-                  onChange={(e) => setScheduleText(e.target.value)}
-                  onClick={() => {
-                    if (scheduleEnabled) {
-                      setScheduleOpen(true);
-                    }
-                  }}
+                  onChange={(e) => setSchedule(e.target.value)}
                 />
-
-                {/* 일정 선택창 */}
-                {scheduleOpen && scheduleEnabled && (
-                  <S.SchedulePopup>
-                    <S.SchedulePopupTitle>날짜 선택</S.SchedulePopupTitle>
-
-                    <S.DateInput
-                      type="date"
-                      value={date}
-                      onChange={handleDateChange}
-                    />
-
-                    <S.SchedulePopupTitle>시간</S.SchedulePopupTitle>
-
-                    <S.TimeInput
-                      type="time"
-                      value={time}
-                      onChange={handleTimeChange}
-                    />
-
-                    <S.ScheduleCloseButton
-                      type="button"
-                      onClick={() => setScheduleOpen(false)}
-                    >
-                      확인
-                    </S.ScheduleCloseButton>
-                  </S.SchedulePopup>
-                )}
               </S.ScheduleRow>
             </S.FormGroup>
 
@@ -196,7 +135,7 @@ function Detail() {
 
               <S.TextArea
                 defaultValue={`데이터수학통계 중간고사는 4월 22일 오후 3시에 5호관 301호에서 진행됩니다.
-                              계산기와 종이 자료를 사용할 수 있으며, 시험에 필요한 분포표는 제공됩니다.`}
+계산기와 종이 자료를 사용할 수 있으며, 시험에 필요한 분포표는 제공됩니다.`}
               />
             </S.FormGroup>
 
@@ -208,7 +147,7 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>카테고리</S.Label>
 
-                  <S.Select>
+                  <S.Select defaultValue="공부">
                     <option>공부</option>
                     <option>학교</option>
                     <option>일상</option>
@@ -219,7 +158,7 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>주제</S.Label>
 
-                  <S.Select>
+                  <S.Select defaultValue="데이터수학통계 과목">
                     <option>주제 없음</option>
                     <option>데이터수학통계 과목</option>
                     <option>주제2</option>
@@ -245,6 +184,7 @@ function Detail() {
         </S.PopupOverlay>
       )}
 
+      {/* 삭제 팝업 */}
       {openPopup === 'delete' && (
         <S.DeletePopupOverlay>
           <S.DeletePopup>
