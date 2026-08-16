@@ -1,16 +1,28 @@
-import styled from 'styled-components';
+import * as S from '../pages/Mypage.styles';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '../api/user';
-import avatarImg from '../assets/images/Avatar.png';
+import avatarImg1 from '../assets/images/Avatar_1.png';
 
 export default function Mypage() {
-  const [userName, setUserName] = useState('게스트');
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState('LikeLionINU');
+  const menuItems = [
+    { label: '프로필 설정', path: '/mypage/edit' },
+    { label: '알림 설정', path: '/mypage/notifications' },
+  ];
+  const serviceItems = [
+    { label: '서비스 소개', path: '/' },
+    { label: 'CapLog 사진 권한 보기', path: '/check-photo-auth' },
+    { label: 'CapLog 알림 권한 보기', path: '/check-noti-auth' },
+    { label: '로그아웃', path: '/login' },
+  ];
 
   /** 유저 정보 조회 API 함수*/
   const fetchUserInfo = async () => {
     try {
       const data = await getUserInfo();
-      const name = data.result?.userName || '게스트';
+      const name = data.result?.userName || 'LikeLionINU';
       setUserName(name);
     } catch (error) {
       console.error('유저 정보 조회 오류:', error);
@@ -22,59 +34,58 @@ export default function Mypage() {
   }, []);
 
   return (
-    <Container>
-      <Header>마이페이지</Header>
-      <InfoCard>
-        <Avatar src={avatarImg} />
-        <ProfileText>{userName} 님 반갑습니다.</ProfileText>
-      </InfoCard>
-    </Container>
+    <S.Container>
+      <S.Header>마이페이지</S.Header>
+      <S.InfoCard>
+        <S.Avatar src={avatarImg1} />
+        <S.ProfileText>{userName}님 반갑습니다.</S.ProfileText>
+      </S.InfoCard>
+
+      <S.Divider />
+
+      {/* 통계 */}
+      <S.StatWrapper>
+        <S.Title>나의 CapLog</S.Title>
+
+        <S.CardWrapper>
+          <S.StatCard>
+            <S.CardLabel>저장한 정보</S.CardLabel>
+            <S.Divider style={{ margin: '10px' }} />
+            <S.CardValue>1개</S.CardValue>
+          </S.StatCard>
+
+          <S.StatCard>
+            <S.CardLabel>이번 달 등록 일정</S.CardLabel>
+            <S.Divider style={{ margin: '10px' }} />
+            <S.CardValue>1개</S.CardValue>
+          </S.StatCard>
+        </S.CardWrapper>
+      </S.StatWrapper>
+
+      {/* 메뉴 */}
+      <S.MenuContainer>
+        <S.MenuTitle>설정</S.MenuTitle>
+        <S.MenuBox>
+          {menuItems.map((item, index) => (
+            <S.MenuItem key={index} onClick={() => navigate(item.path)}>
+              <S.MenuLabel>{item.label}</S.MenuLabel>
+              <S.MenuArrow>{'>'}</S.MenuArrow>
+            </S.MenuItem>
+          ))}
+        </S.MenuBox>
+      </S.MenuContainer>
+
+      <S.MenuContainer>
+        <S.MenuTitle>서비스</S.MenuTitle>
+        <S.MenuBox>
+          {serviceItems.map((item, index) => (
+            <S.MenuItem key={index} onClick={() => navigate(item.path)}>
+              <S.MenuLabel>{item.label}</S.MenuLabel>
+              <S.MenuArrow>{'>'}</S.MenuArrow>
+            </S.MenuItem>
+          ))}
+        </S.MenuBox>
+      </S.MenuContainer>
+    </S.Container>
   );
 }
-
-// ======================디자인==========================
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100dvh;
-  background-color: #ffffff;
-  box-sizing: border-box;
-`;
-
-const Header = styled.div`
-  width: 90%;
-  box-sizing: border-box;
-  padding: 24px;
-  margin-top: 24px;
-  color: #7c2d12;
-  font-size: 16px;
-  font-weight: 800;
-  text-align: left;
-`;
-
-const InfoCard = styled.div`
-  display: flex;
-  align-items: center;
-  width: 90%;
-  height: 110px;
-  box-sizing: border-box;
-  background-color: #ffd1a1;
-  border-radius: 16px;
-  padding: 24px;
-`;
-
-const Avatar = styled.img`
-  width: 18%;
-  border-radius: 50%;
-  border: 1px solid #fff0dd;
-  object-fit: cover;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-`;
-
-const ProfileText = styled.div`
-  margin-left: 16px;
-  color: #7c2d12;
-  font-size: 14px;
-  font-weight: 700;
-`;
