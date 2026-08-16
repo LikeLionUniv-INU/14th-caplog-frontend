@@ -60,7 +60,7 @@ export default function Login() {
 
   return (
     <S.Container>
-      <h1 style={{ color: '#7C2D12' }}>로그인</h1>
+      <h2 style={{ color: '#7C2D12' }}>로그인</h2>
       <S.InputWrapper>
         <S.Label>닉네임</S.Label>
         <S.Input

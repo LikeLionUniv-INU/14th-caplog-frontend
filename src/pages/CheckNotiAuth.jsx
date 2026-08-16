@@ -23,7 +23,7 @@ export default function CheckNotiAuth() {
 
   return (
     <S.Container>
-      <h2 style={{ color: '#7C2D12' }}>알림 권한 안내</h2>
+      <h2 style={{ color: '#7C2D12', margin: '0' }}>알림 권한 안내</h2>
 
       <S.ContentWrapper>
         <S.SectionTitle>알림 접근 권한</S.SectionTitle>

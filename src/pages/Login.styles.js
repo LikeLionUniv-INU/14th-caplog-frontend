@@ -58,10 +58,10 @@ export const ErrorMessage = styled.div`
 `;
 
 export const LoginButton = styled.button`
-  color: #b55116;
+  color: #fff0dd;
   font-weight: 700;
   font-size: 14px;
-  background-color: #ffe3bf;
+  background-color: #b55116;
   width: 80%;
   height: 40px;
   border: none;
@@ -88,7 +88,7 @@ export const SignupText = styled.span`
   color: #b55116;
   font-weight: 700;
   cursor: pointer;
-  margin-left: 6px;
+  margin-left: 10px;
 
   &:hover {
     text-decoration: underline;
