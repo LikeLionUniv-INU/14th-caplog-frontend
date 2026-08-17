@@ -16,7 +16,7 @@ function Home() {
       <S.Header>
         <S.Logo src={logo} alt="Caplog" />
 
-        <S.AlarmButton>
+        <S.AlarmButton onClick={() => navigate('/notification')}>
           <img src={alarm} alt="알람" />
         </S.AlarmButton>
       </S.Header>
