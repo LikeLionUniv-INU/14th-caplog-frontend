@@ -3,6 +3,7 @@ import { Sheet } from 'react-modal-sheet';
 import * as S from './BottomSheet.styles';
 import { useNavigate } from 'react-router-dom';
 import { getCategoryList, getGroupList, confirmUpload } from '../../api/upload';
+import AiLogo from '../../assets/icons/AiLogo.svg';
 
 export default function BottomSheet({ isOpen, onClose, aiResult }) {
   const navigate = useNavigate();
@@ -132,7 +133,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
       <Sheet
         isOpen={isOpen}
         onClose={handleCancelClick}
-        snapPoints={[0, 0.7, 1]}
+        snapPoints={[0, 0.8, 1]}
         initialSnap={1}
       >
         <Sheet.Container>
@@ -141,14 +142,21 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
             <S.SheetContainer>
               <S.HeaderRow>
                 <S.Title>등록하기</S.Title>
-                <S.SubTitle>AI가 분석을 완료했어요! 💡</S.SubTitle>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <img src={AiLogo} width={'5%'} />
+                  <S.SubTitle>CapLog AI가 분석했어요!</S.SubTitle>
+                </div>
               </S.HeaderRow>
 
               <S.WarningBox>
-                <span className="icon">❗</span>
-                AI가 분석한 내용에 오류가 있을 수 있어요.
-                <br />
-                저장 전 확인해주세요.
+                AI가 분석한 내용에 오류가 있을 수 있어요. 저장 전 확인해주세요.
               </S.WarningBox>
 
               <S.FormGroup>
@@ -169,8 +177,15 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                         ? `일정 ${index + 1}: ${event.title}`
                         : '일정'}
                     </S.Label>
-
                     <S.ScheduleRow>
+                      <S.Input
+                        type="datetime-local"
+                        value={event.dateTime || ''}
+                        onChange={(e) =>
+                          handleEventChange(index, 'dateTime', e.target.value)
+                        }
+                        disabled={!event.isChecked}
+                      />
                       <S.CheckboxWrapper
                         $isChecked={event.isChecked}
                         onClick={() =>
@@ -183,15 +198,6 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                       >
                         {event.isChecked && '✓'}
                       </S.CheckboxWrapper>
-
-                      <S.Input
-                        type="datetime-local"
-                        value={event.dateTime || ''}
-                        onChange={(e) =>
-                          handleEventChange(index, 'dateTime', e.target.value)
-                        }
-                        disabled={!event.isChecked}
-                      />
                     </S.ScheduleRow>
                   </S.FormGroup>
 
@@ -227,6 +233,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                       value={scheduleData.category}
                       onChange={handleScheduleChange}
                     >
+                      <option value="">카테고리 선택</option>
                       {categories.map((cat) => (
                         <option key={cat} value={cat}>
                           {cat}
@@ -242,7 +249,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                       value={scheduleData.topic}
                       onChange={handleScheduleChange}
                     >
-                      <option value="">그룹 선택 안함</option>
+                      <option value="">주제 선택</option>
                       {groups.map((grp) => (
                         <option key={grp.groupId} value={grp.groupId}>
                           {grp.groupName}
@@ -272,10 +279,10 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
             <S.ModalTitle>등록을 취소하시겠습니까?</S.ModalTitle>
             <S.ModalDesc>작성 중인 정보가 저장되지 않습니다.</S.ModalDesc>
             <S.ModalButtonGroup>
-              <S.ModalNoButton onClick={handleConfirmNo}>
-                아니요
-              </S.ModalNoButton>
-              <S.ModalYesButton onClick={handleConfirmYes}>예</S.ModalYesButton>
+              <S.ModalNoButton onClick={handleConfirmNo}>취소</S.ModalNoButton>
+              <S.ModalYesButton onClick={handleConfirmYes}>
+                삭제
+              </S.ModalYesButton>
             </S.ModalButtonGroup>
           </S.ModalBox>
         </S.ModalOverlay>

@@ -30,7 +30,7 @@ export const UploadBox = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 24px;
+  margin: 3vh 0;
   overflow: hidden;
 
   transition: transform 0.1s ease-in-out;
