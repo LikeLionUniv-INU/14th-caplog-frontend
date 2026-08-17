@@ -57,7 +57,7 @@ export default function Signup() {
 
   return (
     <S.Container>
-      <h1 style={{ color: '#7C2D12', marginBottom: '0' }}>회원가입</h1>
+      <h2 style={{ color: '#7C2D12', marginBottom: '0' }}>회원가입</h2>
       <S.InputWrapper>
         <S.Label>닉네임</S.Label>
         <S.Input

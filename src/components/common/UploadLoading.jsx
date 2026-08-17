@@ -48,7 +48,7 @@ const Overlay = styled.div`
 const LoadingCard = styled.div`
   background-color: #fff0dd;
   width: 320px;
-  padding: 40px 24px;
+  padding: 30px 24px;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
