@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+// 스타일
 const FilterContainer = styled.div`
   display: flex;
   gap: 7px;
@@ -22,51 +23,29 @@ const FilterButton = styled.button`
 
   cursor: pointer;
 `;
+// 스타일 끝
 
-function PreviewFilter() {
-  const [selectedFilter, setSelectedFilter] = useState('전체');
+const filters = [
+  { label: '전체', value: 'TOTAL' },
+  { label: '공부', value: 'STUDY' },
+  { label: '학교', value: 'SCHOOL' },
+  { label: '일상', value: 'DAILY' },
+  { label: '기타', value: 'ETC' },
+];
 
+function PreviewFilter({ selectedFilter, onFilterChange }) {
   return (
     <FilterContainer>
-      <FilterButton
-        type="button"
-        $active={selectedFilter === '전체'}
-        onClick={() => setSelectedFilter('전체')}
-      >
-        전체
-      </FilterButton>
-
-      <FilterButton
-        type="button"
-        $active={selectedFilter === '공부'}
-        onClick={() => setSelectedFilter('공부')}
-      >
-        공부
-      </FilterButton>
-
-      <FilterButton
-        type="button"
-        $active={selectedFilter === '학교'}
-        onClick={() => setSelectedFilter('학교')}
-      >
-        학교
-      </FilterButton>
-
-      <FilterButton
-        type="button"
-        $active={selectedFilter === '일상'}
-        onClick={() => setSelectedFilter('일상')}
-      >
-        일상
-      </FilterButton>
-
-      <FilterButton
-        type="button"
-        $active={selectedFilter === '기타'}
-        onClick={() => setSelectedFilter('기타')}
-      >
-        기타
-      </FilterButton>
+      {filters.map((filter) => (
+        <FilterButton
+          key={filter.value}
+          type="button"
+          $active={selectedFilter === filter.value}
+          onClick={() => onFilterChange(filter.value)}
+        >
+          {filter.label}
+        </FilterButton>
+      ))}
     </FilterContainer>
   );
 }

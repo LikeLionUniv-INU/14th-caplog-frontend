@@ -31,10 +31,10 @@ function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Archive" element={<Archive />} />
-          <Route path="/Group" element={<Group />} />
-          <Route path="/Detail" element={<Detail />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/group/:id" element={<Group />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/mypage/edit" element={<ProfileEdit />} />
           <Route path="/mypage/notifications" element={<NotiSetting />} />

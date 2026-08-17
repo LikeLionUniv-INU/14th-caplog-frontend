@@ -22,7 +22,7 @@ function Detail() {
       {/* 사진 영역 */}
       <S.ImageSection>
         <S.Header>
-          <S.BackButton type="button" onClick={() => navigate('/group')}>
+          <S.BackButton type="button" onClick={() => navigate('/group/${id}')}>
             <img src={back} alt="뒤로가기" />
           </S.BackButton>
         </S.Header>

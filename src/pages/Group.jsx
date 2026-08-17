@@ -39,7 +39,7 @@ function Group() {
       </S.GroupInfoBox>
 
       <S.CardList>
-        <S.Card onClick={() => navigate('/detail')}>
+        <S.Card onClick={() => navigate('/detail/${id}')}>
           <S.CardTitle>데이터수학통계 중간고사 날짜</S.CardTitle>
           <S.CardImage src={testday} alt="사진" />
         </S.Card>

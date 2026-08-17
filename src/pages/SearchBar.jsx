@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import picsearch from '../assets/picsearch.svg';
 
+// 스타일
 const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
@@ -52,6 +53,7 @@ const SearchButton = styled.button`
     height: 15px;
   }
 `;
+// 스타일 끝
 
 function SearchBar({ onClick, value, onChange, autoFocus }) {
   return (

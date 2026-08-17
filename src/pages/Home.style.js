@@ -25,6 +25,8 @@ export const Logo = styled.img`
 `;
 
 export const AlarmButton = styled.button`
+  position: relative;
+
   border: none;
   background: none;
   padding: 0;
@@ -32,6 +34,30 @@ export const AlarmButton = styled.button`
   color: #b55116;
 
   cursor: pointer;
+`;
+
+export const AlarmBadge = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -7px;
+
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  border-radius: 999px;
+  background-color: #f03232;
+
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
 `;
 
 export const MemoryBox = styled.section`
@@ -56,6 +82,9 @@ export const MemoryList = styled.ul`
   flex-direction: column;
   gap: 10px;
 
+  max-height: 188px;
+  overflow-y: auto;
+
   margin: 0;
   padding: 0;
 
@@ -76,6 +105,8 @@ export const MemoryItem = styled.li`
 
   border-radius: 14px;
   background-color: #fff7ed;
+
+  cursor: pointer;
 
   font-size: 13px;
   font-weight: 600;

@@ -1,9 +1,9 @@
 import PreviewBox from './PreviewBox';
 import PreviewFilter from './PreviewFilter';
 import SearchBar from './SearchBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { previewData } from './mockPreview';
+import { getSchedules } from '../api/schedule';
 import * as S from './Archive.style';
 import back from '../assets/back.svg';
 
@@ -11,10 +11,26 @@ function Archive() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('TOTAL');
+  const [schedules, setSchedules] = useState([]);
 
-  const filteredData = previewData.filter((preview) =>
-    preview.title.toLowerCase().includes(search.toLowerCase()),
-  );
+  useEffect(() => {
+    const fetchSchedules = async () => {
+      try {
+        const data = await getSchedules({
+          page: 0,
+          category: selectedCategory,
+          searchWords: search,
+        });
+
+        setSchedules(data.result.list);
+      } catch (error) {
+        console.error('저장된 정보 조회 실패:', error);
+      }
+    };
+
+    fetchSchedules();
+  }, [selectedCategory, search]);
 
   return (
     <S.ArchiveContainer>
@@ -35,18 +51,25 @@ function Archive() {
       </S.SearchArea>
 
       <S.FilterArea>
-        <PreviewFilter />
+        <PreviewFilter
+          selectedFilter={selectedCategory}
+          onFilterChange={setSelectedCategory}
+        />
       </S.FilterArea>
 
-      {filteredData.length === 0 ? (
+      {schedules.length === 0 ? (
         <p>검색 결과가 없습니다.</p>
       ) : (
         <S.PreviewList>
-          {filteredData.map((preview) => (
+          {schedules.map((item) => (
             <PreviewBox
-              key={preview.id}
-              image={preview.image}
-              title={preview.title}
+              key={item.id}
+              id={item.id}
+              image={item.pictures?.[0]?.captureImg}
+              title={item.schedule.title}
+              isGroup={item.isGroup}
+              isNew={item.isNew}
+              elementCount={item.elementCount}
             />
           ))}
         </S.PreviewList>
