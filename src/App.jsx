@@ -11,6 +11,8 @@ import Signup from './pages/Signup';
 import CheckPhotoAuth from './pages/CheckPhotoAuth';
 import CheckNotiAuth from './pages/CheckNotiAuth';
 import Mypage from './pages/Mypage';
+import ProfileEdit from './pages/ProfileEdit';
+import NotiSetting from './pages/NotiSetting';
 import Notification from './pages/Notification';
 import Upload from './pages/Upload';
 
@@ -34,6 +36,8 @@ function App() {
           <Route path="/Group" element={<Group />} />
           <Route path="/Detail" element={<Detail />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/mypage/edit" element={<ProfileEdit />} />
+          <Route path="/mypage/notifications" element={<NotiSetting />} />
         </Route>
       </Routes>
     </BrowserRouter>

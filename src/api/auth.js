@@ -2,9 +2,9 @@
 import api from './axios';
 
 // 로그인
-export const login = async (username, password) => {
+export const login = async (userName, password) => {
   const response = await api.post('/auth/login', {
-    username,
+    userName,
     password,
   });
 
@@ -12,9 +12,9 @@ export const login = async (username, password) => {
 };
 
 // 회원가입
-export const signup = async (username, password) => {
+export const signup = async (userName, password) => {
   const response = await api.post('/auth/signup', {
-    username,
+    userName,
     password,
   });
 

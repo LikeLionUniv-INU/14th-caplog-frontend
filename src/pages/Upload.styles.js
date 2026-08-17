@@ -22,10 +22,11 @@ export const Header = styled.div`
 
 export const UploadBox = styled.div`
   width: 90%;
-  aspect-ratio: 4 / 3; /* 이미지 비율에 맞는 직사각형 */
+  aspect-ratio: 4 / 3;
   background-color: #fff0dd;
   border-radius: 16px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -40,7 +41,6 @@ export const UploadBox = styled.div`
 
 export const PreviewImg = styled.img`
   width: 100%;
-  height: 100%;
   object-fit: cover;
 `;
 

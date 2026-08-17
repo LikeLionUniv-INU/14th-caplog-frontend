@@ -27,7 +27,7 @@ export default function BottomNav() {
     },
     {
       path: '/mypage',
-      activePaths: ['/mypage'],
+      activePaths: ['/mypage', '/mypage/edit', '/mypage/notifications'],
       icon: <img src={ProfileIcon} alt="마이페이지" />,
     },
   ];

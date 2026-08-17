@@ -14,6 +14,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 85%;
+  margin: 5vh;
 `;
 
 export const SectionTitle = styled.h2`
@@ -38,10 +39,10 @@ export const InfoCard = styled.div`
 `;
 
 export const StartButton = styled.button`
-  color: #b55116;
+  color: #fff0dd;
   font-size: 14px;
   font-weight: 700;
-  background-color: #ffe3bf;
+  background-color: #b55116;
   width: 85%;
   height: 40px;
   border: none;
