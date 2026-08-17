@@ -256,8 +256,8 @@ export const ModalNoButton = styled.button`
 export const ModalYesButton = styled.button`
   flex: 1;
   padding: 14px;
-  background-color: #fdba74;
-  color: #7c2d12;
+  background-color: #b55116;
+  color: #fff0dd;
   border: none;
   border-radius: 100px;
   font-size: 15px;

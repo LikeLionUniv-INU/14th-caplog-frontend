@@ -59,17 +59,17 @@ export const SectionTitle = styled.h3`
   color: #7c2d12;
   font-size: 14px;
   font-weight: 700;
-  margin: 16px 0 8px 0;
+  margin: 16px 0 8px 12px;
 `;
 
 export const SectionDesc = styled.p`
-  margin: 0 0 16px 0;
+  margin: 0 0 16px 12px;
   font-size: 12px;
-  color: #6b7280;
+  color: #b55116;
 `;
 
 export const AvatarBox = styled.div`
-  background-color: #ffd1a1;
+  background-color: #fff0dd;
   border-radius: 12px;
   padding: 24px;
   display: flex;
@@ -110,27 +110,12 @@ export const CheckBadge = styled.div`
 `;
 
 // ======= 닉네임 변경 =======
-export const NicknameBox = styled.div`
-  background-color: #ffd1a1;
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const InputLabel = styled.label`
-  font-size: 13px;
-  font-weight: 600;
-  color: #7c2d12;
-  margin-bottom: 8px;
-`;
-
 export const InputWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 12px;
+  background-color: #fff0dd;
+  border-radius: 50px;
+  padding: 10px 14px;
 `;
 
 export const Input = styled.input`
@@ -147,8 +132,8 @@ export const Input = styled.input`
 `;
 
 export const ClearButton = styled.button`
-  background-color: #7c2d12;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #fdba74;
   border: none;
   border-radius: 50%;
   width: 18px;
@@ -159,6 +144,7 @@ export const ClearButton = styled.button`
   align-items: center;
   flex-shrink: 0;
   font-size: 10px;
+  font-weight: 900;
   cursor: pointer;
   padding: 0;
 `;
@@ -167,6 +153,7 @@ export const CharCount = styled.div`
   text-align: right;
   font-size: 11px;
   color: #7c2d12;
+  margin-right: 12px;
   margin-top: 8px;
 `;
 
@@ -175,7 +162,7 @@ export const SaveButton = styled.button`
   width: 85%;
   height: 40px;
   color: #b55116;
-  margin-top: 120px;
+  margin-top: 100px;
   background-color: ${({ disabled }) => (disabled ? '#E5E7EB' : '#ffe3bf')};
   color: ${({ disabled }) => (disabled ? '#9CA3AF' : '#b55116')};
   font-size: 14px;

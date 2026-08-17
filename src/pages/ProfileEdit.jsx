@@ -115,23 +115,19 @@ export default function ProfileEdit() {
       </S.Section>
 
       <S.Section>
-        <S.SectionTitle>닉네임</S.SectionTitle>
+        <S.SectionTitle>닉네임 변경</S.SectionTitle>
         <S.SectionDesc>닉네임은 언제든지 변경할 수 있어요.</S.SectionDesc>
-
-        <S.NicknameBox>
-          <S.InputLabel>닉네임</S.InputLabel>
-          <S.InputWrapper>
-            <S.Input
-              value={nickname}
-              onChange={handleNicknameChange}
-              placeholder="닉네임을 입력하세요"
-            />
-            {nickname.length > 0 && (
-              <S.ClearButton onClick={handleClearNickname}>×</S.ClearButton>
-            )}
-          </S.InputWrapper>
-          <S.CharCount>{nickname.length} / 20</S.CharCount>
-        </S.NicknameBox>
+        <S.InputWrapper>
+          <S.Input
+            value={nickname}
+            onChange={handleNicknameChange}
+            placeholder="닉네임을 입력하세요"
+          />
+          {nickname.length > 0 && (
+            <S.ClearButton onClick={handleClearNickname}>×</S.ClearButton>
+          )}
+        </S.InputWrapper>
+        <S.CharCount>{nickname.length} / 20</S.CharCount>
       </S.Section>
 
       <S.SaveButton onClick={handleSave}>저장하기</S.SaveButton>
