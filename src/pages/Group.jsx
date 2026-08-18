@@ -2,14 +2,46 @@ import back from '../assets/back.svg';
 import modifyicon from '../assets/modify.svg';
 import deleteicon from '../assets/delete.svg';
 import * as S from './Group.style';
-import testday from '../assets/testday.png';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getGroupDetail, deleteGroup } from '../api/groupApi';
 
 function Group() {
   const navigate = useNavigate();
+  const { groupId } = useParams();
 
   const [openPopup, setOpenPopup] = useState(null);
+  const [groupData, setGroupData] = useState(null);
+
+  useEffect(() => {
+    const fetchGroupDetail = async () => {
+      const result = await getGroupDetail(groupId, 0);
+      setGroupData(result);
+    };
+
+    fetchGroupDetail();
+  }, [groupId]);
+
+  // 그룹 삭제 버튼을 눌렀을 때 실행되는 함수
+  const handleDeleteGroup = async () => {
+    try {
+      const result = await deleteGroup(groupId);
+
+      // 삭제 API 요청이 성공한 경우
+      if (result.isSuccess) {
+        setOpenPopup(null);
+
+        navigate('/Home');
+      }
+    } catch (error) {
+      // 서버 오류나 네트워크 오류가 발생한 경우 확인용
+      console.error('그룹 삭제 실패:', error);
+    }
+  };
+
+  if (!groupData) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <S.GroupContainer>
@@ -21,7 +53,7 @@ function Group() {
 
       <S.GroupInfoBox>
         <S.InfoTop>
-          <S.Category>공부</S.Category>
+          <S.Category>{groupData.result.group.groupCategory}</S.Category>
 
           <S.ActionButtons>
             <S.IconButton type="button" onClick={() => setOpenPopup('modify')}>
@@ -34,25 +66,24 @@ function Group() {
           </S.ActionButtons>
         </S.InfoTop>
 
-        <S.GroupTitle>데이터수학통계 과목</S.GroupTitle>
-        <S.GroupCount>3개의 정보가 저장됨</S.GroupCount>
+        <S.GroupTitle>{groupData.result.group.groupName}</S.GroupTitle>
+        <S.GroupCount>
+          {groupData.result.scheduleCount}개의 정보가 저장됨
+        </S.GroupCount>
       </S.GroupInfoBox>
 
       <S.CardList>
-        <S.Card onClick={() => navigate('/detail/${id}')}>
-          <S.CardTitle>데이터수학통계 중간고사 날짜</S.CardTitle>
-          <S.CardImage src={testday} alt="사진" />
-        </S.Card>
+        {groupData.result.schedules.map((schedule) => (
+          <S.Card
+            key={schedule.scheduleId}
+            onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
+          >
+            {schedule.isNew && <S.NewBadge>NEW</S.NewBadge>}
 
-        <S.Card>
-          <S.CardTitle>데이터수학통계 강의 휴강</S.CardTitle>
-          <S.CardImage alt="사진" />
-        </S.Card>
-
-        <S.Card>
-          <S.CardTitle>통계학 기말고사 문제 풀이</S.CardTitle>
-          <S.CardImage alt="사진" />
-        </S.Card>
+            <S.CardTitle>{schedule.title}</S.CardTitle>
+            <S.CardImage src={schedule.imgUrl} alt="사진" />
+          </S.Card>
+        ))}
       </S.CardList>
 
       {openPopup === 'modify' && (
@@ -109,9 +140,7 @@ function Group() {
                 취소
               </S.CancelButton>
 
-              <S.DeleteButton onClick={() => setOpenPopup(null)}>
-                삭제
-              </S.DeleteButton>
+              <S.DeleteButton onClick={handleDeleteGroup}>삭제</S.DeleteButton>
             </S.DeleteButtonBox>
           </S.DeletePopup>
         </S.DeleteOverlay>

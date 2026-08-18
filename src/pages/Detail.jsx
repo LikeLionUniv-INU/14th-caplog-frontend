@@ -2,41 +2,104 @@ import * as S from './Detail.style';
 import back from '../assets/back.svg';
 import modifyicon from '../assets/modify.svg';
 import deleteicon from '../assets/delete.svg';
-import testday from '../assets/testday.png';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getScheduleDetail, deleteSchedule } from '../api/scheduleDetailApi';
 
 function Detail() {
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   const [openPopup, setOpenPopup] = useState(null);
+
+  const [detail, setDetail] = useState(null);
 
   // 일정 사용 여부
   const [scheduleEnabled, setScheduleEnabled] = useState(true);
 
   // 날짜 / 시간
-  const [schedule, setSchedule] = useState('2025-04-22T15:00');
+  const [schedule, setSchedule] = useState('');
+
+  useEffect(() => {
+    const fetchDetail = async () => {
+      try {
+        const data = await getScheduleDetail(id);
+
+        setDetail(data.result);
+
+        setSchedule(data.result.events[0].dateTime);
+
+        setScheduleEnabled(data.result.events[0].hasDate);
+      } catch (error) {
+        console.error('상세 정보 조회 실패:', error);
+      }
+    };
+
+    fetchDetail();
+  }, [id]);
+
+  const event = detail?.events?.[0];
+
+  if (!detail || !event) {
+    return null;
+  }
+
+  // 디데이 계산
+  const getDday = (dateTime) => {
+    if (!dateTime) return null;
+
+    const today = new Date();
+    const targetDate = new Date(dateTime);
+
+    today.setHours(0, 0, 0, 0);
+    targetDate.setHours(0, 0, 0, 0);
+
+    const diffTime = targetDate - today;
+    const diffDay = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDay === 0) return 'D-Day';
+    if (diffDay > 0) return `D-${diffDay}`;
+
+    return `D+${Math.abs(diffDay)}`;
+  };
+
+  // 일정 삭제 팝업 버튼 함수
+  const handleDeleteSchedule = async () => {
+    try {
+      const result = await deleteSchedule(id);
+
+      if (result.isSuccess) {
+        setOpenPopup(null);
+
+        navigate('/Home');
+      }
+    } catch (error) {
+      // 서버 오류나 네트워크 오류가 발생한 경우 확인용
+      console.error('이미지 삭제에 실패했습니다:', error);
+    }
+  };
 
   return (
     <S.DetailContainer>
       {/* 사진 영역 */}
       <S.ImageSection>
         <S.Header>
-          <S.BackButton type="button" onClick={() => navigate('/group/${id}')}>
+          <S.BackButton type="button" onClick={() => navigate(`/group/${id}`)}>
             <img src={back} alt="뒤로가기" />
           </S.BackButton>
         </S.Header>
 
         <S.ImageButton type="button" onClick={() => setOpenPopup('fullScreen')}>
-          <img src={testday} alt="사진" />
+          <img src={detail.imgUrl?.[0]} alt="사진" />
         </S.ImageButton>
       </S.ImageSection>
 
       {/* 정보 영역 */}
       <S.InfoSection>
         <S.TitleRow>
-          <S.Title>데이터수학통계 중간고사 날짜</S.Title>
-          <S.Dday>D-13</S.Dday>
+          <S.Title>{event.title}</S.Title>
+          <S.Dday>{getDday(event.dateTime)}</S.Dday>
         </S.TitleRow>
 
         <S.Divider />
@@ -56,15 +119,7 @@ function Detail() {
         </S.SummaryHeader>
 
         <S.SummaryBox>
-          <p>
-            데이터수학통계 중간고사는 4월 22일 오후 3시에 5호관 301호에서
-            진행됩니다.
-          </p>
-
-          <p>
-            계산기와 종이 자료를 사용할 수 있으며, 시험에 필요한 분포표는
-            제공됩니다.
-          </p>
+          <p>{event.aiSummary}</p>
         </S.SummaryBox>
       </S.InfoSection>
 
@@ -78,7 +133,7 @@ function Detail() {
           </S.FullScreenHeader>
 
           <S.FullScreenImageBox>
-            <S.FullScreenImage src={testday} alt="사진" />
+            <S.FullScreenImage src={detail.imgUrl?.[0]} alt="사진" />
           </S.FullScreenImageBox>
         </S.FullScreenOverlay>
       )}
@@ -93,7 +148,7 @@ function Detail() {
             <S.FormGroup>
               <S.Label>제목</S.Label>
 
-              <S.TextInput defaultValue="데이터수학통계 중간고사 날짜" />
+              <S.TextInput defaultValue={event.title} />
             </S.FormGroup>
 
             {/* 일정 */}
@@ -120,23 +175,14 @@ function Detail() {
             <S.FormGroup>
               <S.Label>세부사항</S.Label>
 
-              <S.TextArea
-                defaultValue={`📍 장소
-5호관 301호
-
-🎒 준비물
-계산기, 강의자료, 책, 필기 등 종이 자료`}
-              />
+              <S.TextArea defaultValue={event.details} />
             </S.FormGroup>
 
             {/* AI 요약 */}
             <S.FormGroup>
               <S.Label>AI 요약</S.Label>
 
-              <S.TextArea
-                defaultValue={`데이터수학통계 중간고사는 4월 22일 오후 3시에 5호관 301호에서 진행됩니다.
-계산기와 종이 자료를 사용할 수 있으며, 시험에 필요한 분포표는 제공됩니다.`}
-              />
+              <S.TextArea defaultValue={event.aiSummary} />
             </S.FormGroup>
 
             {/* 저장 위치 */}
@@ -204,7 +250,7 @@ function Detail() {
                 취소
               </S.DeleteCancelButton>
 
-              <S.DeleteButton type="button" onClick={() => setOpenPopup(null)}>
+              <S.DeleteButton type="button" onClick={handleDeleteSchedule}>
                 삭제
               </S.DeleteButton>
             </S.PopupButtonBox>

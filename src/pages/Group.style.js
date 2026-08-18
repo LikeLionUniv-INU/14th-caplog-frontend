@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const GroupContainer = styled.div`
   position: relative;
@@ -118,6 +118,8 @@ export const CardList = styled.div`
 `;
 
 export const Card = styled.button`
+  position: relative;
+
   min-width: 0;
   height: 270px;
 
@@ -131,8 +133,25 @@ export const Card = styled.button`
   border: none;
 `;
 
+export const NewBadge = styled.span`
+  position: absolute;
+
+  top: 8px;
+  left: 14px;
+
+  padding: 2px 6px;
+
+  border-radius: 20px;
+  background-color: #f03232;
+
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+`;
+
 export const CardTitle = styled.p`
-  margin: 0 0 18px;
+  margin: 3px 0 18px;
 
   color: #7c2d12;
   font-size: 12px;
