@@ -1,32 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getCalendarEvents } from '../api/calendarApi';
+import { useNavigate } from 'react-router-dom';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import * as S from './Calendar.style';
 import PreviewBox from './PreviewBox';
-
-// 달력페이지 전용 더미데이터
-const schedules = {
-  '2026-08-03': [
-    {
-      id: 1,
-      title: '데이터수학통계 중간고사',
-      image: 'https://placehold.co/177x178',
-    },
-    {
-      id: 2,
-      title: '팀플 회의',
-      image: 'https://placehold.co/177x178',
-    },
-  ],
-
-  '2026-08-06': [
-    {
-      id: 3,
-      title: '기숙사 신청 마감',
-      image: 'https://placehold.co/177x178',
-    },
-  ],
-};
 
 const formatDateKey = (date) => {
   const year = date.getFullYear();
@@ -39,8 +17,53 @@ const formatDateKey = (date) => {
 function Calendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const navigate = useNavigate();
+
+  // API 일정 데이터
+  const [events, setEvents] = useState([]);
+
+  // 현재 달력에 표시 중인 달
+  const [activeDate, setActiveDate] = useState(new Date());
+
+  const startDate = new Date(
+    activeDate.getFullYear(),
+    activeDate.getMonth(),
+    1,
+  );
+
+  const endDate = new Date(
+    activeDate.getFullYear(),
+    activeDate.getMonth() + 1,
+    0,
+  );
+
+  const startDateTime = formatDateKey(startDate);
+  const endDateTime = formatDateKey(endDate);
+
+  // 달력에 표시할 이벤트 목록을 API에서 가져옴
+  useEffect(() => {
+    const fetchCalendarEvents = async () => {
+      const data = await getCalendarEvents({
+        startDateTime,
+        endDateTime,
+        page: 0,
+      });
+
+      console.log('캘린더 API 응답:', data);
+
+      setEvents(data.result.events);
+    };
+
+    fetchCalendarEvents();
+  }, [startDateTime, endDateTime]);
+
+  // 사용자가 선택한 날짜를 YYYY-MM-DD 형태로 변환
   const selectedDateKey = formatDateKey(selectedDate);
-  const selectedSchedules = schedules[selectedDateKey] || [];
+
+  // API에서 받아온 이벤트 중 선택한 날짜의 일정만 가져옴
+  const selectedSchedules = events.filter(
+    (event) => event.date === selectedDateKey,
+  );
 
   return (
     <S.CalendarContainer>
@@ -52,6 +75,10 @@ function Calendar() {
         <ReactCalendar
           value={selectedDate}
           onChange={setSelectedDate}
+
+          onActiveStartDateChange={({ activeStartDate }) => {
+            setActiveDate(activeStartDate);
+          }}
           calendarType="gregory"
           prev2Label={null}
           next2Label={null}
@@ -59,8 +86,14 @@ function Calendar() {
           tileContent={({ date, view }) => {
             if (view !== 'month') return null;
 
+            // 현재 달력 칸의 날짜를 YYYY-MM-DD 형태로 변환
             const dateKey = formatDateKey(date);
-            const scheduleCount = schedules[dateKey]?.length || 0;
+
+            // API에서 받아온 이벤트 중 현재 날짜와 같은 일정만 찾음
+            const dateEvents = events.filter((event) => event.date === dateKey);
+
+            // 현재 날짜의 일정 개수
+            const scheduleCount = dateEvents.length;
 
             if (scheduleCount === 0) return null;
 
@@ -85,11 +118,15 @@ function Calendar() {
         ) : (
           <S.ScheduleList>
             {selectedSchedules.map((schedule) => (
-              <PreviewBox
-                key={schedule.id}
-                image={schedule.image}
-                title={schedule.title}
-              />
+              <div
+                key={schedule.eventId}
+                onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
+              >
+                <PreviewBox
+                  image={schedule.captureImg}
+                  title={schedule.eventtitle}
+                />
+              </div>
             ))}
           </S.ScheduleList>
         )}
