@@ -57,9 +57,9 @@ export default function Notification() {
       {/* 알림 리스트 */}
       <S.ListContainer>
         {dummyNotifications.map((noti) => (
-          <S.NotificationCard key={noti.id}>
+          <S.NotificationCard key={noti.id} $category={noti.category}>
             <S.Thumbnail />
-
+            
             <S.ContentWrapper>
               <S.CardHeader>
                 <S.Category>{noti.category}</S.Category>
