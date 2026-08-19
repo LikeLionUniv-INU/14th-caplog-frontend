@@ -12,8 +12,7 @@ export default function CheckPhotoAuth() {
   const handlePhotoAuth = async () => {
     // 웹인 경우
     if (!Capacitor.isNativePlatform()) {
-      alert('웹 환경에서는 갤러리 권한이 기본 허용됩니다. 폰에서 확인해주세요!');
-      return;
+      navigate('/check-noti-auth');
     }
 
     try {

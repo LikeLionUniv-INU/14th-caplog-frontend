@@ -11,15 +11,14 @@ export default function CheckNotiAuth() {
   /** 푸시 알림 권한 요청 핸들러 */
   const handleNotiAuth = async () => {
     if (!Capacitor.isNativePlatform()) {
-      alert('웹 환경에서는 푸시 알림 기능이 제한됩니다. 폰에서 확인해주세요!');
-      return;
+      navigate('/home');
     }
 
     try {
       const permissions = await PushNotifications.requestPermissions();
 
       if (permissions.receive === 'granted') {
-        alert('알림 권한이 허용되었습니다! 🔔');
+        navigate('/home');
         // FCM 토큰 발급 함수(PushNotifications.register()) 연결
       } else {
         alert('알림 권한이 거부되었습니다. 중요 일정을 놓치지 않게 권한을 켜주세요.');
