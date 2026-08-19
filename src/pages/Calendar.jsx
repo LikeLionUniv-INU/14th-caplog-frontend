@@ -25,17 +25,9 @@ function Calendar() {
   // 현재 달력에 표시 중인 달
   const [activeDate, setActiveDate] = useState(new Date());
 
-  const startDate = new Date(
-    activeDate.getFullYear(),
-    activeDate.getMonth(),
-    1,
-  );
+  const startDate = new Date(activeDate.getFullYear(), activeDate.getMonth(), 1);
 
-  const endDate = new Date(
-    activeDate.getFullYear(),
-    activeDate.getMonth() + 1,
-    0,
-  );
+  const endDate = new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0);
 
   const startDateTime = formatDateKey(startDate);
   const endDateTime = formatDateKey(endDate);
@@ -65,15 +57,11 @@ function Calendar() {
   const selectedDateKey = formatDateKey(selectedDate);
 
   // API에서 받아온 이벤트 중 선택한 날짜의 일정만 가져옴
-  const selectedSchedules = events.filter(
-    (event) => event.date === selectedDateKey,
-  );
+  const selectedSchedules = events.filter((event) => event.date === selectedDateKey);
 
   return (
     <S.CalendarContainer>
-      <S.Header>
-        <h2>캘린더</h2>
-      </S.Header>
+      <S.Header>캘린더</S.Header>
 
       <S.CalendarBox>
         <S.SpringRow>

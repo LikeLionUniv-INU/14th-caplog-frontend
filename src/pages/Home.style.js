@@ -6,7 +6,7 @@ export const HomeContainer = styled.main`
   height: 100dvh;
   margin: 0 auto;
 
-  padding: 0 16px 100px;
+  padding: 0 20px 100px;
   box-sizing: border-box;
   background-color: #fffbf6;
 
@@ -134,12 +134,15 @@ export const MemoryBox = styled.section`
 export const SpringRow = styled.div`
   position: absolute;
   top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
 
   display: flex;
-  gap: 9px;
+  align-items: center;
+  justify-content: space-evenly;
 
+  padding: 0 16px;
+  box-sizing: border-box;
   pointer-events: none;
 `;
 
@@ -266,7 +269,7 @@ export const PreviewHeader = styled.div`
 
   margin-bottom: 16px;
 
-  padding: 0 24px;
+  padding: 0 10px;
 `;
 
 export const SearchSection = styled.div`
@@ -296,10 +299,11 @@ export const AllButton = styled.button`
 
 export const PreviewList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 177px);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-
-  justify-content: center;
+  width: 100%;
+  max-width: 370px;
+  margin: 0 auto; /* 가운데 정렬 */
 `;
 
 export const FilterSection = styled.div`
