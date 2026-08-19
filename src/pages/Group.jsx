@@ -4,12 +4,7 @@ import deleteicon from '../assets/delete.svg';
 import * as S from './Group.style';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  getGroupDetail,
-  deleteGroup,
-  updateGroup,
-  getCategoryList,
-} from '../api/groupApi';
+import { getGroupDetail, deleteGroup, updateGroup, getCategoryList } from '../api/groupApi';
 
 function Group() {
   const navigate = useNavigate();
@@ -70,11 +65,7 @@ function Group() {
   // 그룹 수정 버튼을 눌렀을 때 실행되는 함수
   const handleUpdateGroup = async () => {
     try {
-      const result = await updateGroup(
-        groupId,
-        modifyGroupName,
-        modifyCategory,
-      );
+      const result = await updateGroup(groupId, modifyGroupName, modifyCategory);
 
       // 그룹 수정 API 요청 성공
       if (result.isSuccess) {
@@ -135,9 +126,7 @@ function Group() {
           ))}
         </S.SpringRow>
         <S.InfoTop>
-          <S.Category>
-            {CATEGORY_LABEL[groupData.result.group.groupCategory]}
-          </S.Category>
+          <S.Category>{CATEGORY_LABEL[groupData.result.group.groupCategory]}</S.Category>
 
           <S.ActionButtons>
             <S.IconButton type="button" onClick={handleOpenModify}>
@@ -151,17 +140,12 @@ function Group() {
         </S.InfoTop>
 
         <S.GroupTitle>{groupData.result.group.groupName}</S.GroupTitle>
-        <S.GroupCount>
-          {groupData.result.scheduleCount}개의 정보가 저장됨
-        </S.GroupCount>
+        <S.GroupCount>{groupData.result.scheduleCount}개의 정보가 저장됨</S.GroupCount>
       </S.GroupInfoBox>
 
       <S.CardList>
         {groupData.result.schedules.map((schedule) => (
-          <S.Card
-            key={schedule.scheduleId}
-            onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
-          >
+          <S.Card key={schedule.scheduleId} onClick={() => navigate(`/detail/${schedule.scheduleId}`)}>
             {schedule.isNew && <S.NewBadge>NEW</S.NewBadge>}
 
             <S.CardTitle>{schedule.title}</S.CardTitle>
@@ -179,19 +163,13 @@ function Group() {
 
             <S.InputBox>
               <p>제목</p>
-              <input
-                value={modifyGroupName}
-                onChange={(e) => setModifyGroupName(e.target.value)}
-              />
+              <input value={modifyGroupName} onChange={(e) => setModifyGroupName(e.target.value)} />
             </S.InputBox>
 
             <S.InputBox>
               <p>카테고리</p>
 
-              <select
-                value={modifyCategory}
-                onChange={(e) => setModifyCategory(e.target.value)}
-              >
+              <select value={modifyCategory} onChange={(e) => setModifyCategory(e.target.value)}>
                 {categoryList.map((category) => (
                   <option key={category} value={category}>
                     {CATEGORY_LABEL[category]}
@@ -203,9 +181,7 @@ function Group() {
             <S.Divider />
 
             <S.ButtonBox>
-              <S.CancelButton onClick={() => setOpenPopup(null)}>
-                취소
-              </S.CancelButton>
+              <S.CancelButton onClick={() => setOpenPopup(null)}>취소</S.CancelButton>
 
               <S.ModifyButton onClick={handleUpdateGroup}>수정</S.ModifyButton>
             </S.ButtonBox>
@@ -225,9 +201,7 @@ function Group() {
             </S.DeleteText>
 
             <S.DeleteButtonBox>
-              <S.CancelButton onClick={() => setOpenPopup(null)}>
-                취소
-              </S.CancelButton>
+              <S.CancelButton onClick={() => setOpenPopup(null)}>취소</S.CancelButton>
 
               <S.DeleteButton onClick={handleDeleteGroup}>삭제</S.DeleteButton>
             </S.DeleteButtonBox>
