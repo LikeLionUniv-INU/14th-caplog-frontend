@@ -108,6 +108,11 @@ function Home() {
       </S.Header>
 
       <S.MemoryBox>
+        <S.SpringRow>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <S.Spring key={index} />
+          ))}
+        </S.SpringRow>
         <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
 
         <S.MemoryList>

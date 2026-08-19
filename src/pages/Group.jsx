@@ -4,7 +4,12 @@ import deleteicon from '../assets/delete.svg';
 import * as S from './Group.style';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getGroupDetail, deleteGroup } from '../api/groupApi';
+import {
+  getGroupDetail,
+  deleteGroup,
+  updateGroup,
+  getCategoryList,
+} from '../api/groupApi';
 
 function Group() {
   const navigate = useNavigate();
@@ -12,6 +17,23 @@ function Group() {
 
   const [openPopup, setOpenPopup] = useState(null);
   const [groupData, setGroupData] = useState(null);
+
+  // 수정할 그룹 제목
+  const [modifyGroupName, setModifyGroupName] = useState('');
+
+  // 수정할 그룹 카테고리
+  const [modifyCategory, setModifyCategory] = useState('');
+
+  // 그룹 카테고리 목록
+  const [categoryList, setCategoryList] = useState([]);
+
+  const CATEGORY_LABEL = {
+    TOTAL: '전체',
+    STUDY: '공부',
+    SCHOOL: '학교',
+    DAILY: '일상',
+    ETC: '기타',
+  };
 
   useEffect(() => {
     const fetchGroupDetail = async () => {
@@ -21,6 +43,61 @@ function Group() {
 
     fetchGroupDetail();
   }, [groupId]);
+
+  // 그룹 카테고리 목록 조회
+  const fetchCategoryList = async () => {
+    try {
+      const result = await getCategoryList();
+
+      if (result.isSuccess) {
+        setCategoryList(result.result);
+      }
+    } catch (error) {
+      console.error('카테고리 목록 조회 실패:', error);
+    }
+  };
+
+  // 그룹 수정 팝업 열기
+  const handleOpenModify = () => {
+    setModifyGroupName(groupData.result.group.groupName);
+    setModifyCategory(groupData.result.group.groupCategory);
+
+    fetchCategoryList();
+
+    setOpenPopup('modify');
+  };
+
+  // 그룹 수정 버튼을 눌렀을 때 실행되는 함수
+  const handleUpdateGroup = async () => {
+    try {
+      const result = await updateGroup(
+        groupId,
+        modifyGroupName,
+        modifyCategory,
+      );
+
+      // 그룹 수정 API 요청 성공
+      if (result.isSuccess) {
+        // 화면에 보이는 그룹 정보도 수정된 값으로 변경
+        setGroupData((prev) => ({
+          ...prev,
+          result: {
+            ...prev.result,
+            group: {
+              ...prev.result.group,
+              groupName: result.result.groupName,
+              groupCategory: result.result.groupCategory,
+            },
+          },
+        }));
+
+        // 수정 팝업 닫기
+        setOpenPopup(null);
+      }
+    } catch (error) {
+      console.error('그룹 수정 실패:', error);
+    }
+  };
 
   // 그룹 삭제 버튼을 눌렀을 때 실행되는 함수
   const handleDeleteGroup = async () => {
@@ -52,11 +129,18 @@ function Group() {
       </S.GroupHeader>
 
       <S.GroupInfoBox>
+        <S.SpringRow>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <S.Spring key={index} />
+          ))}
+        </S.SpringRow>
         <S.InfoTop>
-          <S.Category>{groupData.result.group.groupCategory}</S.Category>
+          <S.Category>
+            {CATEGORY_LABEL[groupData.result.group.groupCategory]}
+          </S.Category>
 
           <S.ActionButtons>
-            <S.IconButton type="button" onClick={() => setOpenPopup('modify')}>
+            <S.IconButton type="button" onClick={handleOpenModify}>
               <img src={modifyicon} alt="수정" />
             </S.IconButton>
 
@@ -95,17 +179,24 @@ function Group() {
 
             <S.InputBox>
               <p>제목</p>
-              <input defaultValue="데이터수학통계 과목" />
+              <input
+                value={modifyGroupName}
+                onChange={(e) => setModifyGroupName(e.target.value)}
+              />
             </S.InputBox>
 
             <S.InputBox>
               <p>카테고리</p>
 
-              <select defaultValue="공부">
-                <option>공부</option>
-                <option>학교</option>
-                <option>일상</option>
-                <option>기타</option>
+              <select
+                value={modifyCategory}
+                onChange={(e) => setModifyCategory(e.target.value)}
+              >
+                {categoryList.map((category) => (
+                  <option key={category} value={category}>
+                    {CATEGORY_LABEL[category]}
+                  </option>
+                ))}
               </select>
             </S.InputBox>
 
@@ -116,9 +207,7 @@ function Group() {
                 취소
               </S.CancelButton>
 
-              <S.ModifyButton onClick={() => setOpenPopup(null)}>
-                수정
-              </S.ModifyButton>
+              <S.ModifyButton onClick={handleUpdateGroup}>수정</S.ModifyButton>
             </S.ButtonBox>
           </S.ModifyPopup>
         </S.ModalOverlay>

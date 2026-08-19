@@ -14,12 +14,12 @@ const FilterButton = styled.button`
   border: none;
   border-radius: 16px;
 
-  background-color: ${(props) => (props.$active ? '#FFd1a1' : '#FFF0DD')};
+  background-color: ${(props) => (props.$active ? '#b55116' : '#FFF0DD')};
 
-  color: #7c2d12;
+  color: ${(props) => (props.$active ? '#fff0dd' : '#b55116')};
 
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: medium;
 
   cursor: pointer;
 `;

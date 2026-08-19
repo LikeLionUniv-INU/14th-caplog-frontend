@@ -2,9 +2,16 @@ import * as S from './Detail.style';
 import back from '../assets/back.svg';
 import modifyicon from '../assets/modify.svg';
 import deleteicon from '../assets/delete.svg';
+import aiIcon from '../assets/aiIcon.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getScheduleDetail, deleteSchedule } from '../api/scheduleDetailApi';
+import {
+  getScheduleDetail,
+  deleteSchedule,
+  updateSchedule,
+  getGroupList,
+} from '../api/scheduleDetailApi';
+import { getCategoryList } from '../api/groupApi';
 
 function Detail() {
   const navigate = useNavigate();
@@ -21,6 +28,19 @@ function Detail() {
   // 날짜 / 시간
   const [schedule, setSchedule] = useState('');
 
+  // 수정 팝업 입력값
+  const [editTitle, setEditTitle] = useState('');
+  const [editDetails, setEditDetails] = useState('');
+  const [editAiSummary, setEditAiSummary] = useState('');
+
+  // 저장 위치
+  const [editCategory, setEditCategory] = useState('');
+  const [editGroup, setEditGroup] = useState('');
+
+  // 카테고리 / 주제 목록
+  const [categoryList, setCategoryList] = useState([]);
+  const [groupList, setGroupList] = useState([]);
+
   useEffect(() => {
     const fetchDetail = async () => {
       try {
@@ -31,6 +51,15 @@ function Detail() {
         setSchedule(data.result.events[0].dateTime);
 
         setScheduleEnabled(data.result.events[0].hasDate);
+
+        const currentEvent = data.result.events[0];
+
+        setEditTitle(currentEvent.title ?? '');
+        setEditDetails(currentEvent.details ?? '');
+        setEditAiSummary(currentEvent.aiSummary ?? '');
+
+        setEditCategory(data.result.schedule?.category ?? '');
+        setEditGroup(data.result.schedule?.group ?? '');
       } catch (error) {
         console.error('상세 정보 조회 실패:', error);
       }
@@ -62,6 +91,78 @@ function Detail() {
     if (diffDay > 0) return `D-${diffDay}`;
 
     return `D+${Math.abs(diffDay)}`;
+  };
+
+  // 수정 팝업 열기
+  const handleOpenModify = async () => {
+    try {
+      const [categoryData, groupData] = await Promise.all([
+        getCategoryList(),
+        getGroupList(0),
+      ]);
+
+      setCategoryList(categoryData.result ?? []);
+
+      setGroupList(groupData.result?.groupList ?? []);
+
+      setOpenPopup('modify');
+    } catch (error) {
+      console.error('수정 정보 목록 조회 실패:', error);
+    }
+  };
+
+  // 일정 수정
+  const handleUpdateSchedule = async () => {
+    try {
+      const updateData = {
+        schedule: {
+          title: editTitle,
+          aiSummary: editAiSummary,
+          category: editCategory,
+          hasGroup: Boolean(editGroup),
+          group: editGroup,
+        },
+
+        events: [
+          {
+            id: event.id,
+            title: editTitle,
+            startAt: schedule,
+            endAt: schedule,
+            location: event.location ?? '',
+            details: editDetails,
+          },
+        ],
+      };
+
+      const result = await updateSchedule(id, updateData);
+
+      if (result.isSuccess) {
+        setDetail((prev) => ({
+          ...prev,
+
+          schedule: {
+            ...prev.schedule,
+            ...updateData.schedule,
+          },
+
+          events: [
+            {
+              ...prev.events[0],
+
+              title: editTitle,
+              details: editDetails,
+              aiSummary: editAiSummary,
+              dateTime: schedule,
+            },
+          ],
+        }));
+
+        setOpenPopup(null);
+      }
+    } catch (error) {
+      console.error('일정 수정에 실패했습니다:', error);
+    }
   };
 
   // 일정 삭제 팝업 버튼 함수
@@ -105,10 +206,13 @@ function Detail() {
         <S.Divider />
 
         <S.SummaryHeader>
-          <S.SummaryTitle>CapLog AI 분석 요약</S.SummaryTitle>
+          <S.SummaryTitle>
+            <img src={aiIcon} alt="ai아이콘" />
+            CapLog AI 분석 요약
+          </S.SummaryTitle>
 
           <S.ButtonGroup>
-            <S.IconButton type="button" onClick={() => setOpenPopup('modify')}>
+            <S.IconButton type="button" onClick={handleOpenModify}>
               <img src={modifyicon} alt="수정" />
             </S.IconButton>
 
@@ -148,7 +252,10 @@ function Detail() {
             <S.FormGroup>
               <S.Label>제목</S.Label>
 
-              <S.TextInput defaultValue={event.title} />
+              <S.TextInput
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+              />
             </S.FormGroup>
 
             {/* 일정 */}
@@ -175,14 +282,20 @@ function Detail() {
             <S.FormGroup>
               <S.Label>세부사항</S.Label>
 
-              <S.TextArea defaultValue={event.details} />
+              <S.TextArea
+                value={editDetails}
+                onChange={(e) => setEditDetails(e.target.value)}
+              />
             </S.FormGroup>
 
             {/* AI 요약 */}
             <S.FormGroup>
               <S.Label>AI 요약</S.Label>
 
-              <S.TextArea defaultValue={event.aiSummary} />
+              <S.TextArea
+                value={editAiSummary}
+                onChange={(e) => setEditAiSummary(e.target.value)}
+              />
             </S.FormGroup>
 
             {/* 저장 위치 */}
@@ -193,22 +306,32 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>카테고리</S.Label>
 
-                  <S.Select defaultValue="공부">
-                    <option>공부</option>
-                    <option>학교</option>
-                    <option>일상</option>
-                    <option>기타</option>
+                  <S.Select
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
+                  >
+                    {categoryList.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
                   </S.Select>
                 </S.SelectBox>
 
                 <S.SelectBox>
                   <S.Label>주제</S.Label>
 
-                  <S.Select defaultValue="데이터수학통계 과목">
-                    <option>주제 없음</option>
-                    <option>데이터수학통계 과목</option>
-                    <option>주제2</option>
-                    <option>주제3</option>
+                  <S.Select
+                    value={editGroup}
+                    onChange={(e) => setEditGroup(e.target.value)}
+                  >
+                    <option value="">주제 없음</option>
+
+                    {groupList.map((group) => (
+                      <option key={group.groupId} value={group.groupName}>
+                        {group.groupName}
+                      </option>
+                    ))}
                   </S.Select>
                 </S.SelectBox>
               </S.SelectRow>
@@ -222,7 +345,7 @@ function Detail() {
                 취소
               </S.CancelButton>
 
-              <S.ModifyButton type="button" onClick={() => setOpenPopup(null)}>
+              <S.ModifyButton type="button" onClick={handleUpdateSchedule}>
                 수정
               </S.ModifyButton>
             </S.ButtonRow>
