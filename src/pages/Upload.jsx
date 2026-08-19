@@ -1,19 +1,18 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import * as S from './Upload.styles';
 import GalleryIcon from '../assets/icons/Gallery.svg';
 import { analyzeImage } from '../api/upload';
-import { useNavigate } from 'react-router-dom';
 import UploadLoading from '../components/common/UploadLoading';
 import BottomSheet from '../components/common/BottomSheet';
 
 export default function Upload() {
   const fileInputRef = useRef(null);
-  const navigate = useNavigate();
 
   const [previewImage, setPreviewImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [aiResult, setAiResult] = useState(null);
 
   const handleBoxClick = () => {
     fileInputRef.current?.click();
@@ -24,11 +23,16 @@ export default function Upload() {
     if (!file) return;
     setImageFile(file);
 
+    // 기존에 생성된 미리보기 URL이 있다면 삭제
+    if (previewImage) {
+      URL.revokeObjectURL(previewImage);
+    }
+
     const imageUrl = URL.createObjectURL(file);
     setPreviewImage(imageUrl);
   };
 
-  /** 사진 업로드 api 함수 */
+  /** 사진 업로드 API */
   const handleSubmit = async () => {
     if (!imageFile) {
       alert('사진을 먼저 선택해주세요.');
@@ -36,14 +40,34 @@ export default function Upload() {
     }
     setIsLoading(true);
 
+    // 주석은 테스트용 코드
     try {
-      // 서버 연동 전 테스트용
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      // const data = await analyzeImage(imageFile);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const dummyData = {
+        schedule: {
+          title: '데이터수학통계 중간고사',
+          captureImg: previewImage,
+          aiSummary: '요약 데이터',
+          group: 'NONE',
+        },
+        events: [
+          {
+            Id: 'temp-id-1',
+            title: '데이터수학통계 시험',
+            dateTime: '2026-04-22T15:00',
+            details: '📍 장소: 5호관 301호',
+          },
+        ],
+      };
+
+      setAiResult(dummyData);
       setIsSheetOpen(true);
 
-      // const data = await analyzeImage(imageFile);
       // if (data.isSuccess) {
-      //   setIsSheetOpen(true);
+      //   setAiResult(data.result); // 서버에서 준 분석 데이터 저장
+      //   setIsSheetOpen(true); // 바텀시트 열기
       // } else {
       //   alert(data.message || '분석 중 오류가 발생했습니다.');
       // }
@@ -55,10 +79,15 @@ export default function Upload() {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (previewImage) URL.revokeObjectURL(previewImage);
+    };
+  }, [previewImage]);
+
   return (
     <S.Container>
       <S.Header>사진 등록</S.Header>
-
       <S.UploadBox onClick={handleBoxClick}>
         <input
           type="file"
@@ -78,7 +107,6 @@ export default function Upload() {
           터치하여 사진 추가
         </S.Description>
       </S.UploadBox>
-
       <S.Description>
         기기에 저장된 스크린샷을 선택하세요.
         <br />
@@ -94,7 +122,11 @@ export default function Upload() {
 
       {isLoading && <UploadLoading />}
 
-      <BottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} />
+      <BottomSheet
+        isOpen={isSheetOpen}
+        onClose={() => setIsSheetOpen(false)}
+        aiResult={aiResult}
+      />
     </S.Container>
   );
 }

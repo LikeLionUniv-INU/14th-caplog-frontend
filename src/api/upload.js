@@ -6,10 +6,38 @@ export const analyzeImage = async (imageFile) => {
   const formData = new FormData();
   formData.append('image', imageFile);
 
-  const response = await api.post('/upload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  const response = await api.post('/upload', formData);
+
+  return response.data;
+};
+
+// 그룹/단일 일정 전체 조회 (주제)
+export const getGroupList = async (page = 0) => {
+  const response = await api.get('/group', {
+    params: { page },
+  });
+
+  return response.data;
+};
+
+// 그룹 카테고리 목록 조회 (카테고리)
+export const getCategoryList = async () => {
+  const response = await api.get('/group/categories');
+
+  return response.data;
+};
+
+// 업로드 확정
+export const confirmUpload = async (scheduleData, events) => {
+  const response = await api.post('/upload/confirm', {
+    schedule: {
+      title: scheduleData.title,
+      captureImg: scheduleData.captureImg,
+      aiSummary: scheduleData.aiSummary,
+      hasGroup: scheduleData.hasGroup,
+      group: scheduleData.group,
     },
+    events: events,
   });
 
   return response.data;
