@@ -29,14 +29,14 @@ export const deleteSchedule = async (scheduleId) => {
     };
   }
 
-  const response = await api.delete(`/api/schedule/${scheduleId}`);
+  const response = await api.delete(`/schedule/${scheduleId}`);
 
   return response.data;
 };
 
 // ========================================
 // 그룹/단일 일정 전체 조회 (주제 목록)
-// GET /api/group?page={page}
+// GET /group?page={page}
 //
 // 다른 사람이 만든 실제 API 함수가 들어오면
 // 이 함수는 나중에 교체해도 됨
@@ -82,7 +82,7 @@ export const getGroupList = async (page = 0) => {
 
 // ========================================
 // 일정 수정 (상세페이지 전용)
-// PATCH /api/schedule/{scheduleId}
+// PATCH /schedule/{scheduleId}
 // ========================================
 export const updateSchedule = async (scheduleId, updateData) => {
   // 서버 연결 전 목업
@@ -99,7 +99,7 @@ export const updateSchedule = async (scheduleId, updateData) => {
   }
 
   // 실제 서버 연결
-  const response = await api.patch(`/api/schedule/${scheduleId}`, updateData);
+  const response = await api.patch(`/schedule/${scheduleId}`, updateData);
 
   return response.data;
 };

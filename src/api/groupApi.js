@@ -28,7 +28,7 @@ export const deleteGroup = async (groupId) => {
     };
   }
 
-  const response = await api.delete(`/api/group/${groupId}`);
+  const response = await api.delete(`/group/${groupId}`);
 
   return response.data;
 };
@@ -53,7 +53,7 @@ export const updateGroup = async (groupId, groupName, groupCategory) => {
     };
   }
 
-  const response = await api.patch(`/api/group/${groupId}`, {
+  const response = await api.patch(`/group/${groupId}`, {
     groupName,
     groupCategory,
   });
@@ -73,7 +73,7 @@ export const getCategoryList = async () => {
     };
   }
 
-  const response = await api.get('/api/group/categories');
+  const response = await api.get('/group/categories');
 
   return response.data;
 };
