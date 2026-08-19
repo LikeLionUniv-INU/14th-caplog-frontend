@@ -10,17 +10,18 @@ export default function Notification() {
 
   const [activeFilter, setActiveFilter] = useState('전체');
   const [alarms, setAlarms] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const filters = ['전체', '일정', '미열람', '추천'];
 
-  // 필터 변경 시 초기화
-  useEffect(() => {
+  const handleFilterClick = (filter) => {
+    if (activeFilter === filter) return;
+    setActiveFilter(filter);
     setAlarms([]);
-    setPage(1);
+    setPage(0);
     setHasMore(true);
-  }, [activeFilter]);
+  };
 
   useEffect(() => {
     /** 알림 목록 조회 api */
@@ -38,8 +39,11 @@ export default function Notification() {
         const data = await getAlarms(page, typeMap[activeFilter]);
 
         if (data.isSuccess) {
-          const newAlarms = data.result.alarms;
-          setAlarms((prev) => (page === 1 ? newAlarms : [...prev, ...newAlarms]));
+          const newAlarms = data.result.notifications || [];
+          setAlarms((prev) => (page === 0 ? newAlarms : [...prev, ...newAlarms]));
+
+          const currentPage = data.result.page.pageNumber;
+          const totalPages = data.result.page.totalPage;
           setHasMore(data.result.page.pageNumber < data.result.page.totalPage);
         }
       } catch (error) {
@@ -78,7 +82,7 @@ export default function Notification() {
       {/* 알림 리스트 */}
       <S.ListContainer>
         {alarms.map((noti) => (
-          <S.NotificationCard key={noti.id} $category={noti.category}>
+          <S.NotificationCard key={noti.alarmId} $category={noti.alarmType}>
             <S.Thumbnail />
 
             <S.ContentWrapper>

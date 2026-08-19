@@ -32,7 +32,7 @@ export const InfoCard = styled.div`
   width: 90%;
   height: 100px;
   box-sizing: border-box;
-  background-color: #ffd1a1;
+  background-color: #FFD1A1;
   border-radius: 16px;
   padding: 24px;
 `;
@@ -43,7 +43,6 @@ export const Avatar = styled.img`
   aspect-ratio: 1 / 1;
   flex-shrink: 0;
   border-radius: 50%;
-  border: 1px solid #fff0dd;
   object-fit: cover;
 `;
 
