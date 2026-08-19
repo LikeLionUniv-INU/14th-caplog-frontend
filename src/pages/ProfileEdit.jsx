@@ -16,10 +16,7 @@ export default function ProfileEdit() {
     const fetchInitialData = async () => {
       try {
         // 두 API 동시에 호출
-        const [userRes, avatarRes] = await Promise.all([
-          getUserInfo(),
-          getProfileUrl(),
-        ]);
+        const [userRes, avatarRes] = await Promise.all([getUserInfo(), getProfileUrl()]);
 
         let currentImgUrl = '';
         if (userRes.isSuccess && userRes.result) {
@@ -32,9 +29,7 @@ export default function ProfileEdit() {
           setAvatarList(images);
 
           // 현재 유저와 일치하는 아바타 타입을 찾아 체크 상태로 만듦
-          const matchedAvatar = images.find(
-            (img) => img.imgUrl === currentImgUrl,
-          );
+          const matchedAvatar = images.find((img) => img.imgUrl === currentImgUrl);
           if (matchedAvatar) {
             setSelectedAvatar(matchedAvatar.profileImg);
           } else if (images.length > 0) {
@@ -95,14 +90,8 @@ export default function ProfileEdit() {
 
         <S.AvatarBox>
           {avatarList.map((avatar) => (
-            <S.AvatarWrapper
-              key={avatar.profileImg}
-              onClick={() => setSelectedAvatar(avatar.profileImg)}
-            >
-              <S.AvatarImg
-                src={avatar.imgUrl}
-                alt={`${avatar.profileImg} 아바타`}
-              />
+            <S.AvatarWrapper key={avatar.profileImg} onClick={() => setSelectedAvatar(avatar.profileImg)}>
+              <S.AvatarImg src={avatar.imgUrl} alt={`${avatar.profileImg} 아바타`} />
 
               {selectedAvatar === avatar.profileImg ? (
                 <S.CheckBadge $isActive={true}>✓</S.CheckBadge>
@@ -118,14 +107,8 @@ export default function ProfileEdit() {
         <S.SectionTitle>닉네임 변경</S.SectionTitle>
         <S.SectionDesc>닉네임은 언제든지 변경할 수 있어요.</S.SectionDesc>
         <S.InputWrapper>
-          <S.Input
-            value={nickname}
-            onChange={handleNicknameChange}
-            placeholder="닉네임을 입력하세요"
-          />
-          {nickname.length > 0 && (
-            <S.ClearButton onClick={handleClearNickname}>×</S.ClearButton>
-          )}
+          <S.Input value={nickname} onChange={handleNicknameChange} placeholder="닉네임을 입력하세요" />
+          {nickname.length > 0 && <S.ClearButton onClick={handleClearNickname}>×</S.ClearButton>}
         </S.InputWrapper>
         <S.CharCount>{nickname.length} / 20</S.CharCount>
       </S.Section>

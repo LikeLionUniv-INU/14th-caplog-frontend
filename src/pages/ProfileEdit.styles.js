@@ -159,12 +159,12 @@ export const CharCount = styled.div`
 
 export const SaveButton = styled.button`
   flex-shrink: 0;
-  width: 85%;
+  width: 60%;
   height: 40px;
   color: #b55116;
-  margin-top: 100px;
-  background-color: ${({ disabled }) => (disabled ? '#E5E7EB' : '#ffe3bf')};
-  color: ${({ disabled }) => (disabled ? '#9CA3AF' : '#b55116')};
+  margin-top: 140px;
+  background-color: ${({ disabled }) => (disabled ? '#E5E7EB' : '#B55116')};
+  color: ${({ disabled }) => (disabled ? '#9CA3AF' : '#FFF0DD')};
   font-size: 14px;
   font-weight: 700;
   border: none;
