@@ -27,17 +27,6 @@ export default function Mypage() {
     thisMonthSchedule: 0, // 기본 이번 달 일정
   });
 
-  const menuItems = [
-    { label: '프로필 설정', path: '/mypage/edit' },
-    { label: '알림 설정', path: '/mypage/notifications' },
-  ];
-  const serviceItems = [
-    { label: '서비스 소개', path: '/' },
-    { label: 'CapLog 사진 권한 보기', path: '/check-photo-auth' },
-    { label: 'CapLog 알림 권한 보기', path: '/check-noti-auth' },
-    { label: '로그아웃', path: '/login' },
-  ];
-
   // 로그아웃 관련
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const handleLogoutClick = () => {
