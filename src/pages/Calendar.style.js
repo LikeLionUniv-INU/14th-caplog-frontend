@@ -5,7 +5,7 @@ export const CalendarContainer = styled.div`
   height: 100dvh;
   overflow-y: auto;
 
-  padding: 55px 15px 120px;
+  padding: 24px 15px 120px;
   box-sizing: border-box;
 
   background-color: #fffbf6;
@@ -16,26 +16,28 @@ export const CalendarContainer = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-bottom: 30px;
-
-  h2 {
-    margin: 0;
-    color: #7c2d12;
-    font-size: 16px;
-    font-weight: 700;
-  }
+  width: 90%;
+  box-sizing: border-box;
+  padding: 24px;
+  color: #7c2d12;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: left;
 `;
 
 // 캘린더 상단 스프링 묶음
 export const SpringRow = styled.div`
   position: absolute;
   top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
 
   display: flex;
-  gap: 9px;
+  align-items: center;
+  justify-content: space-evenly;
 
+  padding: 0 16px;
+  box-sizing: border-box;
   pointer-events: none;
 `;
 
@@ -53,9 +55,10 @@ export const Spring = styled.span`
 export const CalendarBox = styled.div`
   position: relative;
 
-  width: 370px;
-  min-height: 348px;
+  width: 100%;
+  max-width: 370px;
 
+  min-height: 348px;
   margin: 0 auto;
 
   background-color: #fff0dd;
@@ -78,8 +81,7 @@ export const CalendarBox = styled.div`
     justify-content: flex-start;
 
     height: 40px;
-    margin-bottom: 18px;
-    padding-left: 15px;
+    margin-bottom: 10px;
     gap: 12px;
   }
 
@@ -97,27 +99,34 @@ export const CalendarBox = styled.div`
     padding: 0;
   }
 
-  /* 이전달 / 다음달 버튼 */
-  .react-calendar__navigation__prev-button,
-  .react-calendar__navigation__next-button {
-    min-width: 28px !important;
-    width: 28px;
-
-    padding: 0;
-    border: none;
-    background: none;
-
-    color: #b55116;
-    font-size: 25px;
-    font-weight: 500;
-  }
-
   .react-calendar__navigation button {
     background: none;
     border: none;
-    color: #7c2d12;
-    font-size: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* 이전달 / 다음달 꺽쇄 */
+  .react-calendar__navigation__prev-button,
+  .react-calendar__navigation__next-button {
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+    color: #b55116;
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .react-calendar__navigation__label {
+    flex-grow: 0 !important;
+    color: #7c2d12;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+    margin-top: 4px;
   }
 
   /* 요일 전체 줄 */
@@ -138,6 +147,7 @@ export const CalendarBox = styled.div`
   }
 
   .react-calendar__tile {
+    position: relative;
     height: 42px;
     padding: 0;
 
@@ -193,7 +203,7 @@ export const CalendarBox = styled.div`
     opacity: 0.55;
   }
 
-  //   일요일 빨강
+  // 일요일 빨강
   .react-calendar__month-view__days > button:nth-child(7n + 1) {
     color: #f03232;
   }
@@ -232,12 +242,15 @@ export const EmptyText = styled.p`
 `;
 
 export const DotContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
   justify-content: center;
   gap: 2px;
-
   height: 5px;
-  margin-top: -4px;
 `;
 
 export const Dot = styled.span`
@@ -250,7 +263,7 @@ export const Dot = styled.span`
 
 export const ScheduleList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 177px);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 
   margin-top: 20px;
