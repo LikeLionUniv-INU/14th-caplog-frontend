@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const DetailContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
 
   position: relative;
 
@@ -10,16 +11,16 @@ export const DetailContainer = styled.div`
   flex-direction: column;
 
   background-color: #ffffff;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ImageSection = styled.div`
-  position: relative;
-
+  flex-shrink: 0;
   width: 100%;
-  height: 50%;
-
-  background-color: #f3f3f3;
-  overflow: hidden;
+  height: 50dvh;
 `;
 
 export const Header = styled.div`
@@ -70,10 +71,10 @@ export const ImageButton = styled.button`
 
 export const InfoSection = styled.div`
   width: 100%;
-  height: 50%;
+  min-height: 50dvh;
+  height: auto;
 
   box-sizing: border-box;
-
   padding: 24px 20px 30px;
 
   background-color: #fff0dd;
@@ -111,8 +112,8 @@ export const Dday = styled.div`
 
   border-radius: 16px;
 
-  background-color: #fdba74;
-  color: #7c2d12;
+  background-color: #b55116;
+  color: #fff0dd;
 
   font-size: 12px;
   font-weight: 600;
@@ -136,10 +137,18 @@ export const SummaryHeader = styled.div`
 export const SummaryTitle = styled.p`
   margin: 0;
 
-  color: #7c2d12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
+  color: #7c2d12;
   font-size: 16px;
   font-weight: 600;
+
+  img {
+    display: block;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -535,7 +544,7 @@ export const DeletePopup = styled.div`
 
   background-color: #fff0dd;
 
-  border-radius: 20px;
+  border-radius: 15px;
 
   padding: 24px 20px 18px;
 
@@ -576,8 +585,8 @@ export const PopupButtonBox = styled.div`
 `;
 
 export const DeleteCancelButton = styled.button`
-  width: 110px;
-  height: 38px;
+  width: 74px;
+  height: 33px;
 
   border: none;
   border-radius: 20px;
@@ -592,15 +601,15 @@ export const DeleteCancelButton = styled.button`
 `;
 
 export const DeleteButton = styled.button`
-  width: 110px;
-  height: 38px;
+  width: 74px;
+  height: 33px;
 
   border: none;
   border-radius: 20px;
 
-  background-color: #fdba74;
+  background-color: #b55116;
 
-  color: #7c2d12;
+  color: #fff0dd;
 
   font-size: 11px;
 

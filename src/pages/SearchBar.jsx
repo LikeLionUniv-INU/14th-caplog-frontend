@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import picsearch from '../assets/picsearch.svg';
+import search from '../assets/search.svg';
 
 // 스타일
 const SearchBarContainer = styled.div`
@@ -44,7 +44,7 @@ const SearchButton = styled.button`
   border: none;
   border-radius: 50%;
 
-  background-color: #fdba74;
+  background-color: #b55116;
   cursor: pointer;
   flex-shrink: 0;
 
@@ -67,7 +67,7 @@ function SearchBar({ onClick, value, onChange, autoFocus }) {
       />
 
       <SearchButton>
-        <img src={picsearch} alt="검색" />
+        <img src={search} alt="검색" />
       </SearchButton>
     </SearchBarContainer>
   );

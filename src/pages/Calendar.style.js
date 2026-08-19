@@ -2,8 +2,17 @@ import styled from 'styled-components';
 
 export const CalendarContainer = styled.div`
   width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+
   padding: 55px 15px 120px;
   box-sizing: border-box;
+
+  background-color: #fffbf6;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Header = styled.div`
@@ -17,13 +26,44 @@ export const Header = styled.div`
   }
 `;
 
+// 캘린더 상단 스프링 묶음
+export const SpringRow = styled.div`
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 9px;
+
+  pointer-events: none;
+`;
+
+// 캘린더 상단 스프링 한 개
+export const Spring = styled.span`
+  width: 8px;
+  height: 17px;
+
+  border-radius: 999px;
+  background-color: #b55116;
+
+  flex-shrink: 0;
+`;
+
 export const CalendarBox = styled.div`
+  position: relative;
+
   width: 370px;
   min-height: 348px;
+
+  margin: 0 auto;
+
   background-color: #fff0dd;
-  border-radius: 20px;
+  border-radius: 15px;
   padding: 18px 16px;
   box-sizing: border-box;
+
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
 
   .react-calendar {
     width: 100%;
@@ -208,11 +248,52 @@ export const Dot = styled.span`
   background-color: #7c2d12;
 `;
 
-// 임시 프리뷰 컴포 대체
 export const ScheduleList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 177px);
   gap: 16px;
 
   margin-top: 20px;
+
+  justify-content: center;
+`;
+
+// 캘린더 일정 카드
+export const ScheduleCard = styled.button`
+  position: relative;
+
+  min-width: 0;
+  height: 270px;
+
+  padding: 20px 14px 14px;
+  box-sizing: border-box;
+
+  border-radius: 15px;
+  background-color: #fff0dd;
+
+  cursor: pointer;
+  border: none;
+`;
+
+// 캘린더 일정 카드 제목
+export const ScheduleCardTitle = styled.p`
+  margin: 3px 0 18px;
+
+  color: #7c2d12;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
+`;
+
+// 캘린더 일정 카드 이미지
+export const ScheduleCardImage = styled.img`
+  display: block;
+
+  width: 100%;
+  height: 196px;
+
+  border-radius: 12px;
+  object-fit: cover;
+
+  background-color: #ffffff;
 `;

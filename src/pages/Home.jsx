@@ -13,6 +13,10 @@ function Home() {
   const navigate = useNavigate();
 
   const [alarmCount, setAlarmCount] = useState(0);
+
+  // 홈 화면에 보여줄 알림 말풍선
+  const [latestAlarm, setLatestAlarm] = useState(null);
+
   const [selectedCategory, setSelectedCategory] = useState('TOTAL');
 
   const [schedules, setSchedules] = useState([]);
@@ -62,6 +66,10 @@ function Home() {
         const data = await getAlarms();
 
         setAlarmCount(data.result.alarmCount);
+
+        const unopenedAlarm = data.result.notifications?.find((alarm) => !alarm.isOpened);
+
+        setLatestAlarm(unopenedAlarm ?? null);
       } catch (error) {
         console.error('알림 조회 실패:', error);
       }
@@ -100,14 +108,23 @@ function Home() {
       <S.Header>
         <S.Logo src={logo} alt="Caplog" />
 
-        <S.AlarmButton onClick={() => navigate('/notification')}>
-          <img src={alarm} alt="알람" />
+        <S.AlarmArea>
+          {latestAlarm && <S.AlarmMessage>{latestAlarm.message}</S.AlarmMessage>}
 
-          {alarmCount > 0 && <S.AlarmBadge>{alarmCount}</S.AlarmBadge>}
-        </S.AlarmButton>
+          <S.AlarmButton onClick={() => navigate('/notification')}>
+            <img src={alarm} alt="알람" />
+
+            {alarmCount > 0 && <S.AlarmBadge>{alarmCount}</S.AlarmBadge>}
+          </S.AlarmButton>
+        </S.AlarmArea>
       </S.Header>
 
       <S.MemoryBox>
+        <S.SpringRow>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <S.Spring key={index} />
+          ))}
+        </S.SpringRow>
         <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
 
         <S.MemoryList>
