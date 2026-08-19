@@ -216,7 +216,7 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 9999;
+  z-index: 100;
 `;
 
 export const ModifyPopup = styled.div`
@@ -226,7 +226,7 @@ export const ModifyPopup = styled.div`
   min-height: 275px;
 
   background-color: #fff0dd;
-  border-radius: 8px;
+  border-radius: 15px;
 
   box-sizing: border-box;
 
@@ -239,8 +239,8 @@ export const ModifyHeader = styled.div`
   h2 {
     margin: 0;
 
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: semibold;
     color: #7c2d12;
   }
 `;
@@ -251,8 +251,8 @@ export const InputBox = styled.div`
   p {
     margin: 0 0 8px;
 
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: regular;
     color: #7c2d12;
   }
 
@@ -263,14 +263,14 @@ export const InputBox = styled.div`
 
     box-sizing: border-box;
 
-    border: 1px solid #777;
-    border-radius: 6px;
+    border: 1px solid #7c2d12;
+    border-radius: 12.5px;
 
     background-color: #ffffff;
 
     padding: 0 12px;
 
-    font-size: 14px;
+    font-size: 11px;
     color: #7c2d12;
 
     outline: none;
@@ -290,27 +290,38 @@ export const Divider = styled.hr`
 
 export const ButtonBox = styled.div`
   display: flex;
-  gap: 22px;
+  justify-content: center;
+  gap: 50px;
 
   padding: 18px 22px;
+`;
 
-  button {
-    flex: 1;
-    height: 42px;
+export const CancelButton = styled.button`
+  width: 78px;
+  height: 32px;
 
-    border-radius: 6px;
+  border: none;
+  border-radius: 20px;
 
-    font-size: 15px;
-    cursor: pointer;
-  }
+  background-color: #ffffff;
+  color: #7c2d12;
+
+  font-size: 11px;
+  cursor: pointer;
 `;
 
 export const ModifyButton = styled.button`
+  width: 78px;
+  height: 32px;
+
   border: none;
+  border-radius: 20px;
 
-  background-color: #fdba74;
+  background-color: #b55116;
+  color: #fff0dd;
 
-  color: #7c2d12;
+  font-size: 11px;
+  cursor: pointer;
 `;
 
 // 삭제 팝업
@@ -320,7 +331,7 @@ export const DeleteOverlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100dvh;
+  height: 100%;
 
   background: rgba(0, 0, 0, 0.6);
 
@@ -328,7 +339,7 @@ export const DeleteOverlay = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 9999;
+  z-index: 100;
 `;
 
 export const DeletePopup = styled.div`
@@ -372,20 +383,6 @@ export const DeleteButtonBox = styled.div`
   gap: 12px;
 
   margin-top: auto;
-`;
-
-export const CancelButton = styled.button`
-  width: 78px;
-  height: 32px;
-
-  border: none;
-  border-radius: 20px;
-
-  background-color: #ffffff;
-  color: #7c2d12;
-
-  font-size: 11px;
-  cursor: pointer;
 `;
 
 export const DeleteButton = styled.button`
