@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ArchiveContainer = styled.div`
   width: 100%;
@@ -7,6 +7,8 @@ export const ArchiveContainer = styled.div`
   box-sizing: border-box;
 
   padding: 52px 17px 100px;
+
+  background-color: #fffbf6;
 `;
 
 export const ArchiveHeader = styled.div`

@@ -43,11 +43,18 @@ function Archive() {
       </S.ArchiveHeader>
 
       <S.SearchArea>
-        <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} autoFocus />
+        <SearchBar
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+        />
       </S.SearchArea>
 
       <S.FilterArea>
-        <PreviewFilter selectedFilter={selectedCategory} onFilterChange={setSelectedCategory} />
+        <PreviewFilter
+          selectedFilter={selectedCategory}
+          onFilterChange={setSelectedCategory}
+        />
       </S.FilterArea>
 
       {schedules.length === 0 ? (

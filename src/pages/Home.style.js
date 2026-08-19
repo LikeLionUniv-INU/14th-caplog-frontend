@@ -7,7 +7,7 @@ export const HomeContainer = styled.main`
   margin: 0 auto;
   padding: 0 16px 100px;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: #fffbf6;
 `;
 
 export const Header = styled.header`
@@ -22,6 +22,7 @@ export const Logo = styled.img`
   width: 76px;
   height: auto;
   display: block;
+  color: #f55116;
 `;
 
 export const AlarmButton = styled.button`
@@ -65,8 +66,33 @@ export const MemoryBox = styled.section`
 
   padding: 32px 12px 12px;
 
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: #ffd1a1;
+
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+`;
+
+export const SpringRow = styled.div`
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 9px;
+
+  pointer-events: none;
+`;
+
+export const Spring = styled.span`
+  width: 8px;
+  height: 17px;
+
+  border-radius: 999px;
+
+  background-color: #b55116;
+
+  flex-shrink: 0;
 `;
 
 export const MemoryTitle = styled.p`
@@ -91,6 +117,31 @@ export const MemoryList = styled.ul`
   list-style: none;
 `;
 
+// D-day 버튼
+export const Dday = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 52px;
+  height: 34px;
+
+  padding: 0 10px;
+
+  border-radius: 30px;
+
+  background-color: ${({ $active }) => ($active ? '#b55116' : '#fdba74')};
+  color: ${({ $active }) => ($active ? '#fff0dd' : '#7c2d12')};
+
+  font-size: 11px;
+  font-weight: 600;
+
+  /* 색상 변경을 부드럽게 */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+`;
+
 export const MemoryItem = styled.li`
   width: 100%;
   min-height: 56px;
@@ -109,8 +160,20 @@ export const MemoryItem = styled.li`
   cursor: pointer;
 
   font-size: 13px;
-  font-weight: 600;
+  font-weight: semibold;
   color: #b55116;
+
+  /* 메모리 리스트 한 줄에 커서를 올렸을 때 D-day만 색상 변경 */
+  &:hover ${Dday} {
+    background-color: #b55116;
+    color: #fff0dd;
+  }
+
+  /* 클릭하고 있는 동안에도 동일한 색상 */
+  &:active ${Dday} {
+    background-color: #b55116;
+    color: #fff0dd;
+  }
 `;
 
 export const MemoryRight = styled.div`
@@ -119,25 +182,6 @@ export const MemoryRight = styled.div`
   gap: 8px;
 
   flex-shrink: 0;
-`;
-
-export const Dday = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  min-width: 52px;
-  height: 34px;
-
-  padding: 0 10px;
-
-  border-radius: 30px;
-
-  background-color: ${({ $active }) => ($active ? '#e26f0b' : '#fdba74')};
-
-  color: ${({ $active }) => ($active ? '#fff7ed' : '#7c2d12')};
-
-  font-weight: 700;
 `;
 
 export const ArrowButton = styled.button`
@@ -163,7 +207,7 @@ export const PreviewHeader = styled.div`
 
   margin-bottom: 16px;
 
-  padding: 0 4px;
+  padding: 0 24px;
 `;
 
 export const SearchSection = styled.div`
@@ -173,8 +217,8 @@ export const SearchSection = styled.div`
 export const PreviewTitle = styled.p`
   margin: 0;
 
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 14.5px;
+  font-weight: 600;
   color: #7c2d12;
 `;
 
@@ -184,7 +228,8 @@ export const AllButton = styled.button`
 
   padding: 0;
 
-  font-size: 13px;
+  font-size: 10px;
+  font-weight: medium;
   color: #7c2d12;
 
   cursor: pointer;
@@ -194,8 +239,11 @@ export const PreviewList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 177px);
   gap: 16px;
+
+  justify-content: center;
 `;
 
 export const FilterSection = styled.div`
-  margin-bottom: 12px;
+  width: min(370px, 100%);
+  margin: 0 auto 16px;
 `;

@@ -43,15 +43,19 @@ function Calendar() {
   // 달력에 표시할 이벤트 목록을 API에서 가져옴
   useEffect(() => {
     const fetchCalendarEvents = async () => {
-      const data = await getCalendarEvents({
-        startDateTime,
-        endDateTime,
-        page: 0,
-      });
+      try {
+        const data = await getCalendarEvents({
+          startDateTime,
+          endDateTime,
+          page: 0,
+        });
 
-      console.log('캘린더 API 응답:', data);
-
-      setEvents(data.result.events);
+        // API에서 받은 일정 목록 저장
+        setEvents(data.result.events);
+      } catch (error) {
+        // 서버 또는 네트워크 오류 확인용
+        console.error('캘린더 일정 조회 실패:', error);
+      }
     };
 
     fetchCalendarEvents();
@@ -72,6 +76,11 @@ function Calendar() {
       </S.Header>
 
       <S.CalendarBox>
+        <S.SpringRow>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <S.Spring key={index} />
+          ))}
+        </S.SpringRow>
         <ReactCalendar
           value={selectedDate}
           onChange={setSelectedDate}
@@ -111,22 +120,26 @@ function Calendar() {
       <S.Divider />
 
       <S.ScheduleSection>
-        <S.ScheduleTitle>오늘의 일정</S.ScheduleTitle>
+        <S.ScheduleTitle>
+          오늘의 일정
+          {selectedSchedules.length > 0 && ` (${selectedSchedules.length}개)`}
+        </S.ScheduleTitle>
 
         {selectedSchedules.length === 0 ? (
           <S.EmptyText>오늘 일정이 없어요!</S.EmptyText>
         ) : (
           <S.ScheduleList>
             {selectedSchedules.map((schedule) => (
-              <div
+              <S.ScheduleCard
                 key={schedule.eventId}
+
+                // 일정 카드를 누르면 해당 일정 상세페이지로 이동
                 onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
               >
-                <PreviewBox
-                  image={schedule.captureImg}
-                  title={schedule.eventtitle}
-                />
-              </div>
+                <S.ScheduleCardTitle>{schedule.eventtitle}</S.ScheduleCardTitle>
+
+                <S.ScheduleCardImage src={schedule.captureImg} alt="사진" />
+              </S.ScheduleCard>
             ))}
           </S.ScheduleList>
         )}

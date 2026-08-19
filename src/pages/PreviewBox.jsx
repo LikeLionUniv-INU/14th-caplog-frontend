@@ -2,6 +2,30 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 // 스타일
+const PreviewTitle = styled.p`
+  width: 177px;
+  height: 42px;
+
+  margin: 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff0dd;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #b55116;
+
+  // 색상 변경을 부드럽게
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+`;
+
 const PreviewBoxContainer = styled.button`
   position: relative;
 
@@ -15,8 +39,19 @@ const PreviewBoxContainer = styled.button`
 
   background: none;
   cursor: pointer;
-`;
 
+  // 마우스를 올렸을 때 제목 부분만 변경
+  &:hover ${PreviewTitle} {
+    background-color: #b55116;
+    color: #fff0dd;
+  }
+
+  // 클릭하고 있는 동안 제목 부분만 변경
+  &:active ${PreviewTitle} {
+    background-color: #b55116;
+    color: #fff0dd;
+  }
+`;
 const PreviewImageWrapper = styled.div`
   position: relative;
 
@@ -61,25 +96,6 @@ const CountBadge = styled.span`
   font-weight: 700;
 `;
 
-const PreviewTitle = styled.p`
-  width: 177px;
-  height: 42px;
-
-  margin: 0;
-  padding: 0 8px;
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: ${({ $isGroup }) => ($isGroup ? '#fff0dd' : '#fff8ef')};
-
-  font-size: 12px;
-  font-weight: 600;
-
-  color: ${({ $isGroup }) => ($isGroup ? '#b55116' : '#d58d5d')};
-`;
 // 스타일 끝
 
 function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
@@ -100,7 +116,9 @@ function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
 
         {isNew && <NewBadge>NEW</NewBadge>}
 
-        {isGroup && elementCount > 1 && <CountBadge>+{elementCount}</CountBadge>}
+        {isGroup && elementCount > 1 && (
+          <CountBadge>+{elementCount}</CountBadge>
+        )}
       </PreviewImageWrapper>
 
       <PreviewTitle $isGroup={isGroup}>{title}</PreviewTitle>

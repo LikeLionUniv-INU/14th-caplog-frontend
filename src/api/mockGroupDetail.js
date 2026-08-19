@@ -11,7 +11,7 @@ export const mockGroupDetail = {
     group: {
       groupId: 1,
       groupName: '데이터수학통계 과목',
-      groupCategory: '공부',
+      groupCategory: 'STUDY',
     },
 
     scheduleCount: 3,

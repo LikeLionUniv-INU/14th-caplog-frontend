@@ -108,6 +108,11 @@ function Home() {
       </S.Header>
 
       <S.MemoryBox>
+        <S.SpringRow>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <S.Spring key={index} />
+          ))}
+        </S.SpringRow>
         <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
 
         <S.MemoryList>
@@ -119,7 +124,9 @@ function Home() {
               <span>{memory.title}</span>
 
               <S.MemoryRight>
-                <S.Dday $active={memory.dday <= 1}>{memory.dday === 0 ? 'D-DAY' : `D-${memory.dday}`}</S.Dday>
+                <S.Dday $active={memory.dday <= 1}>
+                  {memory.dday === 0 ? 'D-DAY' : `D-${memory.dday}`}
+                </S.Dday>
 
                 <S.ArrowButton type="button">›</S.ArrowButton>
               </S.MemoryRight>

@@ -6,6 +6,8 @@ export const GroupContainer = styled.div`
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
+
+  background-color: #fffbf6;
 `;
 
 export const GroupHeader = styled.div`
@@ -36,16 +38,43 @@ export const BackButton = styled.button`
 `;
 
 export const GroupInfoBox = styled.div`
+  position: relative;
+
   width: 100%;
   min-height: 126px;
 
   padding: 16px 18px;
   box-sizing: border-box;
 
-  background-color: #ffcd98;
+  background-color: #ffd1a1;
   border-radius: 16px;
 
   margin-bottom: 18px;
+
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+`;
+
+export const SpringRow = styled.div`
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 9px;
+
+  pointer-events: none;
+`;
+
+export const Spring = styled.span`
+  width: 8px;
+  height: 17px;
+
+  border-radius: 999px;
+
+  background-color: #b55116;
+
+  flex-shrink: 0;
 `;
 
 export const InfoTop = styled.div`
@@ -63,10 +92,10 @@ export const Category = styled.div`
   height: 26px;
 
   border-radius: 20px;
-  background-color: #fff3e3;
+  background-color: #fff0dd;
 
   color: #b55116;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
 `;
 
@@ -99,16 +128,16 @@ export const GroupTitle = styled.h2`
   margin: 18px 0 0;
 
   color: #7c2d12;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
 `;
 
 export const GroupCount = styled.p`
   margin: 10px 0 0;
 
-  color: #8f3d18;
-  font-size: 14px;
-  font-weight: 400;
+  color: #7c2d12;
+  font-size: 12px;
+  font-weight: medium;
 `;
 
 export const CardList = styled.div`
@@ -126,7 +155,7 @@ export const Card = styled.button`
   padding: 20px 14px 14px;
   box-sizing: border-box;
 
-  border-radius: 16px;
+  border-radius: 15px;
   background-color: #fff0dd;
 
   cursor: pointer;
@@ -154,7 +183,7 @@ export const CardTitle = styled.p`
   margin: 3px 0 18px;
 
   color: #7c2d12;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
 
   line-height: 1.4;
@@ -179,6 +208,8 @@ export const ModalOverlay = styled.div`
   left: 0;
 
   width: 100%;
+  height: 100%;
+
   background: rgba(0, 0, 0, 0.55);
 
   display: flex;
@@ -308,7 +339,7 @@ export const DeletePopup = styled.div`
   padding: 28px 24px 20px;
 
   background-color: #fff0dd;
-  border-radius: 20px;
+  border-radius: 15px;
 
   display: flex;
   flex-direction: column;
@@ -364,8 +395,8 @@ export const DeleteButton = styled.button`
   border: none;
   border-radius: 20px;
 
-  background-color: #fdba74;
-  color: #7c2d12;
+  background-color: #b55116;
+  color: #fff0dd;
 
   font-size: 11px;
   cursor: pointer;
