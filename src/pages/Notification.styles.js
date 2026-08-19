@@ -48,9 +48,9 @@ export const FilterChip = styled.button`
   border-radius: 20px;
   border: none;
   font-size: 12px;
-  font-weight: ${({ $isActive }) => ($isActive ? '700' : '500')};
-  color: ${({ $isActive }) => ($isActive ? '#7C2D12' : '#B55116')};
-  background-color: ${({ $isActive }) => ($isActive ? '#FDBA74' : '#FFF0DD')};
+  font-weight: 500;
+  color: ${({ $isActive }) => ($isActive ? '#FFF0DD' : '#B55116')};
+  background-color: ${({ $isActive }) => ($isActive ? '#B55116' : '#FFF0DD')};
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
@@ -66,11 +66,23 @@ export const ListContainer = styled.div`
 export const NotificationCard = styled.div`
   display: flex;
   align-items: center;
-  background-color: #fff0dd;
   border-radius: 16px;
   padding: 12px;
   gap: 12px;
   cursor: pointer;
+
+  background-color: ${({ $category }) => {
+    switch ($category) {
+      case '얼마 남지 않은 일정':
+        return '#FED3A5';
+      case '한 번도 열람하지 않은 정보':
+        return '#FFE4C2';
+      case 'AI 추천':
+        return '#FFF0DD';
+      default:
+        return '#FFF0DD';
+    }
+  }};
 `;
 
 export const Thumbnail = styled.div`
