@@ -41,7 +41,7 @@ export const getSchedules = async ({
   }
 
   // 실제 백엔드 API 사용
-  const response = await api.get('/api/schedule', {
+  const response = await api.get('/schedule', {
     params: {
       page,
       category,

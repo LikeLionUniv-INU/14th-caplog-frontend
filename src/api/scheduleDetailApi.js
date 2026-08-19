@@ -9,7 +9,7 @@ export const getScheduleDetail = async (scheduleId) => {
     return mockScheduleDetail;
   }
 
-  const response = await api.get(`/api/schedule/details/${scheduleId}`);
+  const response = await api.get(`/schedule/details/${scheduleId}`);
 
   return response.data;
 };
@@ -29,7 +29,7 @@ export const deleteSchedule = async (scheduleId) => {
     };
   }
 
-  const response = await api.delete(`/api/schedule/${scheduleId}`);
+  const response = await api.delete(`/schedule/${scheduleId}`);
 
   return response.data;
 };
