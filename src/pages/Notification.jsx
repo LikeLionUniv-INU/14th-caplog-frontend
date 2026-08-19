@@ -83,8 +83,8 @@ export default function Notification() {
 
       {/* 알림 리스트 */}
       <S.ListContainer>
-        {alarms.map((noti, index) => (
-          <S.NotificationCard key={`${noti.scheduleId}-${index}`}>
+        {dummyNotifications.map((noti) => (
+          <S.NotificationCard key={noti.id} $category={noti.category}>
             <S.Thumbnail />
 
             <S.ContentWrapper>
@@ -103,7 +103,7 @@ export default function Notification() {
               <S.Message>{noti.message}</S.Message>
               <S.SubText>{noti.title}</S.SubText>
             </S.ContentWrapper>
-
+            
             <S.NextIcon src={RightArrowIcon} />
           </S.NotificationCard>
         ))}

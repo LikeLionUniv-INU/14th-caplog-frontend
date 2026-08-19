@@ -5,21 +5,21 @@ import { signup } from '../api/auth';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  /** 회원가입 API 연동 함수 */
+  /** 회원가입 API */
   const handleSignupSubmit = async () => {
     // 빈칸 검사
-    if (!nickname || !password || !passwordConfirm) {
+    if (!userName || !password || !passwordConfirm) {
       setErrorMessage('모든 항목을 입력해주세요.');
       return;
     }
 
     // 닉네임 형식 검사
-    if (nickname.length > 20) {
+    if (userName.length > 20) {
       setErrorMessage('닉네임은 20자 이내로 입력해주세요.');
       return;
     }
@@ -40,11 +40,8 @@ export default function Signup() {
     setErrorMessage('');
 
     try {
-      const data = await signup(nickname, password);
-
+      const data = await signup(userName, password);
       if (data.isSuccess) {
-        const token = data.result?.accessToken;
-        if (token) localStorage.setItem('accessToken', token);
         alert('회원가입이 완료되었습니다!');
         navigate('/login');
       } else {
@@ -60,15 +57,15 @@ export default function Signup() {
 
   return (
     <S.Container>
-      <h1 style={{ color: '#7C2D12', marginBottom: '0' }}>회원가입</h1>
+      <h2 style={{ color: '#7C2D12', marginBottom: '0' }}>회원가입</h2>
       <S.InputWrapper>
         <S.Label>닉네임</S.Label>
         <S.Input
           style={{ marginBottom: '30px' }}
           type="text"
           placeholder="한/영 20자 이내"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
         />
 
         <S.Label>비밀번호</S.Label>
