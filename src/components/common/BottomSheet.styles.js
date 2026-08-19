@@ -227,8 +227,8 @@ export const ModalBox = styled.div`
 
 export const ModalTitle = styled.h3`
   margin: 0 0 16px 0;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: #7c2d12;
 `;
 
