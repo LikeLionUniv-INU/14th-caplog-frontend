@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NavContainer = styled.nav`
-  position: absolute;
+  position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
@@ -11,6 +11,7 @@ export const NavContainer = styled.nav`
   justify-content: space-around;
 
   width: 75%;
+  max-width: 322px;
   height: 42px;
   padding: 0 8px;
 

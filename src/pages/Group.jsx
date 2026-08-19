@@ -31,7 +31,7 @@ function Group() {
       if (result.isSuccess) {
         setOpenPopup(null);
 
-        navigate('/Home');
+        navigate('/home');
       }
     } catch (error) {
       // 서버 오류나 네트워크 오류가 발생한 경우 확인용
@@ -46,7 +46,7 @@ function Group() {
   return (
     <S.GroupContainer>
       <S.GroupHeader>
-        <S.BackButton type="button" onClick={() => navigate('/Home')}>
+        <S.BackButton type="button" onClick={() => navigate('/home')}>
           <img src={back} alt="뒤로가기" />
         </S.BackButton>
       </S.GroupHeader>
@@ -67,17 +67,12 @@ function Group() {
         </S.InfoTop>
 
         <S.GroupTitle>{groupData.result.group.groupName}</S.GroupTitle>
-        <S.GroupCount>
-          {groupData.result.scheduleCount}개의 정보가 저장됨
-        </S.GroupCount>
+        <S.GroupCount>{groupData.result.scheduleCount}개의 정보가 저장됨</S.GroupCount>
       </S.GroupInfoBox>
 
       <S.CardList>
         {groupData.result.schedules.map((schedule) => (
-          <S.Card
-            key={schedule.scheduleId}
-            onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
-          >
+          <S.Card key={schedule.scheduleId} onClick={() => navigate(`/detail/${schedule.scheduleId}`)}>
             {schedule.isNew && <S.NewBadge>NEW</S.NewBadge>}
 
             <S.CardTitle>{schedule.title}</S.CardTitle>
@@ -112,13 +107,9 @@ function Group() {
             <S.Divider />
 
             <S.ButtonBox>
-              <S.CancelButton onClick={() => setOpenPopup(null)}>
-                취소
-              </S.CancelButton>
+              <S.CancelButton onClick={() => setOpenPopup(null)}>취소</S.CancelButton>
 
-              <S.ModifyButton onClick={() => setOpenPopup(null)}>
-                수정
-              </S.ModifyButton>
+              <S.ModifyButton onClick={() => setOpenPopup(null)}>수정</S.ModifyButton>
             </S.ButtonBox>
           </S.ModifyPopup>
         </S.ModalOverlay>
@@ -136,9 +127,7 @@ function Group() {
             </S.DeleteText>
 
             <S.DeleteButtonBox>
-              <S.CancelButton onClick={() => setOpenPopup(null)}>
-                취소
-              </S.CancelButton>
+              <S.CancelButton onClick={() => setOpenPopup(null)}>취소</S.CancelButton>
 
               <S.DeleteButton onClick={handleDeleteGroup}>삭제</S.DeleteButton>
             </S.DeleteButtonBox>

@@ -53,11 +53,7 @@ export default function Intro() {
           el: '.custom-pagination',
           renderBullet: function (index, className) {
             if (index === 0) {
-              return (
-                '<span class="' +
-                className +
-                '" style="display: none !important;"></span>'
-              );
+              return '<span class="' + className + '" style="display: none !important;"></span>';
             }
             return '<span class="' + className + '"></span>';
           },
@@ -77,7 +73,7 @@ export default function Intro() {
                     style={{
                       margin: '40px 0 0 0',
                       fontSize: '16px',
-                      fontWeight: '600',
+                      fontWeight: '500',
                     }}
                   >
                     {data.title}

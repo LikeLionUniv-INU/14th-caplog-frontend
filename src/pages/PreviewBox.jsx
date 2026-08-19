@@ -87,9 +87,9 @@ function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
 
   const handleClick = () => {
     if (isGroup) {
-      navigate(`/Group/${id}`);
+      navigate(`/group/${id}`);
     } else {
-      navigate(`/Detail/${id}`);
+      navigate(`/detail/${id}`);
     }
   };
 
@@ -100,9 +100,7 @@ function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
 
         {isNew && <NewBadge>NEW</NewBadge>}
 
-        {isGroup && elementCount > 1 && (
-          <CountBadge>+{elementCount}</CountBadge>
-        )}
+        {isGroup && elementCount > 1 && <CountBadge>+{elementCount}</CountBadge>}
       </PreviewImageWrapper>
 
       <PreviewTitle $isGroup={isGroup}>{title}</PreviewTitle>

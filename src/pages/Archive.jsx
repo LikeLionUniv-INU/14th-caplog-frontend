@@ -35,7 +35,7 @@ function Archive() {
   return (
     <S.ArchiveContainer>
       <S.ArchiveHeader>
-        <S.BackButton onClick={() => navigate('/Home')}>
+        <S.BackButton onClick={() => navigate('/home')}>
           <img src={back} alt="뒤로가기" />
         </S.BackButton>
 
@@ -43,18 +43,11 @@ function Archive() {
       </S.ArchiveHeader>
 
       <S.SearchArea>
-        <SearchBar
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          autoFocus
-        />
+        <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} autoFocus />
       </S.SearchArea>
 
       <S.FilterArea>
-        <PreviewFilter
-          selectedFilter={selectedCategory}
-          onFilterChange={setSelectedCategory}
-        />
+        <PreviewFilter selectedFilter={selectedCategory} onFilterChange={setSelectedCategory} />
       </S.FilterArea>
 
       {schedules.length === 0 ? (

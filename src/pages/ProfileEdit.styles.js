@@ -5,14 +5,14 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100dvh;
-  background-color: #ffffff;
+  background-color: #fffbf6;
   box-sizing: border-box;
   overflow-y: auto;
-  padding-bottom: 100px;
-
+  padding-bottom: 80px;
+  /*   
   &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `;
 
 export const Header = styled.div`
@@ -159,10 +159,10 @@ export const CharCount = styled.div`
 
 export const SaveButton = styled.button`
   flex-shrink: 0;
-  width: 60%;
+  width: 70%;
   height: 40px;
   color: #b55116;
-  margin-top: 140px;
+  margin-top: auto;
   background-color: ${({ disabled }) => (disabled ? '#E5E7EB' : '#B55116')};
   color: ${({ disabled }) => (disabled ? '#9CA3AF' : '#FFF0DD')};
   font-size: 14px;

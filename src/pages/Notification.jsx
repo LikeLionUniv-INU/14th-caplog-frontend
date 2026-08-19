@@ -39,9 +39,7 @@ export default function Notification() {
 
         if (data.isSuccess) {
           const newAlarms = data.result.alarms;
-          setAlarms((prev) =>
-            page === 1 ? newAlarms : [...prev, ...newAlarms],
-          );
+          setAlarms((prev) => (page === 1 ? newAlarms : [...prev, ...newAlarms]));
           setHasMore(data.result.page.pageNumber < data.result.page.totalPage);
         }
       } catch (error) {
@@ -71,11 +69,7 @@ export default function Notification() {
       {/* 카테고리 필터 */}
       <S.FilterContainer>
         {filters.map((filter) => (
-          <S.FilterChip
-            key={filter}
-            $isActive={activeFilter === filter}
-            onClick={() => setActiveFilter(filter)}
-          >
+          <S.FilterChip key={filter} $isActive={activeFilter === filter} onClick={() => setActiveFilter(filter)}>
             {filter}
           </S.FilterChip>
         ))}
@@ -86,7 +80,7 @@ export default function Notification() {
         {dummyNotifications.map((noti) => (
           <S.NotificationCard key={noti.id} $category={noti.category}>
             <S.Thumbnail />
-            
+
             <S.ContentWrapper>
               <S.CardHeader>
                 <S.Category>
@@ -103,7 +97,7 @@ export default function Notification() {
               <S.Message>{noti.message}</S.Message>
               <S.SubText>{noti.title}</S.SubText>
             </S.ContentWrapper>
-            
+
             <S.NextIcon src={RightArrowIcon} />
           </S.NotificationCard>
         ))}
