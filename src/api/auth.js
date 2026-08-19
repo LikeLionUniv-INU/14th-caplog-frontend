@@ -23,9 +23,7 @@ export const signup = async (userName, password) => {
 
 // 사진 권한 허용 여부 전송
 export const putPhotoAuth = async (isApproved) => {
-  const response = await api.put('/users/photo-consent', {
-    params: { isApproved },
-  });
+  const response = await api.post('/users/photo-consent', { isApproved });
 
   return response.data;
 };
@@ -39,16 +37,14 @@ export const checkPhotoAuth = async () => {
 
 // 알림 권한 허용 여부 전송
 export const putNotiAuth = async (isApproved) => {
-  const response = await api.put('/users/alarm-consent', {
-    params: { isApproved },
-  });
+  const response = await api.post('/alarm/alarm-consent', { isApproved });
 
   return response.data;
 };
 
 // 알림 권한 허용 여부 확인
 export const checkNotiAuth = async () => {
-  const response = await api.get('/users/alarm-consent');
+  const response = await api.get('/alarm/alarm-consent');
 
   return response.data;
 };

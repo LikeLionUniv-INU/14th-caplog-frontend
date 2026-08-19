@@ -97,15 +97,9 @@ export default function Upload() {
           onChange={handleFileChange}
         />
 
-        {previewImage ? (
-          <S.PreviewImg src={previewImage} />
-        ) : (
-          <img src={GalleryIcon} width="64" />
-        )}
+        {previewImage ? <S.PreviewImg src={previewImage} /> : <img src={GalleryIcon} width="64" />}
 
-        <S.Description style={{ margin: '20px 0 0 0' }}>
-          터치하여 사진 추가
-        </S.Description>
+        <S.Description style={{ margin: '20px 0 0 0' }}>터치하여 사진 추가</S.Description>
       </S.UploadBox>
       <S.Description>
         기기에 저장된 스크린샷을 선택하세요.
@@ -122,11 +116,7 @@ export default function Upload() {
 
       {isLoading && <UploadLoading />}
 
-      <BottomSheet
-        isOpen={isSheetOpen}
-        onClose={() => setIsSheetOpen(false)}
-        aiResult={aiResult}
-      />
+      <BottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} aiResult={aiResult} />
     </S.Container>
   );
 }

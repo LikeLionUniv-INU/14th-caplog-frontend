@@ -88,7 +88,7 @@ export const AvatarImg = styled.img`
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 0.5px solid #7c2d12;
+  /* border: 0.5px solid #7c2d12; */
 `;
 
 export const CheckBadge = styled.div`
