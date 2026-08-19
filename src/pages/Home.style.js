@@ -32,6 +32,49 @@ export const Logo = styled.img`
   color: #f55116;
 `;
 
+export const AlarmArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const AlarmMessage = styled.div`
+  position: relative;
+
+  /* 말풍선 전체를 조금 아래로 */
+  margin-top: 30px;
+
+  max-width: 290px;
+  width: fit-content;
+
+  padding: 12px 16px;
+
+  border-radius: 8px 0 8px 8px;
+  background-color: #b55116;
+
+  color: #fff0dd;
+  font-size: 11px;
+  font-weight: 400;
+
+  white-space: nowrap;
+
+  /* 말풍선 오른쪽 상단 꼬리 */
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    right: -14px;
+
+    width: 0;
+    height: 0;
+
+    border-top: 14px solid #b55116;
+    border-right: 14px solid transparent;
+  }
+`;
+
 export const AlarmButton = styled.button`
   position: relative;
 
