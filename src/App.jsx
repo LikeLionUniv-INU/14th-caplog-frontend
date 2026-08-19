@@ -3,6 +3,11 @@ import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/common/PageTransition';
 import AppLayout from './styles/AppLayout';
 import Intro from './pages/Intro';
+import Home from './pages/Home';
+import Archive from './pages/Archive';
+import Group from './pages/Group';
+import Detail from './pages/Detail';
+import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import CheckPhotoAuth from './pages/CheckPhotoAuth';
@@ -28,6 +33,11 @@ function AnimatedRoutes() {
         {/* 하단바 필요한 페이지들 */}
         <Route element={<AppLayout />}>
           <Route path="/notification" element={<PageTransition><Notification /></PageTransition>} />
+          <Route path="/home" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/archive" element={<PageTransition><Archive /></PageTransition>} />
+          <Route path="/group/:id" element={<PageTransition><Group /></PageTransition>} />
+          <Route path="/detail/:id" element={<PageTransition><Detail /></PageTransition>} />
+          <Route path="/calendar" element={<PageTransition><Calendar /></PageTransition>} />
           <Route path="/upload" element={<PageTransition><Upload /></PageTransition>} />
           <Route path="/mypage" element={<PageTransition><Mypage /></PageTransition>} />
           <Route path="/mypage/edit" element={<PageTransition><ProfileEdit /></PageTransition>} />
