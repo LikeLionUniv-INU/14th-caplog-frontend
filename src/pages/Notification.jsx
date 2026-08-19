@@ -26,7 +26,8 @@ export default function Notification() {
   useEffect(() => {
     /** 알림 목록 조회 api */
     const fetchAlarms = async () => {
-      if (isLoading || !hasMore) return;
+      if (isLoading) return;
+      if (page > 0 && !hasMore) return;
 
       setIsLoading(true);
       try {
@@ -73,7 +74,7 @@ export default function Notification() {
       {/* 카테고리 필터 */}
       <S.FilterContainer>
         {filters.map((filter) => (
-          <S.FilterChip key={filter} $isActive={activeFilter === filter} onClick={() => setActiveFilter(filter)}>
+          <S.FilterChip key={filter} $isActive={activeFilter === filter} onClick={() => handleFilterClick(filter)}>
             {filter}
           </S.FilterChip>
         ))}
