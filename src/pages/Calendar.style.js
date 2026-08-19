@@ -2,10 +2,17 @@ import styled from 'styled-components';
 
 export const CalendarContainer = styled.div`
   width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+
   padding: 55px 15px 120px;
   box-sizing: border-box;
 
   background-color: #fffbf6;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Header = styled.div`

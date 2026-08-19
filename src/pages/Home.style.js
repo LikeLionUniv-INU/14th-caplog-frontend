@@ -3,11 +3,18 @@ import styled from 'styled-components';
 export const HomeContainer = styled.main`
   width: 100%;
   max-width: 430px;
-  min-height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
+
   padding: 0 16px 100px;
   box-sizing: border-box;
   background-color: #fffbf6;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Header = styled.header`
@@ -23,6 +30,58 @@ export const Logo = styled.img`
   height: auto;
   display: block;
   color: #f55116;
+`;
+
+export const AlarmArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const AlarmMessage = styled.div`
+  position: relative;
+
+  margin-top: 8px;
+
+  width: fit-content;
+  max-width: 310px;
+
+  height: 31px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  background-color: #ffd1a1;
+
+  border-radius: 999px;
+
+  color: #b55116;
+  font-size: 8px;
+  font-weight: semibold;
+
+  white-space: nowrap;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top: 50%;
+    right: -7px;
+
+    transform: translateY(-50%);
+
+    width: 0;
+    height: 0;
+
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid #ffd1a1;
+  }
 `;
 
 export const AlarmButton = styled.button`

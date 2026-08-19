@@ -29,14 +29,14 @@ function AnimatedRoutes() {
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
         <Route path="/check-photo-auth" element={<PageTransition><CheckPhotoAuth /></PageTransition>} />
         <Route path="/check-noti-auth" element={<PageTransition><CheckNotiAuth /></PageTransition>} />
+        <Route path="/detail/:id" element={<PageTransition><Detail /></PageTransition>} />
+        <Route path="/group/:id" element={<PageTransition><Group /></PageTransition>} />
 
         {/* 하단바 필요한 페이지들 */}
         <Route element={<AppLayout />}>
           <Route path="/notification" element={<PageTransition><Notification /></PageTransition>} />
           <Route path="/home" element={<PageTransition><Home /></PageTransition>} />
           <Route path="/archive" element={<PageTransition><Archive /></PageTransition>} />
-          <Route path="/group/:id" element={<PageTransition><Group /></PageTransition>} />
-          <Route path="/detail/:id" element={<PageTransition><Detail /></PageTransition>} />
           <Route path="/calendar" element={<PageTransition><Calendar /></PageTransition>} />
           <Route path="/upload" element={<PageTransition><Upload /></PageTransition>} />
           <Route path="/mypage" element={<PageTransition><Mypage /></PageTransition>} />

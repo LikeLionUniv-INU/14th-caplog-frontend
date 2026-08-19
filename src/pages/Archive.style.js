@@ -2,13 +2,18 @@ import styled from 'styled-components';
 
 export const ArchiveContainer = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
 
   box-sizing: border-box;
 
   padding: 52px 17px 100px;
 
   background-color: #fffbf6;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ArchiveHeader = styled.div`
