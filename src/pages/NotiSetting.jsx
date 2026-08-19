@@ -45,8 +45,7 @@ export default function NotiSetting() {
       } else {
         const nextState = { ...prev, [id]: !prev[id] };
         if (!nextState[id]) nextState.all = false;
-        if (nextState.schedule && nextState.unread && nextState.recommend)
-          nextState.all = true;
+        if (nextState.schedule && nextState.unread && nextState.recommend) nextState.all = true;
 
         return nextState;
       }
@@ -70,10 +69,7 @@ export default function NotiSetting() {
                 <MenuDesc>{item.desc}</MenuDesc>
               </TextWrapper>
 
-              <ToggleWrapper
-                $isOn={toggles[item.id]}
-                onClick={() => handleToggle(item.id)}
-              >
+              <ToggleWrapper $isOn={toggles[item.id]} onClick={() => handleToggle(item.id)}>
                 <ToggleCircle $isOn={toggles[item.id]} />
               </ToggleWrapper>
             </MenuItem>

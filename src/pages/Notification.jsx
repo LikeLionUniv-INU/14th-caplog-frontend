@@ -67,7 +67,7 @@ export default function Notification() {
               <S.Message>{noti.title}</S.Message>
               <S.SubText>{noti.subText}</S.SubText>
             </S.ContentWrapper>
-
+            
             <S.NextIcon src={RightArrowIcon} />
           </S.NotificationCard>
         ))}

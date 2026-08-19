@@ -7,6 +7,17 @@ import avatarImg1 from '../assets/images/Avatar_1.png';
 
 export default function Mypage() {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('LikeLionINU');
+  const menuItems = [
+    { label: '프로필 설정', path: '/mypage/edit' },
+    { label: '알림 설정', path: '/mypage/notifications' },
+  ];
+  const serviceItems = [
+    { label: '서비스 소개', path: '/' },
+    { label: 'CapLog 사진 권한 보기', path: '/check-photo-auth' },
+    { label: 'CapLog 알림 권한 보기', path: '/check-noti-auth' },
+    { label: '로그아웃', path: '/login' },
+  ];
 
   // 유저 기본 정보
   const [userInfo, setUserInfo] = useState({
@@ -129,16 +140,10 @@ export default function Mypage() {
       {isLogoutModalOpen && (
         <A.ModalOverlay>
           <A.ModalBox>
-            <A.ModalTitle style={{ marginBottom: '24px' }}>
-              정말 로그아웃하시겠습니까?
-            </A.ModalTitle>
+            <A.ModalTitle style={{ marginBottom: '24px' }}>정말 로그아웃하시겠습니까?</A.ModalTitle>
             <A.ModalButtonGroup>
-              <A.ModalNoButton onClick={handleLogoutCancel}>
-                아니요
-              </A.ModalNoButton>
-              <A.ModalYesButton onClick={handleLogoutConfirm}>
-                예
-              </A.ModalYesButton>
+              <A.ModalNoButton onClick={handleLogoutCancel}>아니요</A.ModalNoButton>
+              <A.ModalYesButton onClick={handleLogoutConfirm}>예</A.ModalYesButton>
             </A.ModalButtonGroup>
           </A.ModalBox>
         </A.ModalOverlay>
