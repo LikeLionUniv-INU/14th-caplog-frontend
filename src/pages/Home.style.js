@@ -41,37 +41,46 @@ export const AlarmArea = styled.div`
 export const AlarmMessage = styled.div`
   position: relative;
 
-  /* 말풍선 전체를 조금 아래로 */
-  margin-top: 30px;
+  margin-top: 8px;
 
-  max-width: 290px;
   width: fit-content;
+  max-width: 310px;
 
-  padding: 12px 16px;
+  height: 31px;
 
-  border-radius: 8px 0 8px 8px;
-  background-color: #b55116;
+  padding: 0 14px;
 
-  color: #fff0dd;
-  font-size: 11px;
-  font-weight: 400;
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  background-color: #ffd1a1;
+
+  border-radius: 999px;
+
+  color: #b55116;
+  font-size: 8px;
+  font-weight: semibold;
 
   white-space: nowrap;
 
-  /* 말풍선 오른쪽 상단 꼬리 */
   &::after {
     content: '';
 
     position: absolute;
 
-    top: 0;
-    right: -14px;
+    top: 50%;
+    right: -7px;
+
+    transform: translateY(-50%);
 
     width: 0;
     height: 0;
 
-    border-top: 14px solid #b55116;
-    border-right: 14px solid transparent;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid #ffd1a1;
   }
 `;
 
