@@ -1,23 +1,31 @@
 import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
 import { putNotiAuth } from '../api/auth';
+import { Camera } from '@capacitor/camera';
+import { PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
 
 export default function CheckNotiAuth() {
   const navigate = useNavigate();
 
-  /** 알림 권한 허용 여부 전송 API 함수 */
+  /** 푸시 알림 권한 요청 핸들러 */
   const handleNotiAuth = async () => {
-    try {
-      const data = await putNotiAuth(true);
+    if (!Capacitor.isNativePlatform()) {
+      alert('웹 환경에서는 푸시 알림 기능이 제한됩니다. 폰에서 확인해주세요!');
+      return;
+    }
 
-      if (data.isSuccess) {
-        navigate('/home');
+    try {
+      const permissions = await PushNotifications.requestPermissions();
+
+      if (permissions.receive === 'granted') {
+        alert('알림 권한이 허용되었습니다! 🔔');
+        // FCM 토큰 발급 함수(PushNotifications.register()) 연결
       } else {
-        alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
+        alert('알림 권한이 거부되었습니다. 중요 일정을 놓치지 않게 권한을 켜주세요.');
       }
     } catch (error) {
-      console.error('권한 설정 오류:', error);
-      alert('서버와 통신할 수 없습니다. 다시 시도해주세요.');
+      console.error('알림 권한 요청 중 에러 발생:', error);
     }
   };
 
@@ -35,8 +43,7 @@ export default function CheckNotiAuth() {
         <S.InfoCard>
           <S.SectionTitle>접근 범위</S.SectionTitle>
           <S.Description style={{ fontSize: '12px' }}>
-            • CapLog에서 보내는 알림만 수신 가능 <br />• CapLog 알림 외 다른
-            목적으로 사용하지 않음
+            • CapLog에서 보내는 알림만 수신 가능 <br />• CapLog 알림 외 다른 목적으로 사용하지 않음
           </S.Description>
         </S.InfoCard>
 
@@ -49,16 +56,12 @@ export default function CheckNotiAuth() {
           </S.Description>
         </S.InfoCard>
 
-        <S.Description
-          style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}
-        >
+        <S.Description style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}>
           이 설정은 언제든 기기 설정에서 변경할 수 있습니다.
         </S.Description>
       </S.ContentWrapper>
 
-      <S.StartButton onClick={handleNotiAuth}>
-        권한 허용 후 CapLog 시작하기
-      </S.StartButton>
+      <S.StartButton onClick={handleNotiAuth}>권한 허용 후 CapLog 시작하기</S.StartButton>
     </S.Container>
   );
 }

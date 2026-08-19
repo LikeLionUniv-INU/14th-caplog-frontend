@@ -1,23 +1,31 @@
 import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
 import { putPhotoAuth } from '../api/auth';
+import { Camera } from '@capacitor/camera';
+import { PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
 
 export default function CheckPhotoAuth() {
   const navigate = useNavigate();
 
-  /** 사진 권한 허용 여부 전송 API 함수 */
+  /** 사진/갤러리 권한 요청 핸들러 */
   const handlePhotoAuth = async () => {
-    try {
-      const data = await putPhotoAuth(true);
+    // 웹인 경우
+    if (!Capacitor.isNativePlatform()) {
+      alert('웹 환경에서는 갤러리 권한이 기본 허용됩니다. 폰에서 확인해주세요!');
+      return;
+    }
 
-      if (data.isSuccess) {
+    try {
+      const permissions = await Camera.requestPermissions();
+
+      if (permissions.photos === 'granted') {
         navigate('/check-noti-auth');
       } else {
-        alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
+        alert('사진 권한이 거부되었습니다. 원활한 앱 사용을 위해 권한을 허용해주세요.');
       }
     } catch (error) {
-      console.error('권한 설정 오류:', error);
-      alert('서버와 통신할 수 없습니다. 다시 시도해주세요.');
+      console.error('사진 권한 요청 중 에러 발생:', error);
     }
   };
 
@@ -51,16 +59,12 @@ export default function CheckPhotoAuth() {
           </S.Description>
         </S.InfoCard>
 
-        <S.Description
-          style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}
-        >
+        <S.Description style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}>
           이 설정은 언제든 기기 설정에서 변경할 수 있습니다.
         </S.Description>
       </S.ContentWrapper>
 
-      <S.StartButton onClick={handlePhotoAuth}>
-        사진 권한 허용하기
-      </S.StartButton>
+      <S.StartButton onClick={handlePhotoAuth}>사진 권한 허용하기</S.StartButton>
     </S.Container>
   );
 }
