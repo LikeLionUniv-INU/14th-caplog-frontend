@@ -5,12 +5,7 @@ import deleteicon from '../assets/delete.svg';
 import aiIcon from '../assets/aiIcon.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import {
-  getScheduleDetail,
-  deleteSchedule,
-  updateSchedule,
-  getGroupList,
-} from '../api/scheduleDetailApi';
+import { getScheduleDetail, deleteSchedule, updateSchedule, getGroupList } from '../api/scheduleDetailApi';
 import { getCategoryList } from '../api/groupApi';
 
 function Detail() {
@@ -96,10 +91,7 @@ function Detail() {
   // 수정 팝업 열기
   const handleOpenModify = async () => {
     try {
-      const [categoryData, groupData] = await Promise.all([
-        getCategoryList(),
-        getGroupList(0),
-      ]);
+      const [categoryData, groupData] = await Promise.all([getCategoryList(), getGroupList(0)]);
 
       setCategoryList(categoryData.result ?? []);
 
@@ -252,10 +244,7 @@ function Detail() {
             <S.FormGroup>
               <S.Label>제목</S.Label>
 
-              <S.TextInput
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-              />
+              <S.TextInput value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
             </S.FormGroup>
 
             {/* 일정 */}
@@ -282,20 +271,14 @@ function Detail() {
             <S.FormGroup>
               <S.Label>세부사항</S.Label>
 
-              <S.TextArea
-                value={editDetails}
-                onChange={(e) => setEditDetails(e.target.value)}
-              />
+              <S.TextArea value={editDetails} onChange={(e) => setEditDetails(e.target.value)} />
             </S.FormGroup>
 
             {/* AI 요약 */}
             <S.FormGroup>
               <S.Label>AI 요약</S.Label>
 
-              <S.TextArea
-                value={editAiSummary}
-                onChange={(e) => setEditAiSummary(e.target.value)}
-              />
+              <S.TextArea value={editAiSummary} onChange={(e) => setEditAiSummary(e.target.value)} />
             </S.FormGroup>
 
             {/* 저장 위치 */}
@@ -306,10 +289,7 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>카테고리</S.Label>
 
-                  <S.Select
-                    value={editCategory}
-                    onChange={(e) => setEditCategory(e.target.value)}
-                  >
+                  <S.Select value={editCategory} onChange={(e) => setEditCategory(e.target.value)}>
                     {categoryList.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -321,10 +301,7 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>주제</S.Label>
 
-                  <S.Select
-                    value={editGroup}
-                    onChange={(e) => setEditGroup(e.target.value)}
-                  >
+                  <S.Select value={editGroup} onChange={(e) => setEditGroup(e.target.value)}>
                     <option value="">주제 없음</option>
 
                     {groupList.map((group) => (
@@ -366,10 +343,7 @@ function Detail() {
             </S.PopupDescription>
 
             <S.PopupButtonBox>
-              <S.DeleteCancelButton
-                type="button"
-                onClick={() => setOpenPopup(null)}
-              >
+              <S.DeleteCancelButton type="button" onClick={() => setOpenPopup(null)}>
                 취소
               </S.DeleteCancelButton>
 

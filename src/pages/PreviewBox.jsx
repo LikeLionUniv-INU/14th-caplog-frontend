@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // 스타일
 const PreviewTitle = styled.p`
-  width: 177px;
+  width: 100%;
   height: 42px;
 
   margin: 0;
@@ -29,7 +29,8 @@ const PreviewTitle = styled.p`
 const PreviewBoxContainer = styled.button`
   position: relative;
 
-  width: 177px;
+  width: 100%;
+  min-width: 0;
   height: 220px;
 
   padding: 0;
@@ -54,14 +55,13 @@ const PreviewBoxContainer = styled.button`
 `;
 const PreviewImageWrapper = styled.div`
   position: relative;
-
-  width: 177px;
+  width: 100%;
   height: 178px;
 `;
 
 const PreviewImage = styled.img`
   display: block;
-  width: 177px;
+  width: 100%;
   height: 178px;
   object-fit: cover;
 `;
@@ -116,9 +116,7 @@ function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
 
         {isNew && <NewBadge>NEW</NewBadge>}
 
-        {isGroup && elementCount > 1 && (
-          <CountBadge>+{elementCount}</CountBadge>
-        )}
+        {isGroup && elementCount > 1 && <CountBadge>+{elementCount}</CountBadge>}
       </PreviewImageWrapper>
 
       <PreviewTitle $isGroup={isGroup}>{title}</PreviewTitle>

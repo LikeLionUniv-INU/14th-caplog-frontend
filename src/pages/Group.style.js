@@ -7,7 +7,7 @@ export const GroupContainer = styled.div`
   overflow-y: auto;
 
   width: 100%;
-  padding: 0 16px;
+  padding: 0 16px 40px 16px;
   box-sizing: border-box;
 
   background-color: #fffbf6;
@@ -21,7 +21,7 @@ export const GroupHeader = styled.div`
   display: flex;
   align-items: center;
 
-  padding-top: 50px;
+  padding-top: 30px;
   margin-bottom: 34px;
 `;
 
@@ -56,7 +56,7 @@ export const GroupInfoBox = styled.div`
   background-color: #ffd1a1;
   border-radius: 16px;
 
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
 `;
@@ -64,12 +64,15 @@ export const GroupInfoBox = styled.div`
 export const SpringRow = styled.div`
   position: absolute;
   top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  width: 100%;
 
   display: flex;
-  gap: 9px;
+  align-items: center;
+  justify-content: space-evenly;
 
+  padding: 0 16px;
+  box-sizing: border-box;
   pointer-events: none;
 `;
 
