@@ -44,7 +44,7 @@ export const FilterContainer = styled.div`
 `;
 
 export const FilterChip = styled.button`
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 20px;
   border: none;
   font-size: 12px;
@@ -80,7 +80,7 @@ export const NotificationCard = styled.div`
       case 'AI 추천':
         return '#FFF0DD';
       default:
-        return '#FFF0DD';
+        return '#fff0dd';
     }
   }};
 `;
