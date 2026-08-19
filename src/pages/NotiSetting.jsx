@@ -45,8 +45,7 @@ export default function NotiSetting() {
       } else {
         const nextState = { ...prev, [id]: !prev[id] };
         if (!nextState[id]) nextState.all = false;
-        if (nextState.schedule && nextState.unread && nextState.recommend)
-          nextState.all = true;
+        if (nextState.schedule && nextState.unread && nextState.recommend) nextState.all = true;
 
         return nextState;
       }
@@ -70,10 +69,7 @@ export default function NotiSetting() {
                 <MenuDesc>{item.desc}</MenuDesc>
               </TextWrapper>
 
-              <ToggleWrapper
-                $isOn={toggles[item.id]}
-                onClick={() => handleToggle(item.id)}
-              >
+              <ToggleWrapper $isOn={toggles[item.id]} onClick={() => handleToggle(item.id)}>
                 <ToggleCircle $isOn={toggles[item.id]} />
               </ToggleWrapper>
             </MenuItem>
@@ -121,9 +117,9 @@ const HeaderTitle = styled.h2`
 `;
 
 const Desc = styled.p`
-  margin: 0 0 50px 0;
+  margin: 0 0 40px 0;
   font-size: 12px;
-  color: #6b7280;
+  color: #b55116;
 `;
 
 const MenuContainer = styled.div`
@@ -136,7 +132,7 @@ const MenuContainer = styled.div`
 
 const MenuBox = styled.div`
   background-color: #ffffff;
-  border: 1px solid #ffd1a1;
+  border: 1px solid #fdba74;
   border-radius: 8px;
   overflow: hidden;
 `;
@@ -151,7 +147,7 @@ const MenuItem = styled.div`
   transition: background-color 0.2s;
 
   &:not(:last-child) {
-    border-bottom: 1px solid #ffd1a1;
+    border-bottom: 1px solid #fdba74;
   }
 
   &:active {
@@ -175,7 +171,7 @@ const MenuLabel = styled.span`
 const MenuDesc = styled.span`
   font-size: 11px;
   font-weight: 400;
-  color: #6b7280;
+  color: #b55116;
   line-height: 1.4;
 `;
 
@@ -183,7 +179,7 @@ const ToggleWrapper = styled.div`
   width: 46px;
   height: 22px;
   border-radius: 14px;
-  background-color: ${({ $isOn }) => ($isOn ? '#7C2D12' : '#D1D5DB')};
+  background-color: ${({ $isOn }) => ($isOn ? '#B55116' : '#D1D5DB')};
   position: relative;
   cursor: pointer;
   flex-shrink: 0;

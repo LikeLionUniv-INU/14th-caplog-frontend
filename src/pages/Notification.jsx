@@ -59,7 +59,7 @@ export default function Notification() {
         {dummyNotifications.map((noti) => (
           <S.NotificationCard key={noti.id} $category={noti.category}>
             <S.Thumbnail />
-
+            
             <S.ContentWrapper>
               <S.CardHeader>
                 <S.Category>{noti.category}</S.Category>
