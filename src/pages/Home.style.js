@@ -3,11 +3,18 @@ import styled from 'styled-components';
 export const HomeContainer = styled.main`
   width: 100%;
   max-width: 430px;
-  min-height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
+
   padding: 0 16px 100px;
   box-sizing: border-box;
   background-color: #fffbf6;
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Header = styled.header`

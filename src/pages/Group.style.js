@@ -3,11 +3,18 @@ import styled from 'styled-components';
 export const GroupContainer = styled.div`
   position: relative;
 
+  height: 100dvh;
+  overflow-y: auto;
+
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
 
   background-color: #fffbf6;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const GroupHeader = styled.div`
