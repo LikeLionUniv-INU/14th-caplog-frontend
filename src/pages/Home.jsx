@@ -67,7 +67,7 @@ function Home() {
 
         setAlarmCount(data.result.alarmCount);
 
-        const unopenedAlarm = data.result.alarms?.find((alarm) => !alarm.isOpened);
+        const unopenedAlarm = data.result.notifications?.find((alarm) => !alarm.isOpened);
 
         setLatestAlarm(unopenedAlarm ?? null);
       } catch (error) {
