@@ -62,7 +62,6 @@ export const updateGroup = async (groupId, groupName, groupCategory) => {
 };
 
 // 그룹 카테고리 목록 조회
-// TODO: 팀원 API 파일 받으면 이 함수는 삭제하고 팀원 함수 import
 export const getCategoryList = async () => {
   // 카테고리 목록 임시 목업
   if (USE_MOCK) {
@@ -75,8 +74,6 @@ export const getCategoryList = async () => {
   }
 
   const response = await api.get('/api/group/categories');
-  // 실제 백엔드 연동
-  const response = await api.delete(`/group/${groupId}`);
 
   return response.data;
 };
