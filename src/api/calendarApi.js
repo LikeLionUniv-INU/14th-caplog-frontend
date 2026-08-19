@@ -15,7 +15,7 @@ export const getCalendarEvents = async ({
   }
 
   // 실제 API 요청
-  const response = await api.get('/api/schedules/events', {
+  const response = await api.get('/schedules/events', {
     params: {
       startDateTime,
       endDateTime,

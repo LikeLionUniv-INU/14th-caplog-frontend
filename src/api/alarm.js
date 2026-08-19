@@ -9,7 +9,7 @@ export const getAlarms = async (page = 0, alarmType = 'TOTAL') => {
     return mockAlarmData;
   }
 
-  const response = await api.get('/api/alarm', {
+  const response = await api.get('/alarm', {
     params: {
       page,
       alarmType,
