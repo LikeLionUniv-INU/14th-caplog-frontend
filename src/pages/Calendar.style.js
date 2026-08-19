@@ -85,7 +85,7 @@ export const CalendarBox = styled.div`
 
     color: #b55116;
     font-size: 16px;
-    font-weight: medium;
+    font-weight: 500;
 
     padding: 0;
   }

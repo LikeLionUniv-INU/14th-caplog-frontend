@@ -51,8 +51,29 @@ function AnimatedRoutes() {
 function App() {
   return (
     <BrowserRouter>
-      <div style={{ position: 'relative', width: '100%', height: '100dvh', overflow: 'hidden' }}>
-        <AnimatedRoutes />
+      {/* PC 화면 */}
+      <div style={{ 
+        width: '100vw', 
+        height: '100dvh', 
+        backgroundColor: '#f5f5f5', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+      }}>
+        
+        {/* 모바일 화면 */}
+        <div style={{ 
+          position: 'relative', 
+          width: '100%', 
+          maxWidth: '430px',
+          height: '100dvh', 
+          boxShadow: '0 0 20px rgba(0, 0, 0, 0.05)', 
+          overflow: 'hidden' 
+        }}>
+          
+          <AnimatedRoutes />
+          
+        </div>
       </div>
     </BrowserRouter>
   );

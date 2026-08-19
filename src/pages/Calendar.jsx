@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import * as S from './Calendar.style';
+import PreviewBox from './PreviewBox';
 
 const formatDateKey = (date) => {
   const year = date.getFullYear();

@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100dvh;
-  background-color: #ffffff;
+  background-color: #fffbf6;
   box-sizing: border-box;
   overflow-y: auto;
   padding-bottom: 100px;
@@ -64,21 +64,21 @@ export const Divider = styled.div`
 
 // ======= 통계 =======
 export const StatWrapper = styled.div`
-  background-color: #ffd1a1;
   border-radius: 12px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 90%;
+  width: 100%;
   box-sizing: border-box;
 `;
 
 export const Title = styled.h3`
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #7c2d12;
+  margin-left: 12px;
 `;
 
 export const CardWrapper = styled.div`
@@ -89,24 +89,23 @@ export const CardWrapper = styled.div`
 
 export const StatCard = styled.div`
   flex: 1;
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 12px 0;
+  background-color: #fff0dd;
+  border-radius: 18px;
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 `;
 
 export const CardLabel = styled.span`
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   color: #7c2d12;
 `;
 
 export const CardValue = styled.span`
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   color: #7c2d12;
 `;
 
@@ -124,12 +123,13 @@ export const MenuTitle = styled.h3`
   font-size: 15px;
   font-weight: 600;
   color: #7c2d12;
+  margin-left: 12px;
 `;
 
 export const MenuBox = styled.div`
   background-color: #ffffff;
-  border: 1px solid #ffd1a1;
-  border-radius: 8px;
+  border: 1px solid #fdba74;
+  border-radius: 10px;
   overflow: hidden;
 `;
 
@@ -143,7 +143,7 @@ export const MenuItem = styled.div`
   transition: background-color 0.2s;
 
   &:not(:last-child) {
-    border-bottom: 1px solid #ffd1a1;
+    border-bottom: 1px solid #fdba74;
   }
 
   &:active {
@@ -153,7 +153,7 @@ export const MenuItem = styled.div`
 
 export const MenuLabel = styled.span`
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   color: #7c2d12;
 `;
 

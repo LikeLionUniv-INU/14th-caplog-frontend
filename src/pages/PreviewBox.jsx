@@ -103,9 +103,9 @@ function PreviewBox({ id, image, title, isGroup, isNew, elementCount }) {
 
   const handleClick = () => {
     if (isGroup) {
-      navigate(`/Group/${id}`);
+      navigate(`/group/${id}`);
     } else {
-      navigate(`/Detail/${id}`);
+      navigate(`/detail/${id}`);
     }
   };
 

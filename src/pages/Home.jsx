@@ -119,13 +119,7 @@ function Home() {
           {memoryItems.map((memory) => (
             <S.MemoryItem
               key={`${memory.id}-${memory.title}`}
-              onClick={() =>
-                navigate(
-                  memory.isGroup
-                    ? `/Group/${memory.id}`
-                    : `/Detail/${memory.id}`,
-                )
-              }
+              onClick={() => navigate(memory.isGroup ? `/group/${memory.id}` : `/detail/${memory.id}`)}
             >
               <span>{memory.title}</span>
 
@@ -147,18 +141,12 @@ function Home() {
 
       <S.PreviewSection>
         <S.PreviewHeader>
-          <S.PreviewTitle>저장한 캡쳐 정보</S.PreviewTitle>
-
-          <S.AllButton onClick={() => navigate('/Archive')}>
-            전체 보기 ›
-          </S.AllButton>
+          <S.PreviewTitle>저장한 캡처 정보</S.PreviewTitle>
+          <S.AllButton onClick={() => navigate('/archive')}>전체 보기 ›</S.AllButton>
         </S.PreviewHeader>
 
         <S.FilterSection>
-          <PreviewFilter
-            selectedFilter={selectedCategory}
-            onFilterChange={setSelectedCategory}
-          />
+          <PreviewFilter selectedFilter={selectedCategory} onFilterChange={setSelectedCategory} />
         </S.FilterSection>
 
         <S.PreviewList>

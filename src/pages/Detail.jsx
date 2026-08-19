@@ -173,7 +173,7 @@ function Detail() {
       if (result.isSuccess) {
         setOpenPopup(null);
 
-        navigate('/Home');
+        navigate('/home');
       }
     } catch (error) {
       // 서버 오류나 네트워크 오류가 발생한 경우 확인용

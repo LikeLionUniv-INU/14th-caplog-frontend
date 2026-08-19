@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 100dvh;
-  background-color: ${({ $activeIndex }) => ($activeIndex === 0 ? '#FFF0DD' : '#FFFFFF')};
+  background-color: ${({ $activeIndex }) => ($activeIndex === 0 ? '#FFF0DD' : '#FFFBF6')};
   transition: background-color 0.4s ease-in-out;
   display: flex;
   flex-direction: column;

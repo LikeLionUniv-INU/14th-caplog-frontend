@@ -35,7 +35,7 @@ function Archive() {
   return (
     <S.ArchiveContainer>
       <S.ArchiveHeader>
-        <S.BackButton onClick={() => navigate('/Home')}>
+        <S.BackButton onClick={() => navigate('/home')}>
           <img src={back} alt="뒤로가기" />
         </S.BackButton>
 

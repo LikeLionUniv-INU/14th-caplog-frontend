@@ -9,13 +9,14 @@ export const getGroupDetail = async (groupId, page = 0) => {
     return mockGroupDetail;
   }
 
-  const response = await api.get(`/api/group/details/${groupId}?page=${page}`);
+  const response = await api.get(`/group/details/${groupId}?page=${page}`);
 
   return response.data;
 };
 
 // 그룹 삭제
 export const deleteGroup = async (groupId) => {
+  // 목업 모드
   if (USE_MOCK) {
     console.log(`[MOCK] 그룹 삭제 요청: ${groupId}`);
 
@@ -74,6 +75,8 @@ export const getCategoryList = async () => {
   }
 
   const response = await api.get('/api/group/categories');
+  // 실제 백엔드 연동
+  const response = await api.delete(`/group/${groupId}`);
 
   return response.data;
 };
@@ -81,7 +84,7 @@ export const getCategoryList = async () => {
 // import api from './axios';
 
 // export const getGroupDetail = async (groupId, page = 0) => {
-//   const response = await api.get(`/api/group/details/${groupId}?page=${page}`);
+//   const response = await api.get(`/group/details/${groupId}?page=${page}`);
 
 //   return response.data;
 // };

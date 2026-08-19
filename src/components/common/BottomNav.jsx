@@ -12,7 +12,7 @@ export default function BottomNav() {
   const navItems = [
     {
       path: '/home',
-      activePaths: ['/home', '/detail', '/notification'],
+      activePaths: ['/home', '/group', '/detail', '/notification'],
       icon: <img src={HomeIcon} alt="홈" />,
     },
     {
@@ -27,7 +27,7 @@ export default function BottomNav() {
     },
     {
       path: '/mypage',
-      activePaths: ['/mypage', '/mypage/edit', '/mypage/notifications'],
+      activePaths: ['/mypage'],
       icon: <img src={ProfileIcon} alt="마이페이지" />,
     },
   ];
@@ -35,14 +35,12 @@ export default function BottomNav() {
   return (
     <S.NavContainer>
       {navItems.map((item) => {
-        const isActive = item.activePaths.includes(location.pathname);
+        const isActive = item.activePaths.some(
+          (path) => location.pathname === path || location.pathname.startsWith(`${path}/`),
+        );
 
         return (
-          <S.NavItem
-            key={item.path}
-            $isActive={isActive}
-            onClick={() => navigate(item.path)}
-          >
+          <S.NavItem key={item.path} $isActive={isActive} onClick={() => navigate(item.path)}>
             {item.icon}
           </S.NavItem>
         );

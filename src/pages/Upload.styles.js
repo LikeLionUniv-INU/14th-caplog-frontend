@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100dvh;
+  padding-bottom: 80px;
   background-color: #ffffff;
   box-sizing: border-box;
 `;
@@ -30,7 +31,7 @@ export const UploadBox = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 24px;
+  margin: 3vh 0;
   overflow: hidden;
 
   transition: transform 0.1s ease-in-out;
@@ -45,16 +46,16 @@ export const PreviewImg = styled.img`
 `;
 
 export const Description = styled.p`
-  color: #7c2d12;
+  color: #b55116;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
 `;
 
 export const SubmitButton = styled.button`
-  width: 60%;
+  width: 70%;
   height: 40px;
   color: #b55116;
-  margin-top: 100px;
+  margin-top: auto;
   background-color: ${({ disabled }) => (disabled ? '#E5E7EB' : '#B55116')};
   color: ${({ disabled }) => (disabled ? '#9CA3AF' : '#FFF0DD')};
   font-size: 14px;

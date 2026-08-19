@@ -216,7 +216,7 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 100;
+  z-index: 9999;
 `;
 
 export const ModifyPopup = styled.div`
@@ -320,7 +320,7 @@ export const DeleteOverlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
 
   background: rgba(0, 0, 0, 0.6);
 
@@ -328,7 +328,7 @@ export const DeleteOverlay = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 100;
+  z-index: 9999;
 `;
 
 export const DeletePopup = styled.div`

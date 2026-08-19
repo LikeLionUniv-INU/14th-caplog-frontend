@@ -251,7 +251,7 @@ export const PopupOverlay = styled.div`
 
   background: rgba(0, 0, 0, 0.55);
 
-  z-index: 100;
+  z-index: 9999;
 
   display: flex;
   justify-content: center;
@@ -525,15 +525,14 @@ export const DeletePopupOverlay = styled.div`
   left: 0;
 
   width: 100%;
-  height: 100%;
-
+  height: 100dvh;
   background: rgba(0, 0, 0, 0.6);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  z-index: 100;
+  z-index: 9999;
 `;
 
 export const DeletePopup = styled.div`
