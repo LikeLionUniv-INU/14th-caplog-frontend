@@ -15,8 +15,9 @@ export const SheetContainer = styled.div`
 
 export const HeaderRow = styled.div`
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 12px;
 `;
 
 export const Title = styled.h2`
@@ -28,23 +29,22 @@ export const Title = styled.h2`
 
 export const SubTitle = styled.span`
   font-size: 12px;
-  color: #9ca3af;
+  font-weight: 600;
+  color: #b55116;
   margin-bottom: 2px;
 `;
 
 export const WarningBox = styled.div`
   background-color: #fff0dd;
-  color: #7c2d12;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 11px;
+  color: #b55116;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 10px;
+  font-weight: 500;
+  margin: 6px 0;
   display: flex;
   gap: 8px;
   line-height: 1.5;
-
-  .icon {
-    font-size: 12px;
-  }
 `;
 
 export const FormGroup = styled.div`
@@ -56,23 +56,26 @@ export const FormGroup = styled.div`
 export const Label = styled.label`
   font-size: 14px;
   font-weight: 600;
-  color: #7c2d12;
+  color: #b55116;
+  margin-left: 12px;
 `;
 
 export const SubLabel = styled.label`
   font-size: 12px;
   font-weight: 500;
-  color: #6b7280;
+  color: #b55116;
+  margin-left: 12px;
+
   margin-bottom: 4px;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #7c2d12;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #111827;
+  padding: 8px 12px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #b55116;
   outline: none;
   box-sizing: border-box;
 
@@ -86,6 +89,7 @@ export const ScheduleRow = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  margin-bottom: 18px;
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -141,10 +145,10 @@ export const SelectGroup = styled.div`
 export const Select = styled.select`
   width: 100%;
   padding: 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #fdba74;
   border-radius: 8px;
-  font-size: 13px;
-  color: #111827;
+  font-size: 12px;
+  color: #b55116;
   background-color: #ffffff;
   outline: none;
 `;
@@ -158,10 +162,10 @@ export const ButtonGroup = styled.div`
 export const CancelButton = styled.button`
   flex: 1;
   padding: 10px;
-  background-color: #ffffff;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  background-color: #fff0dd;
+  color: #b55116;
+  border: none;
+  border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -170,10 +174,10 @@ export const CancelButton = styled.button`
 export const SubmitButton = styled.button`
   flex: 1;
   padding: 10px;
-  background-color: #7c2d12;
-  color: #ffffff;
+  background-color: #b55116;
+  color: #fff0dd;
   border: none;
-  border-radius: 6px;
+  border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -181,13 +185,13 @@ export const SubmitButton = styled.button`
 
 export const TextArea = styled.textarea`
   width: 100%;
-  min-height: 130px;
-  padding: 16px;
-  border: 1px solid #7c2d12;
-  border-radius: 8px;
-  font-size: 13px;
+  min-height: 120px;
+  padding: 14px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
+  font-size: 12px;
   line-height: 1.4;
-  color: #111827;
+  color: #b55116;
   background-color: #ffffff;
   outline: none;
   box-sizing: border-box;
@@ -242,26 +246,26 @@ export const ModalButtonGroup = styled.div`
 
 export const ModalNoButton = styled.button`
   flex: 1;
-  padding: 14px;
+  padding: 12px;
   background-color: #ffffff;
   color: #7c2d12;
   border: none;
   border-radius: 100px;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   outline: none;
 `;
 
 export const ModalYesButton = styled.button`
   flex: 1;
-  padding: 14px;
+  padding: 12px;
   background-color: #b55116;
   color: #fff0dd;
   border: none;
   border-radius: 100px;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   outline: none;
 `;
