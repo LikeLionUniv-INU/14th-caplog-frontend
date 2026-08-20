@@ -387,7 +387,7 @@ export const CheckBox = styled.input`
 
   margin: 0;
 
-  border: 1px solid #555;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
 
   background: #ffffff;
