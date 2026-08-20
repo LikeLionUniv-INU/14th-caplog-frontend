@@ -38,7 +38,7 @@ export const deleteGroup = async (groupId) => {
 };
 
 // 그룹 수정
-export const updateGroup = async (groupId, groupName, groupCategory) => {
+export const updateGroup = async (groupId, groupName, category, categoryEnum) => {
   if (USE_MOCK) {
     console.log('[MOCK] 그룹 수정 요청:', {
       groupId,
@@ -59,7 +59,8 @@ export const updateGroup = async (groupId, groupName, groupCategory) => {
 
   const response = await api.patch(`/group/${groupId}`, {
     groupName,
-    groupCategory,
+    category,
+    categoryEnum,
   });
 
   return response.data;
