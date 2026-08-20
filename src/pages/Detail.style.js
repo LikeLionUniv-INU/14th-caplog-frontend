@@ -178,6 +178,24 @@ export const IconButton = styled.button`
   }
 `;
 
+export const DetailContentBox = styled.div`
+  margin-top: 20px;
+
+  color: #7c2d12;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+
+  p {
+    margin: 0;
+  }
+
+  p + p {
+    margin-top: 18px;
+  }
+`;
+
 export const SummaryBox = styled.div`
   margin-top: 20px;
 

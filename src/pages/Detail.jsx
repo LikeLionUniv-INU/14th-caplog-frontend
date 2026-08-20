@@ -222,6 +222,10 @@ function Detail() {
           </S.ButtonGroup>
         </S.SummaryHeader>
 
+        <S.DetailContentBox>
+          <p>{event.details}</p>
+        </S.DetailContentBox>
+
         <S.SummaryBox>
           <p>{detail.aiSummary}</p>
         </S.SummaryBox>
