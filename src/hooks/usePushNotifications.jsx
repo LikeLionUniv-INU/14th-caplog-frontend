@@ -9,7 +9,6 @@ export function usePushNotifications() {
     // FCM 토큰 수신 → 서버에 저장
     PushNotifications.addListener('registration', (token) => {
       console.log('FCM Token:', token.value);
-      // TODO: 서버 API에 token.value 전송
     });
 
     // 포그라운드 알림 수신
