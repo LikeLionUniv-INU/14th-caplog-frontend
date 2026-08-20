@@ -5,68 +5,74 @@ import * as S from './Home.style';
 import logo from '../assets/logo.svg';
 import alarm from '../assets/alarm.svg';
 import { useNavigate } from 'react-router-dom';
-import { getAlarms } from '../api/notification';
+import { getAlarms, getAlarmSettings } from '../api/notification';
 import { useEffect, useState } from 'react';
 import { getSchedules } from '../api/schedule';
 
 function Home() {
   const navigate = useNavigate();
+
   const [alarmCount, setAlarmCount] = useState(0);
   const [memoryItems, setMemoryItems] = useState([]);
-  const [latestAlarm, setLatestAlarm] = useState(null); // 홈 화면에 보여줄 알림 말풍선
+  const [latestAlarm, setLatestAlarm] = useState(null);
+
   const [selectedCategory, setSelectedCategory] = useState('TOTAL');
   const [schedules, setSchedules] = useState([]);
 
-  // 기억해야 하는 일정박스 관련
+  // ========================================
+  // 저장한 캡처 정보 조회
+  // ========================================
   useEffect(() => {
-    const fetchMemorySchedules = async () => {
+    const fetchSchedules = async () => {
       try {
-        const data = await getSchedules({
+        const schedulesData = await getSchedules({
           page: 0,
-          category: 'TOTAL',
+          category: selectedCategory,
           searchWords: '',
         });
 
-        // setMemorySchedules(data.result.list);
+        console.log('저장 일정 응답:', schedulesData);
+
+        setSchedules(schedulesData.result?.list ?? []);
       } catch (error) {
-        console.error('기억해야 할 정보 조회 실패:', error);
+        console.error('저장 일정 조회 실패:', error);
       }
     };
 
-    fetchMemorySchedules();
-  }, []);
-
+    fetchSchedules();
+  }, [selectedCategory]);
+  // ========================================
+  // 기억해야 할 정보 - 임박 일정 알림 조회
+  // ========================================
   useEffect(() => {
-    const fetchAll = async () => {
+    const fetchImminentAlarms = async () => {
       try {
-        const [schedulesData, alarmsData] = await Promise.all([
-          getSchedules({ page: 0, category: selectedCategory, searchWords: '' }),
-          getAlarms(0, 'IMMINENT'),
-        ]);
+        const settingsData = await getAlarmSettings();
+        console.log('내 알림 설정:', settingsData);
 
-        setSchedules(schedulesData.result.list);
+        const alarmsData = await getAlarms(0, 'IMMINENT');
+        console.log('IMMINENT 응답:', alarmsData);
 
-        const alarms = alarmsData.result.notifications ?? [];
-        setAlarmCount(alarmsData.result.alarmCount);
-        setLatestAlarm(alarms.find((a) => !a.isOpened) ?? null);
+        const alarms = alarmsData.result?.notifications ?? [];
+
+        setAlarmCount(alarmsData.result?.alarmCount ?? 0);
+
+        setLatestAlarm(alarms.find((alarmItem) => !alarmItem.isOpened) ?? null);
+
         setMemoryItems(
-          alarms.map((alarm) => ({
-            id: alarm.scheduleId,
-            title: alarm.title,
-            dday: alarm.Dday,
+          alarms.map((alarmItem) => ({
+            id: alarmItem.scheduleId,
+            title: alarmItem.title,
+            dday: alarmItem.Dday,
           })),
         );
       } catch (error) {
-        console.error('홈 데이터 조회 실패:', error);
+        console.error('IMMINENT 알림 조회 실패:', error);
       }
     };
 
-    fetchAll();
-  }, [selectedCategory]);
-
-  // 14일 이내 일정 연산
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+    fetchImminentAlarms();
+  }, []);
 
   return (
     <S.HomeContainer>
@@ -90,6 +96,7 @@ function Home() {
             <S.Spring key={index} />
           ))}
         </S.SpringRow>
+
         <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
 
         <S.MemoryList>
@@ -97,10 +104,7 @@ function Home() {
             <S.PreviewTitle style={{ textAlign: 'center' }}>아직 임박한 일정은 없어요.</S.PreviewTitle>
           ) : (
             memoryItems.map((memory) => (
-              <S.MemoryItem
-                key={`${memory.id}-${memory.title}`}
-                onClick={() => navigate(memory.isGroup ? `/group/${memory.id}` : `/detail/${memory.id}`)}
-              >
+              <S.MemoryItem key={`${memory.id}-${memory.title}`} onClick={() => navigate(`/detail/${memory.id}`)}>
                 <span>{memory.title}</span>
 
                 <S.MemoryRight>
@@ -121,6 +125,7 @@ function Home() {
       <S.PreviewSection>
         <S.PreviewHeader>
           <S.PreviewTitle>저장한 캡처 정보</S.PreviewTitle>
+
           <S.AllButton onClick={() => navigate('/archive')}>전체 보기 ›</S.AllButton>
         </S.PreviewHeader>
 
