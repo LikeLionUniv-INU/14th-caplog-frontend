@@ -1,7 +1,8 @@
+import { usePushNotifications } from './hooks/usePushNotifications';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SendIntent from 'send-intent';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { SendIntent } from 'send-intent';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/common/PageTransition';
 import AppLayout from './styles/AppLayout';
@@ -157,13 +158,14 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  usePushNotifications();
   const navigate = useNavigate();
 
   useEffect(() => {
     SendIntent.checkSendIntentReceived().then((result) => {
       if (!result?.url) return;
 
-      navigate('/share', {
+      navigate('/upload', {
         state: {
           imageUrl: result.url,
           title: result.title,
@@ -174,7 +176,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       {/* PC 화면 */}
       <div
         style={{
@@ -200,7 +202,7 @@ function App() {
           <AnimatedRoutes />
         </div>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 

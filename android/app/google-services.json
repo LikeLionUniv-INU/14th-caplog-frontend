@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1046290378530",
+    "project_id": "caplog-e53fa",
+    "storage_bucket": "caplog-e53fa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046290378530:android:a1e96bc663f2a25ecb7f7b",
+        "android_client_info": {
+          "package_name": "com.caplog.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb9IEUl6vuk19VMG0lqiDn_DBp9ROwWXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

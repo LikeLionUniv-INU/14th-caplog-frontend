@@ -1,23 +1,42 @@
 import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
 import { putPhotoAuth } from '../api/auth';
+import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 
 export default function CheckPhotoAuth() {
   const navigate = useNavigate();
 
   /** 사진 권한 허용 여부 전송 API 함수 */
   const handlePhotoAuth = async () => {
-    try {
-      const data = await putPhotoAuth(true);
+    // 웹이면 그냥 다음 페이지로
+    if (!Capacitor.isNativePlatform()) {
+      navigate('/check-noti-auth');
+      return;
+    }
 
-      if (data.isSuccess) {
-        navigate('/check-noti-auth');
+    try {
+      const permission = await Camera.requestPermissions({
+        permissions: ['camera', 'photos'],
+      });
+
+      console.log('Permission Result:', permission);
+
+      if (permission.photos === 'granted' || permission.photos === 'limited') {
+        const data = await putPhotoAuth(true);
+
+        if (data.isSuccess) {
+          navigate('/check-noti-auth');
+        } else {
+          alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
+        }
       } else {
-        alert(data.message || '권한 설정 처리 중 문제가 발생했습니다.');
+        alert('갤러리 권한이 필요합니다. 설정에서 허용해주세요.');
+        navigate('/check-noti-auth');
       }
     } catch (error) {
       console.error('권한 설정 오류:', error);
-      alert('서버와 통신할 수 없습니다. 다시 시도해주세요.');
+      alert('권한 요청 중 문제가 발생했습니다. 기기 설정에서 권한을 확인해주세요.');
+      navigate('/check-noti-auth');
     }
   };
 
@@ -51,16 +70,12 @@ export default function CheckPhotoAuth() {
           </S.Description>
         </S.InfoCard>
 
-        <S.Description
-          style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}
-        >
+        <S.Description style={{ fontSize: '12px', fontWeight: '300', textAlign: 'center' }}>
           이 설정은 언제든 기기 설정에서 변경할 수 있습니다.
         </S.Description>
       </S.ContentWrapper>
 
-      <S.StartButton onClick={handlePhotoAuth}>
-        사진 권한 허용하기
-      </S.StartButton>
+      <S.StartButton onClick={handlePhotoAuth}>사진 권한 허용하기</S.StartButton>
     </S.Container>
   );
 }

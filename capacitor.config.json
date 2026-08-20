@@ -1,5 +1,8 @@
 {
   "appId": "com.caplog.app",
   "appName": "caplog",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
 }
