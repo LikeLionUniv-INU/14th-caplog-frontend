@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { getScheduleDetail, deleteSchedule, updateSchedule } from '../api/scheduleDetailApi';
 import { getGroupList } from '../api/upload';
 import { getCategoryList } from '../api/groupApi';
+import { getSchedules } from '../api/schedule';
 
 function Detail() {
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ function Detail() {
   const [editCategory, setEditCategory] = useState('');
   const [editGroup, setEditGroup] = useState('');
 
-  // 카테고리 / 주제 목록
+  // 카테고리 / 주제 및 일정 목록
   const [categoryList, setCategoryList] = useState([]);
-  const [groupList, setGroupList] = useState([]);
+  const [subjectList, setSubjectList] = useState([]);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -97,13 +98,29 @@ function Detail() {
     ETC: '기타',
   };
 
+  // 선택한 카테고리에 속한 주제 / 일정 목록 조회
+  const fetchSubjectList = async (category) => {
+    try {
+      const data = await getSchedules({
+        page: 0,
+        category,
+        searchWords: '',
+      });
+
+      setSubjectList(data.result?.list ?? []);
+    } catch (error) {
+      console.error('주제/일정 목록 조회 실패:', error);
+      setSubjectList([]);
+    }
+  };
+
   // 수정 팝업 열기
   const handleOpenModify = async () => {
     try {
-      const groupData = await getGroupList(0);
-
       setCategoryList(CATEGORY_LIST);
-      setGroupList(groupData.result?.groupList ?? []);
+
+      // 현재 카테고리에 해당하는 주제 / 일정 목록 조회
+      await fetchSubjectList(editCategory || 'TOTAL');
 
       setOpenPopup('modify');
     } catch (error) {
@@ -298,7 +315,20 @@ function Detail() {
                 <S.SelectBox>
                   <S.Label>카테고리</S.Label>
 
-                  <S.Select value={editCategory} onChange={(e) => setEditCategory(e.target.value)}>
+                  <S.Select
+                    value={editCategory}
+                    onChange={async (e) => {
+                      const selectedCategory = e.target.value;
+
+                      setEditCategory(selectedCategory);
+
+                      // 기존 주제 선택 초기화
+                      setEditGroup('');
+
+                      // 변경한 카테고리에 해당하는 목록 다시 조회
+                      await fetchSubjectList(selectedCategory);
+                    }}
+                  >
                     {categoryList.map((category) => (
                       <option key={category} value={category}>
                         {CATEGORY_LABEL[category]}
@@ -313,9 +343,9 @@ function Detail() {
                   <S.Select value={editGroup} onChange={(e) => setEditGroup(e.target.value)}>
                     <option value="">주제 없음</option>
 
-                    {groupList.map((group) => (
-                      <option key={group.groupId} value={group.groupName}>
-                        {group.groupName}
+                    {subjectList.map((item) => (
+                      <option key={`${item.isGroup ? 'group' : 'schedule'}-${item.id}`} value={item.title}>
+                        {item.title}
                       </option>
                     ))}
                   </S.Select>
