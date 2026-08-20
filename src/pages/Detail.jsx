@@ -44,14 +44,17 @@ function Detail() {
 
         setDetail(data.result);
 
-        setSchedule(data.result.events[0].startAt);
+        const currentEvent = data.result.events?.[0];
 
-        setScheduleEnabled(data.result.events[0].hasDate);
+        if (currentEvent) {
+          setSchedule(currentEvent.startAt ? currentEvent.startAt.replace(' ', 'T').slice(0, 16) : '');
 
-        const currentEvent = data.result.events[0];
+          setScheduleEnabled(currentEvent.hasDate);
 
-        setEditTitle(currentEvent.title ?? '');
-        setEditDetails(currentEvent.details ?? '');
+          setEditTitle(currentEvent.title ?? '');
+          setEditDetails(currentEvent.details ?? '');
+        }
+
         setEditAiSummary(data.result.aiSummary ?? '');
         setEditCategory(data.result.category ?? 'TOTAL');
         setEditGroup(data.result.group ?? '');
@@ -191,8 +194,15 @@ function Detail() {
           </S.BackButton>
         </S.Header>
 
-        <S.ImageButton type="button" onClick={() => setOpenPopup('fullScreen')}>
-          <img src={detail.imgUrl?.[0]} alt="사진" />
+        <S.ImageButton
+          type="button"
+          onClick={() => {
+            if (detail.imgUrl?.[0]) {
+              setOpenPopup('fullScreen');
+            }
+          }}
+        >
+          {detail.imgUrl?.[0] && <img src={detail.imgUrl[0]} alt="사진" />}
         </S.ImageButton>
       </S.ImageSection>
 
@@ -222,6 +232,10 @@ function Detail() {
           </S.ButtonGroup>
         </S.SummaryHeader>
 
+        <S.DetailContentBox>
+          <p>{event.details}</p>
+        </S.DetailContentBox>
+
         <S.SummaryBox>
           <p>{detail.aiSummary}</p>
         </S.SummaryBox>
@@ -237,7 +251,7 @@ function Detail() {
           </S.FullScreenHeader>
 
           <S.FullScreenImageBox>
-            <S.FullScreenImage src={detail.imgUrl?.[0]} alt="사진" />
+            {detail.imgUrl?.[0] && <S.FullScreenImage src={detail.imgUrl[0]} alt="사진" />}
           </S.FullScreenImageBox>
         </S.FullScreenOverlay>
       )}
