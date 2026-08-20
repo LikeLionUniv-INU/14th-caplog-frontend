@@ -48,3 +48,12 @@ export const checkNotiAuth = async () => {
 
   return response.data;
 };
+
+// FCM 토큰 전송
+export const sendFcmToken = async (tokenValue) => {
+  const response = await api.post('/users/fcm-token', {
+    fcmToken: tokenValue,
+  });
+
+  return response.data;
+};

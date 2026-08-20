@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import usePush from './hook/usePush';
 import PageTransition from './components/common/PageTransition';
 import AppLayout from './styles/AppLayout';
 import Intro from './pages/Intro';
@@ -49,6 +50,8 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  usePush();
+  
   return (
     <BrowserRouter>
       {/* PC 화면 */}
