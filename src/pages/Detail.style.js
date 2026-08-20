@@ -286,13 +286,20 @@ export const ModifyPopup = styled.div`
   border-radius: 8px;
 
   z-index: 101;
+
+  color:
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const PopupTitle = styled.h2`
   margin: 0 0 28px;
 
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
+  color: #7c2d12;
 `;
 
 /* =========================
@@ -308,8 +315,9 @@ export const FormGroup = styled.div`
 export const Label = styled.p`
   margin: 0 0 7px;
 
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  color: #b55116;
 `;
 
 export const TextInput = styled.input`
@@ -320,12 +328,13 @@ export const TextInput = styled.input`
 
   padding: 0 12px;
 
-  border: 1px solid #555;
-  border-radius: 6px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
 
   background: white;
 
-  font-size: 14px;
+  font-size: 12px;
+  color: #b55116;
 
   outline: none;
 `;
@@ -338,11 +347,12 @@ export const TextArea = styled.textarea`
 
   padding: 12px;
 
-  border: 1px solid #555;
-  border-radius: 6px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
 
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
+  color: #b55116;
   line-height: 1.5;
 
   resize: none;
@@ -374,14 +384,14 @@ export const CheckBox = styled.input`
   margin: 0;
 
   border: 1px solid #555;
-  border-radius: 6px;
+  border-radius: 8px;
 
-  background: white;
+  background: #ffffff;
 
   cursor: pointer;
 
   &:checked {
-    background: #444;
+    background: #7c2d12;
   }
 
   &:checked::after {
@@ -396,7 +406,7 @@ export const CheckBox = styled.input`
 
     color: white;
 
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
   }
 `;
@@ -409,17 +419,18 @@ export const DateTimeInput = styled.input`
   box-sizing: border-box;
   padding: 0 10px;
 
-  border: 1px solid #777;
-  border-radius: 6px;
+  border: 1px solid #fdba74;
+  border-radius: 12px;
 
   background: white;
-  font-size: 13px;
+  font-size: 12px;
+  color: #b55116;
 
   outline: none;
 
   &:disabled {
-    background: #eeeeee;
-    color: #aaaaaa;
+    background: #f3f4f6;
+    color: #9ca3af;
     cursor: default;
   }
 `;
@@ -459,12 +470,16 @@ export const Select = styled.select`
 
   padding: 0 10px;
 
-  border: 1px solid #555;
-  border-radius: 6px;
+  border: 1px solid #fdba74;
+  border-radius: 8px;
 
   background: white;
 
-  font-size: 13px;
+  color: #b55116;
+
+  font-size: 12px;
+
+  outline: none;
 `;
 
 /* =========================
@@ -475,43 +490,41 @@ export const Line = styled.hr`
   margin: 28px -20px 18px;
 
   border: none;
-  border-top: 1px solid #dddddd;
 `;
 
 export const ButtonRow = styled.div`
   display: flex;
 
-  gap: 14px;
+  gap: 12px;
 `;
 
 export const CancelButton = styled.button`
   flex: 1;
+  padding: 10px;
 
-  height: 44px;
+  border: none;
+  border-radius: 20px;
 
-  border: 1px solid #888;
-  border-radius: 6px;
+  background: #fff0dd;
+  color: #b55116;
 
-  background: white;
-
-  font-size: 14px;
-
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 `;
 
 export const ModifyButton = styled.button`
   flex: 1;
-
-  height: 44px;
+  padding: 10px;
 
   border: none;
-  border-radius: 6px;
+  border-radius: 20px;
 
-  background: #aaaaaa;
-  color: white;
+  background: #b55116;
+  color: #fff0dd;
 
-  font-size: 14px;
-
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 `;
 
