@@ -260,17 +260,17 @@ function Detail() {
               <S.Label>일정</S.Label>
 
               <S.ScheduleRow>
-                <S.CheckBox
-                  type="checkbox"
-                  checked={scheduleEnabled}
-                  onChange={(e) => setScheduleEnabled(e.target.checked)}
-                />
-
                 <S.DateTimeInput
                   type="datetime-local"
                   value={schedule}
                   disabled={!scheduleEnabled}
                   onChange={(e) => setSchedule(e.target.value)}
+                />
+
+                <S.CheckBox
+                  type="checkbox"
+                  checked={scheduleEnabled}
+                  onChange={(e) => setScheduleEnabled(e.target.checked)}
                 />
               </S.ScheduleRow>
             </S.FormGroup>

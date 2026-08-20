@@ -162,8 +162,6 @@ function Group() {
               </select>
             </S.InputBox>
 
-            <S.Divider />
-
             <S.ButtonBox>
               <S.CancelButton onClick={() => setOpenPopup(null)}>취소</S.CancelButton>
 
