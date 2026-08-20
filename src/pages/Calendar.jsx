@@ -45,6 +45,9 @@ function Calendar() {
       } catch (error) {
         // 서버 또는 네트워크 오류 확인용
         console.error('캘린더 일정 조회 실패:', error);
+
+        setEvents([]);
+        setDateCounts([]);
       }
     };
 
@@ -55,7 +58,7 @@ function Calendar() {
   const selectedDateKey = formatDateKey(selectedDate);
 
   // API에서 받아온 이벤트 중 선택한 날짜의 일정만 가져옴
-  const selectedSchedules = events.filter((event) => event?.date.slice(0, 10) === selectedDateKey);
+  const selectedSchedules = events.filter((event) => event?.date?.slice(0, 10) === selectedDateKey);
 
   return (
     <S.CalendarContainer>
@@ -77,7 +80,7 @@ function Calendar() {
           calendarType="gregory"
           prev2Label={null}
           next2Label={null}
-          formatDay={(locale, date) => date.getDate()}
+          formatDay={(_, date) => date.getDate()}
           tileContent={({ date, view }) => {
             if (view !== 'month') return null;
 
