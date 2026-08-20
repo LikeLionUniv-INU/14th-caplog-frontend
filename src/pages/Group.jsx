@@ -49,7 +49,7 @@ function Group() {
   // 그룹 수정 버튼을 눌렀을 때 실행되는 함수
   const handleUpdateGroup = async () => {
     try {
-      const result = await updateGroup(groupId, modifyGroupName, modifyCategory);
+      const result = await updateGroup(groupId, modifyGroupName, modifyCategory, modifyCategory);
 
       // 그룹 수정 API 요청 성공
       if (result.isSuccess) {
