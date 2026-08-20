@@ -25,11 +25,8 @@ function Calendar() {
 
   // 현재 달력에 표시 중인 달
   const [activeDate, setActiveDate] = useState(new Date());
-
   const startDate = new Date(activeDate.getFullYear(), activeDate.getMonth(), 1);
-
   const endDate = new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0);
-
   const startDateTime = `${formatDateKey(startDate)}T00:00:00`;
   const endDateTime = `${formatDateKey(endDate)}T23:59:59`;
 

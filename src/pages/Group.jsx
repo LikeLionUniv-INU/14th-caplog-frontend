@@ -4,7 +4,7 @@ import deleteicon from '../assets/delete.svg';
 import * as S from './Group.style';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getGroupDetail, deleteGroup, updateGroup, getCategoryList } from '../api/groupApi';
+import { getGroupDetail, deleteGroup, updateGroup } from '../api/groupApi';
 
 function Group() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function Group() {
   const [modifyCategory, setModifyCategory] = useState('');
 
   // 그룹 카테고리 목록
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState(['TOTAL', 'STUDY', 'SCHOOL', 'DAILY', 'ETC']);
 
   const CATEGORY_LABEL = {
     TOTAL: '전체',
@@ -39,26 +39,10 @@ function Group() {
     fetchGroupDetail();
   }, [groupId]);
 
-  // 그룹 카테고리 목록 조회
-  const fetchCategoryList = async () => {
-    try {
-      const result = await getCategoryList();
-
-      if (result.isSuccess) {
-        setCategoryList(result.result);
-      }
-    } catch (error) {
-      console.error('카테고리 목록 조회 실패:', error);
-    }
-  };
-
   // 그룹 수정 팝업 열기
   const handleOpenModify = () => {
     setModifyGroupName(groupData.result.group.groupName);
     setModifyCategory(groupData.result.group.groupCategory);
-
-    fetchCategoryList();
-
     setOpenPopup('modify');
   };
 
@@ -76,8 +60,8 @@ function Group() {
             ...prev.result,
             group: {
               ...prev.result.group,
-              groupName: result.result.groupName,
-              groupCategory: result.result.groupCategory,
+              groupName: modifyGroupName,
+              groupCategory: modifyCategory,
             },
           },
         }));

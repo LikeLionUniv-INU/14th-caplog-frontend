@@ -135,19 +135,17 @@ export const IconButton = styled.button`
 `;
 
 export const GroupTitle = styled.h2`
-  margin: 18px 0 0;
-
   color: #7c2d12;
   font-size: 15px;
   font-weight: 700;
+  margin-bottom: 0;
 `;
 
 export const GroupCount = styled.p`
-  margin: 10px 0 0;
-
   color: #7c2d12;
   font-size: 12px;
   font-weight: medium;
+  margin-top: 8px;
 `;
 
 export const CardList = styled.div`
@@ -160,7 +158,6 @@ export const Card = styled.button`
   position: relative;
 
   min-width: 0;
-  height: 270px;
 
   padding: 20px 14px 14px;
   box-sizing: border-box;
@@ -379,8 +376,6 @@ export const DeleteTitle = styled.h2`
 `;
 
 export const DeleteText = styled.p`
-  margin: 25px 0 0;
-
   color: #7c2d12;
   font-size: 11px;
   font-weight: 400;

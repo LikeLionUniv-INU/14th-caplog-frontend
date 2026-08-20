@@ -563,8 +563,6 @@ export const DeletePopupTitle = styled.h2`
 `;
 
 export const PopupDescription = styled.p`
-  margin: 20px 0 0;
-
   width: 240px;
 
   color: #7c2d12;

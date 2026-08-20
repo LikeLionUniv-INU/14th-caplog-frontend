@@ -42,35 +42,35 @@ export default function Upload() {
 
     // 주석은 테스트용 코드
     try {
-      // const data = await analyzeImage(imageFile);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const data = await analyzeImage(imageFile);
+      // await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const dummyData = {
-        schedule: {
-          title: '데이터수학통계 중간고사',
-          captureImg: previewImage,
-          aiSummary: '요약 데이터',
-          group: 'NONE',
-        },
-        events: [
-          {
-            Id: 'temp-id-1',
-            title: '데이터수학통계 시험',
-            dateTime: '2026-04-22T15:00',
-            details: '📍 장소: 5호관 301호',
-          },
-        ],
-      };
+      // const dummyData = {
+      //   schedule: {
+      //     title: '데이터수학통계 중간고사',
+      //     captureImg: previewImage,
+      //     aiSummary: '요약 데이터',
+      //     group: 'NONE',
+      //   },
+      //   events: [
+      //     {
+      //       Id: 'temp-id-1',
+      //       title: '데이터수학통계 시험',
+      //       dateTime: '2026-04-22T15:00',
+      //       details: '📍 장소: 5호관 301호',
+      //     },
+      //   ],
+      // };
 
-      setAiResult(dummyData);
-      setIsSheetOpen(true);
+      // setAiResult(dummyData);
+      // setIsSheetOpen(true);
 
-      // if (data.isSuccess) {
-      //   setAiResult(data.result); // 서버에서 준 분석 데이터 저장
-      //   setIsSheetOpen(true); // 바텀시트 열기
-      // } else {
-      //   alert(data.message || '분석 중 오류가 발생했습니다.');
-      // }
+      if (data.isSuccess) {
+        setAiResult(data.result); // 서버에서 준 분석 데이터 저장
+        setIsSheetOpen(true); // 바텀시트 열기
+      } else {
+        alert(data.message || '분석 중 오류가 발생했습니다.');
+      }
     } catch (error) {
       console.error('업로드 실패:', error);
       alert('서버와 통신할 수 없습니다.');

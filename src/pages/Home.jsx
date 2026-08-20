@@ -5,23 +5,17 @@ import * as S from './Home.style';
 import logo from '../assets/logo.svg';
 import alarm from '../assets/alarm.svg';
 import { useNavigate } from 'react-router-dom';
-import { getAlarms } from '../api/alarm';
+import { getAlarms } from '../api/notification';
 import { useEffect, useState } from 'react';
 import { getSchedules } from '../api/schedule';
 
 function Home() {
   const navigate = useNavigate();
-
   const [alarmCount, setAlarmCount] = useState(0);
-
-  // 홈 화면에 보여줄 알림 말풍선
-  const [latestAlarm, setLatestAlarm] = useState(null);
-
+  const [memoryItems, setMemoryItems] = useState([]);
+  const [latestAlarm, setLatestAlarm] = useState(null); // 홈 화면에 보여줄 알림 말풍선
   const [selectedCategory, setSelectedCategory] = useState('TOTAL');
-
   const [schedules, setSchedules] = useState([]);
-
-  const [memorySchedules, setMemorySchedules] = useState([]);
 
   // 기억해야 하는 일정박스 관련
   useEffect(() => {
@@ -33,7 +27,7 @@ function Home() {
           searchWords: '',
         });
 
-        setMemorySchedules(data.result.list);
+        // setMemorySchedules(data.result.list);
       } catch (error) {
         console.error('기억해야 할 정보 조회 실패:', error);
       }
@@ -43,65 +37,36 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const fetchSchedules = async () => {
+    const fetchAll = async () => {
       try {
-        const data = await getSchedules({
-          page: 0,
-          category: selectedCategory,
-          searchWords: '',
-        });
+        const [schedulesData, alarmsData] = await Promise.all([
+          getSchedules({ page: 0, category: selectedCategory, searchWords: '' }),
+          getAlarms(0, 'IMMINENT'),
+        ]);
 
-        setSchedules(data.result.list);
+        setSchedules(schedulesData.result.list);
+
+        const alarms = alarmsData.result.notifications ?? [];
+        setAlarmCount(alarmsData.result.alarmCount);
+        setLatestAlarm(alarms.find((a) => !a.isOpened) ?? null);
+        setMemoryItems(
+          alarms.map((alarm) => ({
+            id: alarm.scheduleId,
+            title: alarm.title,
+            dday: alarm.Dday,
+          })),
+        );
       } catch (error) {
-        console.error('저장된 정보 조회 실패:', error);
+        console.error('홈 데이터 조회 실패:', error);
       }
     };
 
-    fetchSchedules();
+    fetchAll();
   }, [selectedCategory]);
-
-  useEffect(() => {
-    const fetchAlarms = async () => {
-      try {
-        const data = await getAlarms();
-
-        setAlarmCount(data.result.alarmCount);
-
-        const unopenedAlarm = data.result.notifications?.find((alarm) => !alarm.isOpened);
-
-        setLatestAlarm(unopenedAlarm ?? null);
-      } catch (error) {
-        console.error('알림 조회 실패:', error);
-      }
-    };
-
-    fetchAlarms();
-  }, []);
 
   // 14일 이내 일정 연산
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
-  const memoryItems = memorySchedules
-    .flatMap((item) =>
-      (item.events || [])
-        .map((event) => {
-          const eventDate = new Date(event.dateTime);
-          eventDate.setHours(0, 0, 0, 0);
-
-          const diffTime = eventDate.getTime() - today.getTime();
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-          return {
-            id: item.id,
-            isGroup: item.isGroup,
-            title: event.title,
-            dday: diffDays,
-          };
-        })
-        .filter((event) => event.dday >= 0 && event.dday <= 14),
-    )
-    .sort((a, b) => a.dday - b.dday);
 
   return (
     <S.HomeContainer>
@@ -128,25 +93,29 @@ function Home() {
         <S.MemoryTitle>기억해야 할 정보가 있어요!</S.MemoryTitle>
 
         <S.MemoryList>
-          {memoryItems.map((memory) => (
-            <S.MemoryItem
-              key={`${memory.id}-${memory.title}`}
-              onClick={() => navigate(memory.isGroup ? `/group/${memory.id}` : `/detail/${memory.id}`)}
-            >
-              <span>{memory.title}</span>
+          {memoryItems.length === 0 ? (
+            <S.PreviewTitle>임박한 일정이 없어요.</S.PreviewTitle>
+          ) : (
+            memoryItems.map((memory) => (
+              <S.MemoryItem
+                key={`${memory.id}-${memory.title}`}
+                onClick={() => navigate(memory.isGroup ? `/group/${memory.id}` : `/detail/${memory.id}`)}
+              >
+                <span>{memory.title}</span>
 
-              <S.MemoryRight>
-                <S.Dday $active={memory.dday <= 1}>{memory.dday === 0 ? 'D-DAY' : `D-${memory.dday}`}</S.Dday>
+                <S.MemoryRight>
+                  <S.Dday $active={memory.dday <= 1}>{memory.dday === 0 ? 'D-DAY' : `D-${memory.dday}`}</S.Dday>
 
-                <S.ArrowButton type="button">›</S.ArrowButton>
-              </S.MemoryRight>
-            </S.MemoryItem>
-          ))}
+                  <S.ArrowButton type="button">›</S.ArrowButton>
+                </S.MemoryRight>
+              </S.MemoryItem>
+            ))
+          )}
         </S.MemoryList>
       </S.MemoryBox>
 
       <S.SearchSection>
-        <SearchBar onClick={() => navigate('/Archive')} />
+        <SearchBar onClick={() => navigate('/archive')} />
       </S.SearchSection>
 
       <S.PreviewSection>
@@ -164,8 +133,8 @@ function Home() {
             <PreviewBox
               key={item.id}
               id={item.id}
-              image={item.pictures?.[0]?.captureImg}
-              title={item.schedule.title}
+              image={item.captureImg}
+              title={item.title}
               isGroup={item.isGroup}
               isNew={item.isNew}
               elementCount={item.elementCount}

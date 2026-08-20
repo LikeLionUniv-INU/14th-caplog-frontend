@@ -4,9 +4,13 @@ import api from './axios';
 // 사진 업로드
 export const analyzeImage = async (imageFile) => {
   const formData = new FormData();
-  formData.append('image', imageFile);
+  formData.append('file', imageFile);
 
-  const response = await api.post('/upload', formData);
+  const response = await api.post('/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return response.data;
 };
@@ -29,16 +33,17 @@ export const getCategoryList = async () => {
 
 // 업로드 확정
 export const confirmUpload = async (scheduleData, events) => {
-  const response = await api.post('/upload/confirm', {
-    schedule: {
-      title: scheduleData.title,
-      captureImg: scheduleData.captureImg,
-      aiSummary: scheduleData.aiSummary,
-      hasGroup: scheduleData.hasGroup,
-      group: scheduleData.group,
-    },
+  const payload = {
+    imageId: scheduleData.captureImg || 0,
+    title: scheduleData.title || '',
+    category: scheduleData.category || 'TOTAL',
+    scheduleAiSummary: scheduleData.aiSummary || '',
+    group: scheduleData.group || '',
+    groupId: scheduleData.topic ? Number(scheduleData.topic) : 0,
     events: events,
-  });
+  };
+
+  const response = await api.post('/upload/confirm', payload);
 
   return response.data;
 };

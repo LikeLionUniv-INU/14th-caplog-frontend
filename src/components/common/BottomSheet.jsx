@@ -14,22 +14,19 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     title: '',
     aiSummary: '',
     captureImg: '',
-    category: 'TOTAL',
+    category: '',
     topic: '',
+    details: '',
   });
 
-  // 추출된 개별 일정 상태
   const [events, setEvents] = useState([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
-  // 바텀시트 열릴 때 초기 데이터 세팅
+  // 카테고리, 그룹 옵션 불러오기
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const [catRes, groupRes] = await Promise.all([
-          getCategoryList(),
-          getGroupList(0),
-        ]);
+        const [catRes, groupRes] = await Promise.all([getCategoryList(), getGroupList(0)]);
         if (catRes.isSuccess) setCategories(catRes.result.categories);
         if (groupRes.isSuccess) setGroups(groupRes.result.groupList);
       } catch (error) {
@@ -39,15 +36,26 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     fetchOptions();
   }, []);
 
+  // 데이터 매핑
   useEffect(() => {
     if (isOpen && aiResult) {
       const timer = setTimeout(() => {
+        let matchedTopic = aiResult.groupId || '';
+
+        if (!matchedTopic && aiResult.group && groups.length > 0) {
+          const foundGroup = groups.find((g) => g.groupName.trim() === aiResult.group.trim());
+          if (foundGroup) {
+            matchedTopic = foundGroup.groupId;
+          }
+        }
+
         setScheduleData({
-          title: aiResult.schedule?.title || '',
-          aiSummary: aiResult.schedule?.aiSummary || '',
-          captureImg: aiResult.schedule?.captureImg || '',
-          category: 'TOTAL',
-          topic: '',
+          title: aiResult.title || '',
+          aiSummary: aiResult.scheduleAiSummary || '',
+          captureImg: aiResult.imageId || '',
+          category: aiResult.category || '',
+          topic: matchedTopic,
+          details: aiResult.events?.[0]?.details || '',
         });
 
         const initialEvents = (aiResult.events || []).map((event) => ({
@@ -61,15 +69,13 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     } else if (!isOpen) {
       setEvents([]);
     }
-  }, [isOpen, aiResult]);
+  }, [isOpen, aiResult, groups]);
 
-  // 공통 변경 핸들러 (제목, 요약, 카테고리, 그룹)
   const handleScheduleChange = (e) => {
     const { name, value } = e.target;
     setScheduleData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 개별 일정 변경 핸들러
   const handleEventChange = (index, field, value) => {
     setEvents((prev) => {
       const newEvents = [...prev];
@@ -87,7 +93,6 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
 
   /** 업로드 확정 API */
   const handleSubmit = async () => {
-    // 체크된 일정만 필터링 (체크 안 된 건 자동 폐기)
     const selectedEvents = events.filter((e) => e.isChecked);
 
     if (selectedEvents.length === 0) {
@@ -96,10 +101,14 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     }
 
     const formattedEvents = selectedEvents.map((e) => ({
-      Id: e.Id,
+      isChecked: true,
       title: e.title,
-      dateTime: e.dateTime || null, // 빈 날짜는 null 처리
-      details: e.details,
+      details: scheduleData.details || '',
+      aiSummary: scheduleData.aiSummary || '',
+      videoUrl: e.videoUrl || '',
+      date: e.date || '',
+      startAt: e.startAt || '',
+      endAt: e.endAt || '',
     }));
 
     const hasGroup = !!scheduleData.topic;
@@ -109,11 +118,11 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
       captureImg: scheduleData.captureImg,
       aiSummary: scheduleData.aiSummary,
       hasGroup: hasGroup,
-      group: hasGroup ? scheduleData.topic : 'NONE', // 그룹이 없으면 NONE
+      group: hasGroup ? scheduleData.topic : 'NONE',
     };
 
     try {
-      const response = await confirmUpload(formattedSchedule, formattedEvents);
+      const response = await confirmUpload(scheduleData, formattedEvents);
 
       if (response.isSuccess) {
         alert('일정이 성공적으로 등록되었습니다!');
@@ -130,12 +139,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
 
   return (
     <>
-      <Sheet
-        isOpen={isOpen}
-        onClose={handleCancelClick}
-        snapPoints={[0, 0.8, 1]}
-        initialSnap={1}
-      >
+      <Sheet isOpen={isOpen} onClose={handleCancelClick} snapPoints={[0, 0.8, 1]} initialSnap={1}>
         <Sheet.Container>
           <Sheet.Header />
           <Sheet.Content>
@@ -150,77 +154,46 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                     gap: '4px',
                   }}
                 >
-                  <img src={AiLogo} width={'5%'} />
+                  <img src={AiLogo} width={'5%'} alt="AI Logo" />
                   <S.SubTitle>CapLog AI가 분석했어요!</S.SubTitle>
                 </div>
               </S.HeaderRow>
 
-              <S.WarningBox>
-                AI가 분석한 내용에 오류가 있을 수 있어요. 저장 전 확인해주세요.
-              </S.WarningBox>
+              <S.WarningBox>AI가 분석한 내용에 오류가 있을 수 있어요. 저장 전 확인해주세요.</S.WarningBox>
 
               <S.FormGroup>
                 <S.Label>제목</S.Label>
-                <S.Input
-                  name="title"
-                  value={scheduleData.title}
-                  onChange={handleScheduleChange}
-                />
+                <S.Input name="title" value={scheduleData.title} onChange={handleScheduleChange} />
               </S.FormGroup>
 
-              {/* 일정 목록 렌더링 */}
-              {events.map((event, index) => (
-                <div key={event.Id || index}>
-                  <S.FormGroup>
-                    <S.Label>
-                      {events.length > 1
-                        ? `일정 ${index + 1}: ${event.title}`
-                        : '일정'}
-                    </S.Label>
-                    <S.ScheduleRow>
-                      <S.Input
-                        type="datetime-local"
-                        value={event.dateTime || ''}
-                        onChange={(e) =>
-                          handleEventChange(index, 'dateTime', e.target.value)
-                        }
-                        disabled={!event.isChecked}
-                      />
-                      <S.CheckboxWrapper
-                        $isChecked={event.isChecked}
-                        onClick={() =>
-                          handleEventChange(
-                            index,
-                            'isChecked',
-                            !event.isChecked,
-                          )
-                        }
-                      >
-                        {event.isChecked && '✓'}
-                      </S.CheckboxWrapper>
-                    </S.ScheduleRow>
-                  </S.FormGroup>
-
-                  <S.FormGroup>
-                    <S.Label>세부사항</S.Label>
-                    <S.TextArea
-                      value={event.details || ''}
-                      onChange={(e) =>
-                        handleEventChange(index, 'details', e.target.value)
-                      }
+              <S.FormGroup>
+                <S.Label>일정</S.Label>
+                {events.map((event, index) => (
+                  <S.ScheduleRow key={index} style={{ marginBottom: events.length > 1 ? '10px' : '0' }}>
+                    <S.Input
+                      type="datetime-local"
+                      value={event.startAt ? event.startAt.substring(0, 16) : ''}
+                      onChange={(e) => handleEventChange(index, 'startAt', e.target.value)}
                       disabled={!event.isChecked}
                     />
-                  </S.FormGroup>
-                </div>
-              ))}
+                    <S.CheckboxWrapper
+                      $isChecked={event.isChecked}
+                      onClick={() => handleEventChange(index, 'isChecked', !event.isChecked)}
+                    >
+                      {event.isChecked && '✓'}
+                    </S.CheckboxWrapper>
+                  </S.ScheduleRow>
+                ))}
+              </S.FormGroup>
+
+              <S.FormGroup>
+                <S.Label>세부사항</S.Label>
+                <S.TextArea name="details" value={scheduleData.details} onChange={handleScheduleChange} />
+              </S.FormGroup>
 
               <S.FormGroup>
                 <S.Label>AI 요약</S.Label>
-                <S.TextArea
-                  name="aiSummary"
-                  value={scheduleData.aiSummary}
-                  onChange={handleScheduleChange}
-                />
+                <S.TextArea name="aiSummary" value={scheduleData.aiSummary} onChange={handleScheduleChange} />
               </S.FormGroup>
 
               <S.FormGroup>
@@ -228,11 +201,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
                 <S.SelectRow>
                   <S.SelectGroup>
                     <S.SubLabel>카테고리</S.SubLabel>
-                    <S.Select
-                      name="category"
-                      value={scheduleData.category}
-                      onChange={handleScheduleChange}
-                    >
+                    <S.Select name="category" value={scheduleData.category} onChange={handleScheduleChange}>
                       <option value="">카테고리 선택</option>
                       {categories.map((cat) => (
                         <option key={cat} value={cat}>
@@ -244,11 +213,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
 
                   <S.SelectGroup>
                     <S.SubLabel>주제</S.SubLabel>
-                    <S.Select
-                      name="topic"
-                      value={scheduleData.topic}
-                      onChange={handleScheduleChange}
-                    >
+                    <S.Select name="topic" value={scheduleData.topic} onChange={handleScheduleChange}>
                       <option value="">주제 선택</option>
                       {groups.map((grp) => (
                         <option key={grp.groupId} value={grp.groupId}>
@@ -261,9 +226,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
               </S.FormGroup>
 
               <S.ButtonGroup>
-                <S.CancelButton onClick={handleCancelClick}>
-                  취소
-                </S.CancelButton>
+                <S.CancelButton onClick={handleCancelClick}>취소</S.CancelButton>
                 <S.SubmitButton onClick={handleSubmit}>등록</S.SubmitButton>
               </S.ButtonGroup>
             </S.SheetContainer>
@@ -280,9 +243,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
             <S.ModalDesc>작성 중인 정보가 저장되지 않습니다.</S.ModalDesc>
             <S.ModalButtonGroup>
               <S.ModalNoButton onClick={handleConfirmNo}>취소</S.ModalNoButton>
-              <S.ModalYesButton onClick={handleConfirmYes}>
-                삭제
-              </S.ModalYesButton>
+              <S.ModalYesButton onClick={handleConfirmYes}>삭제</S.ModalYesButton>
             </S.ModalButtonGroup>
           </S.ModalBox>
         </S.ModalOverlay>
