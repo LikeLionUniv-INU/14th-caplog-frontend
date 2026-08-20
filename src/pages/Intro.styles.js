@@ -69,8 +69,9 @@ export const MockupImage = styled.div`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
   bottom: 40px;
-  left: 0;
   width: 100%;
   padding: 0 24px;
   z-index: 10;
@@ -81,7 +82,7 @@ export const SubmitButton = styled.button`
   font-weight: 700;
   font-size: 14px;
   background-color: #b55116;
-  width: 100%;
+  width: 70%;
   height: 40px;
   border: none;
   cursor: pointer;
