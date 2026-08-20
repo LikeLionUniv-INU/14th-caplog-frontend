@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAlarms } from '../api/notification';
 import { useEffect, useState } from 'react';
 import { getSchedules } from '../api/schedule';
+import api from '../api/axios';
 
 function Home() {
   const navigate = useNavigate();
@@ -67,6 +68,15 @@ function Home() {
   // 14일 이내 일정 연산
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const handleTestPush = async () => {
+    try {
+      const res = await api.post('/alarm/test-push');
+      console.log('푸시 테스트 성공:', res.data);
+    } catch (error) {
+      console.error('푸시 테스트 실패:', error);
+    }
+  };
 
   return (
     <S.HomeContainer>
@@ -142,6 +152,9 @@ function Home() {
           ))}
         </S.PreviewList>
       </S.PreviewSection>
+      <button onClick={handleTestPush} style={{ marginTop: '10px' }}>
+        알림 테스트
+      </button>
     </S.HomeContainer>
   );
 }
