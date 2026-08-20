@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as S from './Upload.styles';
 import GalleryIcon from '../assets/icons/Gallery.svg';
 import { analyzeImage } from '../api/upload';
@@ -7,6 +8,7 @@ import BottomSheet from '../components/common/BottomSheet';
 
 export default function Upload() {
   const fileInputRef = useRef(null);
+  const location = useLocation();
 
   const [previewImage, setPreviewImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -84,6 +86,30 @@ export default function Upload() {
       if (previewImage) URL.revokeObjectURL(previewImage);
     };
   }, [previewImage]);
+
+  const handleSharedImage = async (sharedUrl) => {
+    try {
+      setPreviewImage(sharedUrl);
+      const response = await fetch(sharedUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'shared_image.jpg', { type: blob.type || 'image/jpeg' });
+      setImageFile(file);
+    } catch (error) {
+      console.error('공유된 이미지 처리 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (location.state && location.state.sharedUrl) {
+      handleSharedImage(location.state.sharedUrl);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (location.state && location.state.sharedUrl) {
+      handleSharedImage(location.state.sharedUrl);
+    }
+  }, [location.state]);
 
   return (
     <S.Container>

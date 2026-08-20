@@ -11,10 +11,11 @@
   },
   "dependencies": {
     "@capacitor/android": "^8.5.0",
+    "@capacitor/app": "^8.1.1",
     "@capacitor/camera": "^8.2.3",
     "@capacitor/core": "^8.5.0",
-    "@capacitor/push-notifications": "^8.1.2",
     "axios": "^1.19.0",
+    "capacitor-plugin-send-intent": "^0.0.2",
     "framer-motion": "^13.1.0",
     "react": "^19.2.8",
     "react-calendar": "^6.0.1",

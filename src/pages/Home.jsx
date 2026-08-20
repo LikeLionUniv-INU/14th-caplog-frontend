@@ -12,6 +12,14 @@ import { getSchedules } from '../api/schedule';
 function Home() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const pendingUrl = localStorage.getItem('pendingSharedImage');
+    if (pendingUrl) {
+      localStorage.removeItem('pendingSharedImage');
+      navigate('/upload', { state: { sharedUrl: pendingUrl } });
+    }
+  }, [navigate]);
+
   const [alarmCount, setAlarmCount] = useState(0);
 
   // 홈 화면에 보여줄 알림 말풍선

@@ -2,30 +2,12 @@ import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
 import { putNotiAuth } from '../api/auth';
 import { Camera } from '@capacitor/camera';
-import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 
 export default function CheckNotiAuth() {
   const navigate = useNavigate();
-
-  /** 푸시 알림 권한 요청 핸들러 */
   const handleNotiAuth = async () => {
-    if (!Capacitor.isNativePlatform()) {
-      navigate('/home');
-    }
-
-    try {
-      const permissions = await PushNotifications.requestPermissions();
-
-      if (permissions.receive === 'granted') {
-        navigate('/home');
-        // FCM 토큰 발급 함수(PushNotifications.register()) 연결
-      } else {
-        alert('알림 권한이 거부되었습니다. 중요 일정을 놓치지 않게 권한을 켜주세요.');
-      }
-    } catch (error) {
-      console.error('알림 권한 요청 중 에러 발생:', error);
-    }
+    navigate('/home');
   };
 
   return (

@@ -2,7 +2,6 @@ import * as S from './CheckAuth.styles';
 import { useNavigate } from 'react-router-dom';
 import { putPhotoAuth } from '../api/auth';
 import { Camera } from '@capacitor/camera';
-import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 
 export default function CheckPhotoAuth() {
