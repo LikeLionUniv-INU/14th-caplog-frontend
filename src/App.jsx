@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SendIntent from 'send-intent';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/common/PageTransition';
@@ -154,6 +157,22 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    SendIntent.checkSendIntentReceived().then((result) => {
+      if (!result?.url) return;
+
+      navigate('/share', {
+        state: {
+          imageUrl: result.url,
+          title: result.title,
+        },
+        replace: true,
+      });
+    });
+  }, []);
+
   return (
     <BrowserRouter>
       {/* PC 화면 */}
