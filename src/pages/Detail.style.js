@@ -358,6 +358,10 @@ export const TextArea = styled.textarea`
   resize: none;
 
   outline: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 /* =========================
@@ -447,7 +451,8 @@ export const SaveTitle = styled.p`
   margin: 0 0 12px;
 
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #7c2d12;
 `;
 
 export const SelectRow = styled.div`
