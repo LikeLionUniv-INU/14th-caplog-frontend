@@ -1,7 +1,7 @@
 import api from './axios';
 import { mockScheduleDetail } from './mockScheduleDetail';
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 // 일정 상세 조회 (상세페이지 전용)
 export const getScheduleDetail = async (scheduleId) => {
@@ -53,7 +53,7 @@ export const updateSchedule = async (scheduleId, updateData) => {
   }
 
   // 실제 서버 연결
-  const response = await api.patch(`/schedule/${scheduleId}`, updateData);
+  const response = await api.put(`/schedule/${scheduleId}`, updateData);
 
   return response.data;
 };

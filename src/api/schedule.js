@@ -1,14 +1,10 @@
 import api from './axios';
 import { mockScheduleData } from './mockSchedule';
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 // 저장된 정보 목록 조회
-export const getSchedules = async ({
-  page = 0,
-  category = 'TOTAL',
-  searchWords = '',
-} = {}) => {
+export const getSchedules = async ({ page = 0, category = 'TOTAL', searchWords = '' } = {}) => {
   // 목업 데이터 사용
   if (USE_MOCK) {
     let list = mockScheduleData.result.list;
@@ -20,9 +16,7 @@ export const getSchedules = async ({
 
     // 검색
     if (searchWords) {
-      list = list.filter((item) =>
-        item.schedule.title.toLowerCase().includes(searchWords.toLowerCase()),
-      );
+      list = list.filter((item) => item.schedule.title.toLowerCase().includes(searchWords.toLowerCase()));
     }
 
     return {

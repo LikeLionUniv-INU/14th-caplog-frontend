@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import * as S from './Calendar.style';
-import PreviewBox from './PreviewBox';
 
 const formatDateKey = (date) => {
   const year = date.getFullYear();
@@ -22,6 +21,8 @@ function Calendar() {
   // API 일정 데이터
   const [events, setEvents] = useState([]);
 
+  const [dateCounts, setDateCounts] = useState([]);
+
   // 현재 달력에 표시 중인 달
   const [activeDate, setActiveDate] = useState(new Date());
 
@@ -29,8 +30,8 @@ function Calendar() {
 
   const endDate = new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0);
 
-  const startDateTime = formatDateKey(startDate);
-  const endDateTime = formatDateKey(endDate);
+  const startDateTime = `${formatDateKey(startDate)}T00:00:00`;
+  const endDateTime = `${formatDateKey(endDate)}T23:59:59`;
 
   // 달력에 표시할 이벤트 목록을 API에서 가져옴
   useEffect(() => {
@@ -39,11 +40,11 @@ function Calendar() {
         const data = await getCalendarEvents({
           startDateTime,
           endDateTime,
-          page: 0,
         });
 
         // API에서 받은 일정 목록 저장
-        setEvents(data.result.events);
+        setEvents(data.result?.events ?? []);
+        setDateCounts(data.result?.dateCounts ?? []);
       } catch (error) {
         // 서버 또는 네트워크 오류 확인용
         console.error('캘린더 일정 조회 실패:', error);
@@ -53,11 +54,11 @@ function Calendar() {
     fetchCalendarEvents();
   }, [startDateTime, endDateTime]);
 
-  // 사용자가 선택한 날짜를 YYYY-MM-DD 형태로 변환
+  // 사용자가 선택한 날짜를 알맞은 형태로 변환
   const selectedDateKey = formatDateKey(selectedDate);
 
   // API에서 받아온 이벤트 중 선택한 날짜의 일정만 가져옴
-  const selectedSchedules = events.filter((event) => event.date === selectedDateKey);
+  const selectedSchedules = events.filter((event) => event?.date.slice(0, 10) === selectedDateKey);
 
   return (
     <S.CalendarContainer>
@@ -83,14 +84,11 @@ function Calendar() {
           tileContent={({ date, view }) => {
             if (view !== 'month') return null;
 
-            // 현재 달력 칸의 날짜를 YYYY-MM-DD 형태로 변환
             const dateKey = formatDateKey(date);
 
-            // API에서 받아온 이벤트 중 현재 날짜와 같은 일정만 찾음
-            const dateEvents = events.filter((event) => event.date === dateKey);
+            const dateCount = dateCounts.find((item) => item.date === dateKey);
 
-            // 현재 날짜의 일정 개수
-            const scheduleCount = dateEvents.length;
+            const scheduleCount = dateCount?.count ?? 0;
 
             if (scheduleCount === 0) return null;
 
@@ -124,7 +122,7 @@ function Calendar() {
                 // 일정 카드를 누르면 해당 일정 상세페이지로 이동
                 onClick={() => navigate(`/detail/${schedule.scheduleId}`)}
               >
-                <S.ScheduleCardTitle>{schedule.eventtitle}</S.ScheduleCardTitle>
+                <S.ScheduleCardTitle>{schedule.eventTitle}</S.ScheduleCardTitle>
 
                 <S.ScheduleCardImage src={schedule.captureImg} alt="사진" />
               </S.ScheduleCard>

@@ -29,7 +29,7 @@ function AnimatedRoutes() {
         <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
         <Route path="/check-photo-auth" element={<PageTransition><CheckPhotoAuth /></PageTransition>} />
         <Route path="/check-noti-auth" element={<PageTransition><CheckNotiAuth /></PageTransition>} />
-        <Route path="/detail/:scheduleId" element={<PageTransition><Detail /></PageTransition>} />
+        <Route path="/detail/:id" element={<PageTransition><Detail /></PageTransition>} />
         <Route path="/group/:groupId" element={<PageTransition><Group /></PageTransition>} />
 
         {/* 하단바 필요한 페이지들 */}
