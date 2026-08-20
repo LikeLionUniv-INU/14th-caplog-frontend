@@ -43,7 +43,7 @@ function Detail() {
 
         setDetail(data.result);
 
-        setSchedule(data.result.events[0].dateTime);
+        setSchedule(data.result.events[0].startAt);
 
         setScheduleEnabled(data.result.events[0].hasDate);
 
@@ -51,10 +51,9 @@ function Detail() {
 
         setEditTitle(currentEvent.title ?? '');
         setEditDetails(currentEvent.details ?? '');
-        setEditAiSummary(currentEvent.aiSummary ?? '');
-
-        setEditCategory(data.result.schedule?.category ?? '');
-        setEditGroup(data.result.schedule?.group ?? '');
+        setEditAiSummary(data.result.aiSummary ?? '');
+        setEditCategory(data.result.category ?? 'TOTAL');
+        setEditGroup(data.result.group ?? '');
       } catch (error) {
         console.error('상세 정보 조회 실패:', error);
       }
@@ -88,13 +87,21 @@ function Detail() {
     return `D+${Math.abs(diffDay)}`;
   };
 
+  const CATEGORY_LIST = ['TOTAL', 'STUDY', 'SCHOOL', 'DAILY', 'ETC'];
+  const CATEGORY_LABEL = {
+    TOTAL: '전체',
+    STUDY: '공부',
+    SCHOOL: '학교',
+    DAILY: '일상',
+    ETC: '기타',
+  };
+
   // 수정 팝업 열기
   const handleOpenModify = async () => {
     try {
-      const [categoryData, groupData] = await Promise.all([getCategoryList(), getGroupList(0)]);
+      const groupData = await getGroupList(0);
 
-      setCategoryList(categoryData.result ?? []);
-
+      setCategoryList(CATEGORY_LIST);
       setGroupList(groupData.result?.groupList ?? []);
 
       setOpenPopup('modify');
@@ -178,7 +185,7 @@ function Detail() {
       {/* 사진 영역 */}
       <S.ImageSection>
         <S.Header>
-          <S.BackButton type="button" onClick={() => navigate(`/group/${id}`)}>
+          <S.BackButton type="button" onClick={() => navigate(-1)}>
             <img src={back} alt="뒤로가기" />
           </S.BackButton>
         </S.Header>
@@ -192,7 +199,7 @@ function Detail() {
       <S.InfoSection>
         <S.TitleRow>
           <S.Title>{event.title}</S.Title>
-          <S.Dday>{getDday(event.dateTime)}</S.Dday>
+          <S.Dday>{getDday(event.startAt)}</S.Dday>
         </S.TitleRow>
 
         <S.Divider />
@@ -215,7 +222,7 @@ function Detail() {
         </S.SummaryHeader>
 
         <S.SummaryBox>
-          <p>{event.aiSummary}</p>
+          <p>{detail.aiSummary}</p>
         </S.SummaryBox>
       </S.InfoSection>
 
@@ -292,7 +299,7 @@ function Detail() {
                   <S.Select value={editCategory} onChange={(e) => setEditCategory(e.target.value)}>
                     {categoryList.map((category) => (
                       <option key={category} value={category}>
-                        {category}
+                        {CATEGORY_LABEL[category]}
                       </option>
                     ))}
                   </S.Select>

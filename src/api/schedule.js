@@ -1,7 +1,7 @@
 import api from './axios';
 import { mockScheduleData } from './mockSchedule';
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 // 저장된 정보 목록 조회
 export const getSchedules = async ({

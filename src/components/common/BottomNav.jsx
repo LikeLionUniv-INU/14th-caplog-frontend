@@ -12,7 +12,7 @@ export default function BottomNav() {
   const navItems = [
     {
       path: '/home',
-      activePaths: ['/home', '/group', '/detail', '/notification'],
+      activePaths: ['/home', '/archive', '/group', '/detail', '/notification'],
       icon: <img src={HomeIcon} alt="홈" />,
     },
     {

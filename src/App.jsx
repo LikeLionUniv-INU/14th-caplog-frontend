@@ -24,24 +24,129 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Intro /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
-        <Route path="/check-photo-auth" element={<PageTransition><CheckPhotoAuth /></PageTransition>} />
-        <Route path="/check-noti-auth" element={<PageTransition><CheckNotiAuth /></PageTransition>} />
-        <Route path="/detail/:id" element={<PageTransition><Detail /></PageTransition>} />
-        <Route path="/group/:id" element={<PageTransition><Group /></PageTransition>} />
+        <Route
+          path="/"
+          element={
+            <PageTransition>
+              <Intro />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PageTransition>
+              <Login />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PageTransition>
+              <Signup />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/check-photo-auth"
+          element={
+            <PageTransition>
+              <CheckPhotoAuth />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/check-noti-auth"
+          element={
+            <PageTransition>
+              <CheckNotiAuth />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/detail/:id"
+          element={
+            <PageTransition>
+              <Detail />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/group/:groupId"
+          element={
+            <PageTransition>
+              <Group />
+            </PageTransition>
+          }
+        />
 
         {/* 하단바 필요한 페이지들 */}
         <Route element={<AppLayout />}>
-          <Route path="/notification" element={<PageTransition><Notification /></PageTransition>} />
-          <Route path="/home" element={<PageTransition><Home /></PageTransition>} />
-          <Route path="/archive" element={<PageTransition><Archive /></PageTransition>} />
-          <Route path="/calendar" element={<PageTransition><Calendar /></PageTransition>} />
-          <Route path="/upload" element={<PageTransition><Upload /></PageTransition>} />
-          <Route path="/mypage" element={<PageTransition><Mypage /></PageTransition>} />
-          <Route path="/mypage/edit" element={<PageTransition><ProfileEdit /></PageTransition>} />
-          <Route path="/mypage/notifications" element={<PageTransition><NotiSetting /></PageTransition>} />
+          <Route
+            path="/notification"
+            element={
+              <PageTransition>
+                <Notification />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <PageTransition>
+                <Home />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/archive"
+            element={
+              <PageTransition>
+                <Archive />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <PageTransition>
+                <Calendar />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/upload"
+            element={
+              <PageTransition>
+                <Upload />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/mypage"
+            element={
+              <PageTransition>
+                <Mypage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/mypage/edit"
+            element={
+              <PageTransition>
+                <ProfileEdit />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/mypage/notifications"
+            element={
+              <PageTransition>
+                <NotiSetting />
+              </PageTransition>
+            }
+          />
         </Route>
       </Routes>
     </AnimatePresence>
@@ -52,27 +157,28 @@ function App() {
   return (
     <BrowserRouter>
       {/* PC 화면 */}
-      <div style={{ 
-        width: '100vw', 
-        height: '100dvh', 
-        backgroundColor: '#f5f5f5', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center' 
-      }}>
-        
+      <div
+        style={{
+          width: '100vw',
+          height: '100dvh',
+          backgroundColor: '#f5f5f5',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         {/* 모바일 화면 */}
-        <div style={{ 
-          position: 'relative', 
-          width: '100%', 
-          maxWidth: '430px',
-          height: '100dvh', 
-          boxShadow: '0 0 20px rgba(0, 0, 0, 0.05)', 
-          overflow: 'hidden' 
-        }}>
-          
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '430px',
+            height: '100dvh',
+            boxShadow: '0 0 20px rgba(0, 0, 0, 0.05)',
+            overflow: 'hidden',
+          }}
+        >
           <AnimatedRoutes />
-          
         </div>
       </div>
     </BrowserRouter>

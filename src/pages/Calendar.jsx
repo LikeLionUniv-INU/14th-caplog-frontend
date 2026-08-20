@@ -24,13 +24,10 @@ function Calendar() {
 
   // 현재 달력에 표시 중인 달
   const [activeDate, setActiveDate] = useState(new Date());
-
   const startDate = new Date(activeDate.getFullYear(), activeDate.getMonth(), 1);
-
   const endDate = new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0);
-
-  const startDateTime = formatDateKey(startDate);
-  const endDateTime = formatDateKey(endDate);
+  const startDateTime = `${formatDateKey(startDate)}T00:00:00`;
+  const endDateTime = `${formatDateKey(endDate)}T23:59:59`;
 
   // 달력에 표시할 이벤트 목록을 API에서 가져옴
   useEffect(() => {
@@ -57,8 +54,7 @@ function Calendar() {
   const selectedDateKey = formatDateKey(selectedDate);
 
   // API에서 받아온 이벤트 중 선택한 날짜의 일정만 가져옴
-  const selectedSchedules = events.filter((event) => event.date === selectedDateKey);
-
+  const selectedSchedules = events.filter((event) => event.date.slice(0, 10) === selectedDateKey);
   return (
     <S.CalendarContainer>
       <S.Header>캘린더</S.Header>

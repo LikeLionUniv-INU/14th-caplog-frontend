@@ -40,9 +40,6 @@ export const AlarmArea = styled.div`
 
 export const AlarmMessage = styled.div`
   position: relative;
-
-  margin-top: 8px;
-
   width: fit-content;
   max-width: 310px;
 
@@ -158,7 +155,7 @@ export const Spring = styled.span`
 `;
 
 export const MemoryTitle = styled.p`
-  margin: 0 0 24px 8px;
+  margin: 0 0 20px 8px;
 
   font-size: 17px;
   font-weight: 700;
@@ -185,10 +182,7 @@ export const Dday = styled.span`
   justify-content: center;
   align-items: center;
 
-  min-width: 52px;
-  height: 34px;
-
-  padding: 0 10px;
+  padding: 4px 12px;
 
   border-radius: 30px;
 
@@ -206,9 +200,7 @@ export const Dday = styled.span`
 
 export const MemoryItem = styled.li`
   width: 100%;
-  min-height: 56px;
-
-  padding: 0 14px;
+  padding: 3px 14px;
 
   display: flex;
   align-items: center;
@@ -216,7 +208,7 @@ export const MemoryItem = styled.li`
 
   box-sizing: border-box;
 
-  border-radius: 14px;
+  border-radius: 10px;
   background-color: #fff7ed;
 
   cursor: pointer;
@@ -241,7 +233,7 @@ export const MemoryItem = styled.li`
 export const MemoryRight = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 
   flex-shrink: 0;
 `;

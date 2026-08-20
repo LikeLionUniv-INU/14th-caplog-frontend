@@ -43,18 +43,11 @@ function Archive() {
       </S.ArchiveHeader>
 
       <S.SearchArea>
-        <SearchBar
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          autoFocus
-        />
+        <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} autoFocus />
       </S.SearchArea>
 
       <S.FilterArea>
-        <PreviewFilter
-          selectedFilter={selectedCategory}
-          onFilterChange={setSelectedCategory}
-        />
+        <PreviewFilter selectedFilter={selectedCategory} onFilterChange={setSelectedCategory} />
       </S.FilterArea>
 
       {schedules.length === 0 ? (
@@ -65,8 +58,8 @@ function Archive() {
             <PreviewBox
               key={item.id}
               id={item.id}
-              image={item.pictures?.[0]?.captureImg}
-              title={item.schedule.title}
+              image={item.captureImg}
+              title={item.title}
               isGroup={item.isGroup}
               isNew={item.isNew}
               elementCount={item.elementCount}

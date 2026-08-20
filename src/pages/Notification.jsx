@@ -107,12 +107,12 @@ export default function Notification() {
           </S.NotificationCard>
         ))}
 
-        {/* 더보기 버튼 (임시) */}
+        {/* 더보기 버튼 (임시)
         {hasMore && (
           <button onClick={handleLoadMore} disabled={isLoading}>
             {isLoading ? '불러오는 중...' : '더보기'}
           </button>
-        )}
+        )} */}
       </S.ListContainer>
     </S.Container>
   );
