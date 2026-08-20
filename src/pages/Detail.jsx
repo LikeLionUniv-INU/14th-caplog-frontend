@@ -5,7 +5,8 @@ import deleteicon from '../assets/delete.svg';
 import aiIcon from '../assets/aiIcon.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getScheduleDetail, deleteSchedule, updateSchedule, getGroupList } from '../api/scheduleDetailApi';
+import { getScheduleDetail, deleteSchedule, updateSchedule } from '../api/scheduleDetailApi';
+import { getGroupList } from '../api/upload';
 import { getCategoryList } from '../api/groupApi';
 
 function Detail() {

@@ -9,7 +9,11 @@ export const getGroupDetail = async (groupId, page = 0) => {
     return mockGroupDetail;
   }
 
-  const response = await api.get(`/group/details/${groupId}?page=${page}`);
+  const response = await api.get(`/group/details/${groupId}`, {
+    params: {
+      page,
+    },
+  });
 
   return response.data;
 };
