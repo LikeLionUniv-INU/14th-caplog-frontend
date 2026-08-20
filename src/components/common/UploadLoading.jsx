@@ -13,7 +13,7 @@ export default function UploadLoading() {
         }
         return oldProgress + 5;
       });
-    }, 150);
+    }, 300);
 
     return () => clearInterval(timer);
   }, []);

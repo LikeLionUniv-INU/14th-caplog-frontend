@@ -104,7 +104,7 @@ function Home() {
 
         <S.MemoryList>
           {memoryItems.length === 0 ? (
-            <S.PreviewTitle>임박한 일정이 없어요.</S.PreviewTitle>
+            <S.PreviewTitle style={{ textAlign: 'center' }}>아직 임박한 일정은 없어요.</S.PreviewTitle>
           ) : (
             memoryItems.map((memory) => (
               <S.MemoryItem
@@ -141,7 +141,7 @@ function Home() {
         <S.PreviewList>
           {schedules.map((item) => (
             <PreviewBox
-              key={item.id}
+              key={`${item.isGroup ? 'group' : 'schedule'}-${item.id}`}
               id={item.id}
               image={item.captureImg}
               title={item.title}

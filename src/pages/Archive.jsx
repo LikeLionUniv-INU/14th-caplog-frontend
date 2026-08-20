@@ -56,7 +56,7 @@ function Archive() {
         <S.PreviewList>
           {schedules.map((item) => (
             <PreviewBox
-              key={item.id}
+              key={`${item.isGroup ? 'group' : 'schedule'}-${item.id}`}
               id={item.id}
               image={item.captureImg}
               title={item.title}

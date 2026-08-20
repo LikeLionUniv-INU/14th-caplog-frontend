@@ -32,18 +32,7 @@ export const getCategoryList = async () => {
 };
 
 // 업로드 확정
-export const confirmUpload = async (scheduleData, events) => {
-  const payload = {
-    imageId: scheduleData.captureImg || 0,
-    title: scheduleData.title || '',
-    category: scheduleData.category || 'TOTAL',
-    scheduleAiSummary: scheduleData.aiSummary || '',
-    group: scheduleData.group || '',
-    groupId: scheduleData.topic ? Number(scheduleData.topic) : 0,
-    events: events,
-  };
-
+export const confirmUpload = async (payload) => {
   const response = await api.post('/upload/confirm', payload);
-
   return response.data;
 };
