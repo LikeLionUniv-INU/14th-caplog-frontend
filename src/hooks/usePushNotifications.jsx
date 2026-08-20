@@ -6,6 +6,18 @@ export function usePushNotifications() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const createHighImportanceChannel = async () => {
+      await PushNotifications.createChannel({
+        id: 'caplog_popup_channel',
+        name: '팝업 알림',
+        description: '중요 알림',
+        importance: 5,
+        visibility: 1,
+      });
+    };
+
+    createHighImportanceChannel();
+
     // FCM 토큰 수신 → 서버에 저장
     PushNotifications.addListener('registration', (token) => {
       console.log('FCM Token:', token.value);
