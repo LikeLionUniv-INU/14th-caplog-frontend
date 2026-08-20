@@ -40,12 +40,21 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
   useEffect(() => {
     if (isOpen && aiResult) {
       const timer = setTimeout(() => {
+        let matchedTopic = aiResult.groupId || '';
+
+        if (!matchedTopic && aiResult.group && groups.length > 0) {
+          const foundGroup = groups.find((g) => g.groupName.trim() === aiResult.group.trim());
+          if (foundGroup) {
+            matchedTopic = foundGroup.groupId;
+          }
+        }
+
         setScheduleData({
           title: aiResult.title || '',
           aiSummary: aiResult.scheduleAiSummary || '',
           captureImg: aiResult.imageId || '',
           category: aiResult.category || '',
-          topic: aiResult.groupId || '',
+          topic: matchedTopic,
           details: aiResult.events?.[0]?.details || '',
         });
 
@@ -60,7 +69,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     } else if (!isOpen) {
       setEvents([]);
     }
-  }, [isOpen, aiResult]);
+  }, [isOpen, aiResult, groups]);
 
   const handleScheduleChange = (e) => {
     const { name, value } = e.target;
@@ -92,10 +101,14 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     }
 
     const formattedEvents = selectedEvents.map((e) => ({
+      isChecked: true,
       title: e.title,
-      startAt: e.startAt || null,
-      endAt: e.endAt || null,
-      details: scheduleData.details,
+      details: scheduleData.details || '',
+      aiSummary: scheduleData.aiSummary || '',
+      videoUrl: e.videoUrl || '',
+      date: e.date || '',
+      startAt: e.startAt || '',
+      endAt: e.endAt || '',
     }));
 
     const hasGroup = !!scheduleData.topic;
@@ -109,7 +122,7 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     };
 
     try {
-      const response = await confirmUpload(formattedSchedule, formattedEvents);
+      const response = await confirmUpload(scheduleData, formattedEvents);
 
       if (response.isSuccess) {
         alert('일정이 성공적으로 등록되었습니다!');

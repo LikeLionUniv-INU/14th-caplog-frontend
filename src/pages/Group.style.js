@@ -160,7 +160,6 @@ export const Card = styled.button`
   position: relative;
 
   min-width: 0;
-  height: 270px;
 
   padding: 20px 14px 14px;
   box-sizing: border-box;
