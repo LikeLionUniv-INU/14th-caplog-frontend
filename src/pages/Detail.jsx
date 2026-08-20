@@ -141,19 +141,16 @@ function Detail() {
         setDetail((prev) => ({
           ...prev,
 
-          schedule: {
-            ...prev.schedule,
-            ...updateData.schedule,
-          },
+          aiSummary: editAiSummary,
+          category: editCategory,
 
           events: [
             {
               ...prev.events[0],
-
               title: editTitle,
               details: editDetails,
-              aiSummary: editAiSummary,
-              dateTime: schedule,
+              startAt: schedule,
+              endAt: schedule,
             },
           ],
         }));
