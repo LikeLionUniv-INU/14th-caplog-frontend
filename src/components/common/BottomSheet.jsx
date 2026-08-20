@@ -91,38 +91,42 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
     onClose();
   };
 
+  const CATEGORY_MAP = {
+    학습: 'STUDY',
+    학교: 'SCHOOL',
+    일상: 'DAILY',
+    기타: 'ETC',
+  };
+
   /** 업로드 확정 API */
   const handleSubmit = async () => {
     const selectedEvents = events.filter((e) => e.isChecked);
 
-    if (selectedEvents.length === 0) {
-      alert('등록할 일정을 최소 1개 이상 체크해주세요.');
-      return;
-    }
-
     const formattedEvents = selectedEvents.map((e) => ({
       isChecked: true,
-      title: e.title,
+      title: e.title || '',
       details: scheduleData.details || '',
       aiSummary: scheduleData.aiSummary || '',
       videoUrl: e.videoUrl || '',
-      date: e.date || '',
-      startAt: e.startAt || '',
-      endAt: e.endAt || '',
+      date: e.date || null,
+      startAt: e.startAt || null,
+      endAt: e.endAt || null,
     }));
 
     const hasGroup = !!scheduleData.topic;
 
-    const formattedSchedule = {
-      title: scheduleData.title,
-      captureImg: scheduleData.captureImg,
-      aiSummary: scheduleData.aiSummary,
-      hasGroup: hasGroup,
+    const payload = {
+      imageId: Number(scheduleData.captureImg) || 0,
+      title: scheduleData.title || '',
+      category: CATEGORY_MAP[scheduleData.category] || 'ETC',
+      scheduleAiSummary: scheduleData.aiSummary || '',
       group: hasGroup ? scheduleData.topic : 'NONE',
+      groupId: hasGroup && !isNaN(Number(scheduleData.topic)) ? Number(scheduleData.topic) : 0,
+      events: formattedEvents,
     };
 
     try {
-      const response = await confirmUpload(scheduleData, formattedEvents);
+      const response = await confirmUpload(payload);
 
       if (response.isSuccess) {
         alert('일정이 성공적으로 등록되었습니다!');
@@ -242,8 +246,8 @@ export default function BottomSheet({ isOpen, onClose, aiResult }) {
             <S.ModalTitle>등록을 취소하시겠습니까?</S.ModalTitle>
             <S.ModalDesc>작성 중인 정보가 저장되지 않습니다.</S.ModalDesc>
             <S.ModalButtonGroup>
-              <S.ModalNoButton onClick={handleConfirmNo}>취소</S.ModalNoButton>
-              <S.ModalYesButton onClick={handleConfirmYes}>삭제</S.ModalYesButton>
+              <S.ModalNoButton onClick={handleConfirmNo}>아니오</S.ModalNoButton>
+              <S.ModalYesButton onClick={handleConfirmYes}>예</S.ModalYesButton>
             </S.ModalButtonGroup>
           </S.ModalBox>
         </S.ModalOverlay>

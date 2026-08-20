@@ -72,8 +72,10 @@ export default function Upload() {
         alert(data.message || '분석 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      console.error('업로드 실패:', error);
-      alert('서버와 통신할 수 없습니다.');
+      console.error('업로드 실패 원인:', error);
+      const errorMsg = error.response?.data?.message || error.message;
+      const statusCode = error.response?.status || '상태코드 없음';
+      alert(`[업로드 실패]\n코드: ${statusCode}\n이유: ${errorMsg}`);
     } finally {
       setIsLoading(false);
     }
