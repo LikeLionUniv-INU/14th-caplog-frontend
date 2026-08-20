@@ -1,7 +1,7 @@
 import api from './axios';
 import { mockGroupDetail } from './mockGroupDetail';
 
-const USE_MOCK = false;
+const USE_MOCK = true;
 
 // 그룹 상세 조회
 export const getGroupDetail = async (groupId, page = 0) => {

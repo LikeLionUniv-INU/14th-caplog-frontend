@@ -229,8 +229,8 @@ export const ModalOverlay = styled.div`
 export const ModifyPopup = styled.div`
   position: absolute;
 
-  width: 314px;
-  min-height: 275px;
+  width: 290px;
+  min-height: 266px;
 
   background-color: #fff0dd;
   border-radius: 15px;
@@ -257,10 +257,11 @@ export const InputBox = styled.div`
 
   p {
     margin: 0 0 8px;
+    padding-left: 10px;
 
     font-size: 11px;
-    font-weight: regular;
-    color: #7c2d12;
+    font-weight: medium;
+    color: #b55116;
   }
 
   input,
@@ -270,15 +271,15 @@ export const InputBox = styled.div`
 
     box-sizing: border-box;
 
-    border: 1px solid #7c2d12;
-    border-radius: 12.5px;
+    border: none;
+    border-radius: 25px;
 
     background-color: #ffffff;
 
     padding: 0 12px;
 
-    font-size: 11px;
-    color: #7c2d12;
+    font-size: 10px;
+    color: #b55116;
 
     outline: none;
   }
@@ -288,19 +289,13 @@ export const InputBox = styled.div`
   }
 `;
 
-export const Divider = styled.hr`
-  margin: 28px 0 0;
-
-  border: none;
-  border-top: 1px solid #fdba74;
-`;
-
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 11px;
 
   padding: 18px 22px;
+  margin-top: 20px;
 `;
 
 export const CancelButton = styled.button`
