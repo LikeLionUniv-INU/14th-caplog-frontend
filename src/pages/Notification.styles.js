@@ -85,7 +85,7 @@ export const NotificationCard = styled.div`
   }};
 `;
 
-export const Thumbnail = styled.div`
+export const Thumbnail = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 12px;
