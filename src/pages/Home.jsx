@@ -54,6 +54,7 @@ function Home() {
           alarms.map((alarm) => ({
             id: alarm.scheduleId,
             title: alarm.title,
+            message: alarm.message,
             dday: alarm.Dday,
           })),
         );
@@ -111,7 +112,7 @@ function Home() {
                 key={`${memory.id}-${memory.title}`}
                 onClick={() => navigate(memory.isGroup ? `/group/${memory.id}` : `/detail/${memory.id}`)}
               >
-                <span>{memory.title}</span>
+                <span>{memory.message}</span>
 
                 <S.MemoryRight>
                   <S.Dday $active={memory.dday <= 1}>{memory.dday === 0 ? 'D-DAY' : `D-${memory.dday}`}</S.Dday>
