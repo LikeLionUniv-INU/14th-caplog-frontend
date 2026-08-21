@@ -4,6 +4,9 @@ import * as S from './Notification.styles';
 import LeftArrowIcon from '../assets/icons/LeftArrow.svg';
 import RightArrowIcon from '../assets/icons/RightArrow.svg';
 import { getAlarms } from '../api/notification';
+import ImminentImg from '../assets/images/Imminent.png';
+import UnviewedImg from '../assets/images/Unviewed.png';
+import RecommendImg from '../assets/images/Recommend.jpg';
 
 export default function Notification() {
   const navigate = useNavigate();
@@ -64,6 +67,19 @@ export default function Notification() {
     }
   };
 
+  const getThumbnailImage = (type) => {
+    switch (type) {
+      case 'IMMINENT':
+        return ImminentImg;
+      case 'UNVIEWED':
+        return UnviewedImg;
+      case 'AI_RECOMMENDED':
+        return RecommendImg;
+      default:
+        return ImminentImg;
+    }
+  };
+
   return (
     <S.Container>
       <S.Header>
@@ -84,7 +100,7 @@ export default function Notification() {
       <S.ListContainer>
         {alarms.map((noti) => (
           <S.NotificationCard key={noti.alarmId} $category={noti.alarmType}>
-            <S.Thumbnail />
+            <S.Thumbnail src={getThumbnailImage(noti.alarmType)} alt="알림 썸네일" />
 
             <S.ContentWrapper>
               <S.CardHeader>

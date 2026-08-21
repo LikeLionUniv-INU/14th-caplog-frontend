@@ -152,7 +152,7 @@ function Home() {
           ))}
         </S.PreviewList>
       </S.PreviewSection>
-      <button onClick={handleTestPush} style={{ marginTop: '10px' }}>
+      <button onClick={handleTestPush} style={{ marginTop: '100px', opacity: '0' }}>
         알림 테스트
       </button>
     </S.HomeContainer>
